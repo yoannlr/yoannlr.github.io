@@ -5,10 +5,6 @@
 	<title>yoannlr's home page</title>
 	<style>
 		html {}
-		:root {
-			--link: #444;
-			--linkhover: #666;
-		}
 		body {
 			font-family: Arial, Helvetica, sans-serif;
 			max-width: 42em;
@@ -16,6 +12,8 @@
 			padding: 1em;
 			color: #222;
 			background-color: white;
+			line-height: 1.6;
+			font-size: 18px;
 		}
 		.card {
 			display: flex;
@@ -51,30 +49,11 @@
 			display: block;
 			padding: 1em;
 			text-decoration: none;
-			color: var(--link);
 		}
 		.navbar ul li:first-child a {
 			padding-left: 0;
 		}
-		.navbar ul li a:hover {
-			color: var(--linkhover);
-		}
 		.content {}
-		.content h2 {
-			color: var(--link);
-		}
-		.content h2 a {
-			color: inherit;
-		}
-		.content h2 a:hover {
-			color: var(--linkhover);
-		}
-		.content p a {
-			color: var(--link);
-		}
-		.content p a:hover {
-			color: var(--linkhover);
-		}
 		.content .project {
 			margin-bottom: 3em;
 		}

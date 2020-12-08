@@ -1,7 +1,5 @@
 html {}
 :root {
-	--link: #444;
-	--linkhover: #666;
 	--date: gray;
 	--codefont: monospace;
 	--code: #ddd;
@@ -15,12 +13,8 @@ body {
 	padding: 1em;
 	color: #222;
 	background-color: white;
-}
-a {
-	color: var(--link);
-}
-a:hover {
-	color: var(--linkhover);
+	line-height: 1.6;
+	font-size: 18px;
 }
 header {
 	color: lightgray;
@@ -47,9 +41,6 @@ main p img {
 p.date {
 	color: var(--date);
 	font-size: 90%;
-}
-p, li {
-	line-height: 1.5em;
 }
 pre {
 	border-radius: 4px;
