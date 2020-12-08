@@ -1,0 +1,94 @@
+#!/bin/sh
+
+# any *.md will be processed (ie. have _header, date and _footer added)
+# a *.md file won't be processed if it starts with an _
+# any other file will be copied to dst
+
+export src="$(readlink -f blog_raw)"
+export dst="$(readlink -f blog)"
+export SITENAME="yoannlr's blog"
+export SITEURL='https://yoannlr.github.io/blog'
+export HEADER=$(cat "$src/_header.html")
+export FOOTER=$(cat "$src/_footer.html")
+
+export RSSFILE='rss.xml'
+export RSSHEAD="$src/_rss.xml"
+export RSSURL="$SITEURL/$RSSFILE"
+export RSSTITLE="yoannlr's blog"
+export RSSLANG="en-us"
+export RSSDESC="Latest news from yoannlr"
+
+main() {
+	cd "$src"
+
+	# replicate folder structure to dst
+	# 'cpio -pdvm' for verbose and to keep mtime
+	find . -type d | cpio -pd "$dst"
+
+	# clear rss file and _list before processing articles
+	sed "s#RSSTITLE#$RSSTITLE#g;s#RSSDESC#$RSSDESC#g;s#RSSLANG#$RSSLANG#g;s#RSSURL#$RSSURL#g" $RSSHEAD > $RSSFILE
+	echo '' > "$src/_list"
+
+	# render articles as html files
+	find . -type f -name '*.md' ! -name '*_index.md' ! -name '_*' -printf '%T@\t%p\n' | sort | cut -d$'\t' -f2 | colrm 1 2 | render_articles isart
+	echo -e '</channel>\n</rss>' >> $RSSFILE
+
+	echo "Articles processed"
+
+	# generate index
+	cat "$src/_index.md" "$src/_list" > "$src/index.md"
+	echo 'index.md' | render_articles
+	rm "$src/index.md" 
+
+	# copy other files (such as images) to dst
+	find . -type f ! -name '*.md' ! -name '_*' -exec cp -- "{}" "$dst/{}" \;
+}
+
+render_articles() {
+	while read art
+	do
+		artdate=$(date -r "$art" '+%d %b %Y')
+		rssdate=$(date -R -r "$art")
+		lowdown < "$art" | awk -v isart="$1" -v date="$artdate" -v rssdate="$rssdate" -v article="${art%\.md}.html" -v artlist="_list" '
+		BEGIN {
+			title = ENVIRON["SITENAME"]
+			t = ""
+		}
+		{
+			body = body "\n" $0
+			if (isart == "isart" && match($0, /<[[:space:]]*[Hh]1(>|[[:space:]][^>]*>)/)) {
+				body = body "\n<p class=\"date\">" date "</p>\n"
+			}
+		}
+		END {
+			body = substr(body, 2)
+			if (body ~ /<[Hh][Tt][Mm][Ll]/) {
+				print body
+				exit
+			}
+			if (match(body, /<[[:space:]]*[Hh]1(>|[[:space:]][^>]*>)/)) {
+				t = substr(body, RSTART + RLENGTH)
+				sub("<[[:space:]]*/[[:space:]]*[Hh]1.*", "", t)
+				gsub(/^[[:space:]]*|[[:space:]]$/, "", t)
+				if (isart == "isart") printf "* %s &mdash; [%s](%s)\n", date, t, article >> artlist
+				title = t " &mdash; " title
+			}
+			n = split(ENVIRON["HEADER"], header, /\n/)
+			for (i = 1; i <= n; i++) {
+				if (match(tolower(header[i]), "<title></title>")) {
+					head = substr(header[i], 1, RSTART - 1)
+					tail = substr(header[i], RSTART + RLENGTH)
+					print head "<title>" title "</title>" tail
+				} else print header[i]
+			}
+			if (isart == "isart") {
+				printf "<item>\n<title>%s</title>\n<guid>%s/%s</guid>\n<pubDate>%s</pubDate>\n<description>\n<![CDATA[\n%s\n]]>\n</description>\n</item>\n", t, ENVIRON["SITEURL"], article, rssdate, body >> ENVIRON["RSSFILE"]
+				close(ENVIRON["RSSFILE"])
+			}
+			print body
+			print ENVIRON["FOOTER"]
+		}' > "$dst/${art%\.md}.html"
+	done
+}
+
+main

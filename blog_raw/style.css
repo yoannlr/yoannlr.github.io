@@ -1,0 +1,92 @@
+html {}
+:root {
+	--link: #444;
+	--linkhover: #666;
+	--date: gray;
+	--codefont: monospace;
+	--code: #ddd;
+	--codefg: #222;
+	--codehover: #bbb;
+}
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	max-width: 42em;
+	margin: 2em auto;
+	padding: 1em;
+	color: #222;
+	background-color: white;
+}
+a {
+	color: var(--link);
+}
+a:hover {
+	color: var(--linkhover);
+}
+header {
+	color: lightgray;
+	margin-bottom: 3em;
+}
+header a {
+	padding: 1em;
+	text-decoration: none;
+}
+header a:first-child {
+	padding-left: 0;
+}
+footer {
+	font-size: 0.9em;
+	margin-top: 5em;
+	color: #222;
+}
+footer a {
+	text-decoration: underline;
+}
+main p img {
+	width: 100%;
+}
+p.date {
+	color: var(--date);
+	font-size: 90%;
+}
+p, li {
+	line-height: 1.5em;
+}
+pre {
+	border-radius: 4px;
+	white-space: pre-wrap;
+	padding: 4px;
+}
+pre, code {
+	background-color: var(--code);
+	color: var(--codefg);
+	font-family: var(--codefont);
+}
+pre > code {
+	background-color: transparent;
+}
+hr {
+	border: 0;
+	height: 1px;
+	background: var(--fg);
+}
+h2, h3, h4, h5, h6 {
+	margin-top: 2.5em;
+}
+table, table td, table th {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+table td, table th {
+	padding: 0.5em;
+}
+@media (prefers-color-scheme: dark) {
+	html {
+		filter: invert(1);
+	}
+	img {
+		filter: invert(1);
+	}
+	code:hover, pre:hover {
+		background-color: var(--codehover);
+	}
+}

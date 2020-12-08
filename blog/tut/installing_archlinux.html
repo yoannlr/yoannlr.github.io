@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Installing Arch Linux: a guide &mdash; yoannlr's blog</title>
+	<link rel="stylesheet" href="/blog/style.css" />
+</head>
+<body>
+	<header>
+		<a href="/">Home</a><a href="/blog/">Blog</a><a href="https://github.com/yoannlr">GitHub</a>
+	</header>
+	<main>
+<h1 id="Installing%20Arch%20Linux:%20a%20guide">Installing Arch Linux: a guide</h1>
+<p class="date">08 Dec 2020</p>
+
+
+<p><img src="/res/archlinux_logo.png" alt="Arch Linux Logo" /></p>
+
+<p>This installation guide is based on the principle you know at least a few about Linux (basic system knowledge, using a terminal environment).
+<a href="https://www.archlinux.org/">Arch Linux</a> is not a Linux distro intended for everyone to use (no desktop environment by default).
+It is, however, a great way to learn more about Linux.</p>
+
+<h2 id="Creating%20bootable%20media">Creating bootable media</h2>
+
+<p>In order to install Arch, we will first need to create a media with which we&#39;ll boot our computer.</p>
+
+<ol start="1">
+<li>Download Arch Linux disk image <a href="https://www.archlinux.org/download">here</a> (ISO file, no need to get the latest version, it&#39;s a rolling release and everything will be downloaded at install).</li>
+<li>Use the <code>lsblk</code> command in a Linux terminal to identify your media.
+Execute <code>lsblk</code> without your media connected, then connect it and re-run the command, it will be easier to identify your media this way.</li>
+</ol>
+
+<pre><code>me : ~ $ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 111.8G  0 disk 
+├─sda1   8:1    0   511M  0 part &#47;boot
+└─sda2   8:2    0 111.3G  0 part &#47;
+sdb      8:16   0 931.5G  0 disk 
+└─sdb1   8:17   0 931.5G  0 part &#47;mnt&#47;data
+</code></pre>
+
+<pre><code>me : ~ $ lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda      8:0    0 111.8G  0 disk 
+├─sda1   8:1    0   511M  0 part &#47;boot
+└─sda2   8:2    0 111.3G  0 part &#47;
+sdb      8:16   0 931.5G  0 disk 
+└─sdb1   8:17   0 931.5G  0 part &#47;mnt&#47;data
+sdc      8:32   1   7.5G  0 disk -- this is our media!
+└─sdc1   8:33   1   7.5G  0 part 
+</code></pre>
+
+<ol start="3">
+<li>We&#39;ll then need to copy the ISO image on the media.
+It&#39;s a block copy, which means your media will be formatted.
+From your download folder, <code>dd if=archlinux-2019.10.01-x86_64.iso of=&#47;dev&#47;sdc</code> replacing <code>sdc</code> with your media identifier.</li>
+<li>Start your computer from the so created media.
+You may need to select it in a boot menu or from the BIOS&#47;UEFI.</li>
+</ol>
+
+<h2 id="Installing%20Arch">Installing Arch</h2>
+
+<p>Arch boots up a live system to a prompt <code>root@archiso ~ #</code>.</p>
+
+<p>First thing, if you&#39;re not using qwerty, you can load another layout: example with azerty : <code>loadkeys fr</code>.</p>
+
+<p>Then, we need to check we are connected to the Internet: <code>ping archlinux.org</code>.
+To use a WiFi network, we can use the <code>wifi-menu</code> utility.</p>
+
+<h3 id="Format%20drive">Format drive</h3>
+
+<p>Now, we&#39;ll need to format our computer&#39;s hard drive.
+Use <code>lsblk</code> to idendify it.
+You may use the disk size to find it in the list (as an example, my computer has a 128G SSD, I can use this information to find the corresponding media).</p>
+
+<p>To format it, use the cfdisk utility: <code>cfdisk &#47;dev&#47;sdx</code> with <code>sdx</code> being your disk identifier.
+Remove everything (with the &#8220;[Delete]&#8220; button), at the end we need to have only &#8220;Free Space&#8221;.
+Then, create two partitions (&#8220;[New]&#8220;):</p>
+
+<ul>
+<li>One of <em>EFI</em> type, of 500M.
+It <strong>must</strong> be the first one you create.
+It will be the boot partition, required by the UEFI system.</li>
+<li>One of <em>Linux Filesystem</em> type, with the remaining space.
+It will be the Linux partition (you might want to create a &#47;home and a swap partition too, but I&#39;ll not cover this here).</li>
+</ul>
+
+<p>Write changes to the disk (&#8220;[Write]&#8220;), <strong>it will erase all existing data on the disk</strong>.</p>
+
+<p><img src="/res/cfdisk.png" alt="cfdisk screenshot" /></p>
+
+<p>Partitions are created, now we need to format them.
+Get their id with <code>lsblk</code>, it must be <code>sdxy</code>, with <code>sdx</code> being the same as earlier.</p>
+
+<ul>
+<li>EFI partition of 500M can use vfat: <code>mkfs.vfat &#47;dev&#47;sdx1</code>.</li>
+<li>Linux partition can use ext4: <code>mkfs.ext4 &#47;dev&#47;sdx2</code>.</li>
+</ul>
+
+<h3 id="Mount%20the%20partitions">Mount the partitions</h3>
+
+<p>We&#39;ll now mount the created partitions on the live system.
+First, the Linux partition on <code>&#47;mnt</code>: <code>mount &#47;dev&#47;sdx2 &#47;mnt</code>.
+Then, the UEFI partition on <code>&#47;boot</code> of the Linux partition: <code>mkdir &#47;mnt&#47;boot</code>, <code>mount &#47;dev&#47;sdx1 &#47;mnt&#47;boot</code>.</p>
+
+<p>This way, we get the required configuration to install Arch!</p>
+
+<h3 id="Launch%20the%20installation">Launch the installation</h3>
+
+<p>It&#39;s pretty easy, just a command to run!</p>
+
+<p><code>pacstrap -i &#47;mnt archlinux-keyring base base-devel linux-lts linux-firmware vim</code></p>
+
+<p>It will prompt you a few choices, just hit Return on your keyboard, default options are great.</p>
+
+<h3 id="Configuring%20the%20system">Configuring the system</h3>
+
+<p>Create the fstab file (it tells the system how to mount disks at startup): <code>genfstab -U -p &#47;mnt &#62;&#62; &#47;mnt&#47;etc&#47;fstab</code>.</p>
+
+<p>Then, chroot in the new system (we will now work from the disk): <code>arch-chroot &#47;mnt</code>.</p>
+
+<p>First, we&#39;ll set the system locale (the language).
+Edit <code>&#47;etc&#47;locale.gen</code> (with vim, for example): uncomment the locales you want to use (<code>en_US.UTF-8</code> in my case).
+Then run <code>locale-gen</code> and <code>echo LANG=en_US.UTF-8 &#62;&#62; &#47;etc&#47;locale.conf</code>.</p>
+
+<p>Configure the local time: <code>ln -sf &#47;usr&#47;share&#47;zoneinfo&#47;Europe&#47;Paris &#47;etc&#47;localtime</code> (for Paris time zone).</p>
+
+<p>Give a name to your machine: <code>echo chosen_name &#62; &#47;etc&#47;hostname</code>.</p>
+
+<p>Basic network configuration to bind &#8220;localhost&#8221; to 127.0.0.1: edit <code>&#47;etc&#47;hosts</code> to add the line <code>127.0.0.1  localhost</code>.</p>
+
+<p>And some programs to ease network configuration later: <code>pacman -S networkmanager &#38;&#38; systemctl enable NetworkManager</code>.</p>
+
+<h3 id="Installing%20the%20bootloader">Installing the bootloader</h3>
+
+<p>The bootloader will allow us to start our system.
+Currently, if you stop your computer, you won&#39;t be able to start the new Arch system.</p>
+
+<p><code>bootctl install</code></p>
+
+<p>Then, create the bootloader configuration.</p>
+
+<p>Edit <code>&#47;boot&#47;loader&#47;entries&#47;arch.conf</code> (create it, if non-existent):</p>
+
+<pre><code>title Arch Linux
+linux &#47;vmlinuz-linux
+initrd &#47;initramfs-linux.img
+options root=PARTUID=&#60;uid&#62; rw
+</code></pre>
+
+<p>Two things you need to know about this configuration:</p>
+
+<ul>
+<li><code>&#47;vmlinux-linux</code> and <code>&#47;initramfs-linux.img</code> refers to files that <strong>must</strong> exist in <code>&#47;boot</code>.</li>
+<li><code>&#60;uid&#62;</code> must be the Linux partition UID, get it by running <code>blkid</code>.</li>
+</ul>
+
+<p>In <code>&#47;boot&#47;loader&#47;loader.conf</code> :</p>
+
+<pre><code>default arch
+timeout 5
+</code></pre>
+
+<h3 id="Users">Users</h3>
+
+<p>You may want to set a root password: <code>passwd</code>.</p>
+
+<p>Then, add your main user: <code>useradd -m -g users -G wheel -s &#47;bin&#47;bash username</code>.
+And give it a password: <code>passwd username</code>.</p>
+
+<p>We can - and it&#39;s recommended - allow members of group &#8220;wheel&#8221; (which our user is part of) to use root privileges with the sudo command.
+To do so: <code>EDITOR=vim visudo</code>, and uncomment the line containing <code>%wheel ALL=(ALL) ALL</code>.</p>
+
+<h3 id="Reboot">Reboot</h3>
+
+<p><code>exit</code> pour leave the chroot environment.</p>
+
+<p><code>umount -R &#47;mnt</code> to unmount the two partitions.</p>
+
+<p><code>reboot</code></p>
+
+<p>And voilà!</p>
+	</main>
+	<footer>
+		by <a href="/">yoannlr</a> &middot; <a href="/blog/rss.xml">RSS Feed</a><br />
+		Generated with <a href="https://raw.githubusercontent.com/yoannlr/yoannlr.github.io/sbg">sbg</a>, my static blog generator inspired by <a href="https://www.romanzolotarev.com/ssg.html">ssg</a>.
+	</footer>
+</html>
