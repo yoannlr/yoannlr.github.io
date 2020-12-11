@@ -11,7 +11,7 @@
 	</header>
 	<main>
 <h1 id="Installing%20Arch%20Linux:%20a%20guide">Installing Arch Linux: a guide</h1>
-<p class="date">08 Dec 2020</p>
+<p class="date">10 Dec 2020</p>
 
 
 <p><img src="/res/archlinux_logo.png" alt="Arch Linux Logo" /></p>
@@ -62,7 +62,7 @@ You may need to select it in a boot menu or from the BIOS&#47;UEFI.</li>
 
 <p>Arch boots up a live system to a prompt <code>root@archiso ~ #</code>.</p>
 
-<p>First thing, if you&#39;re not using qwerty, you can load another layout: example with azerty : <code>loadkeys fr</code>.</p>
+<p>First thing, if you&#39;re not using qwerty, you can load another layout: example with azerty: <code>loadkeys fr</code>.</p>
 
 <p>Then, we need to check we are connected to the Internet: <code>ping archlinux.org</code>.
 To use a WiFi network, we can use the <code>wifi-menu</code> utility.</p>
@@ -155,7 +155,7 @@ options root=PARTUID=&#60;uid&#62; rw
 <li><code>&#60;uid&#62;</code> must be the Linux partition UID, get it by running <code>blkid</code>.</li>
 </ul>
 
-<p>In <code>&#47;boot&#47;loader&#47;loader.conf</code> :</p>
+<p>In <code>&#47;boot&#47;loader&#47;loader.conf</code>:</p>
 
 <pre><code>default arch
 timeout 5
@@ -173,7 +173,7 @@ To do so: <code>EDITOR=vim visudo</code>, and uncomment the line containing <cod
 
 <h3 id="Reboot">Reboot</h3>
 
-<p><code>exit</code> pour leave the chroot environment.</p>
+<p><code>exit</code> to leave the chroot environment.</p>
 
 <p><code>umount -R &#47;mnt</code> to unmount the two partitions.</p>
 

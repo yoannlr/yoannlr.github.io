@@ -47,7 +47,7 @@ sdc      8:32   1   7.5G  0 disk -- this is our media!
 
 Arch boots up a live system to a prompt `root@archiso ~ #`.
 
-First thing, if you're not using qwerty, you can load another layout: example with azerty : `loadkeys fr`.
+First thing, if you're not using qwerty, you can load another layout: example with azerty: `loadkeys fr`.
 
 Then, we need to check we are connected to the Internet: `ping archlinux.org`.
 To use a WiFi network, we can use the `wifi-menu` utility.
@@ -135,7 +135,7 @@ Two things you need to know about this configuration:
 * `/vmlinux-linux` and `/initramfs-linux.img` refers to files that **must** exist in `/boot`.
 * `<uid>` must be the Linux partition UID, get it by running `blkid`.
 
-In `/boot/loader/loader.conf` :
+In `/boot/loader/loader.conf`:
 
 ```
 default arch
@@ -154,7 +154,7 @@ To do so: `EDITOR=vim visudo`, and uncomment the line containing `%wheel ALL=(AL
 
 ### Reboot
 
-`exit` pour leave the chroot environment.
+`exit` to leave the chroot environment.
 
 `umount -R /mnt` to unmount the two partitions.
 

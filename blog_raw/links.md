@@ -37,6 +37,7 @@ It's permanently updated.
 * [&starf; scrcpy - Android screen copy (with ADB)](https://github.com/Genymobile/scrcpy)
 * [jumpcutter - automate video editing (not tested)](https://github.com/carykh/jumpcutter)
 * [obs-move-transition - better transitions in OBS](https://github.com/exeldro/obs-move-transition)
+* [LibreSprite - FOSS alternative to Aseprite (a pixel art program)](https://github.com/LibreSprite/LibreSprite)
 
 ## Windows
 
