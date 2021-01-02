@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Retreive an APK from a non-rooted Android device &mdash; yoannlr's blog</title>
+	<link rel="stylesheet" href="/blog/style.css" />
+</head>
+<body>
+	<header>
+		<a href="/">Home</a><a href="/blog/">Blog</a><a href="https://github.com/yoannlr">GitHub</a>
+	</header>
+	<main>
+<h1 id="Retreive%20an%20APK%20from%20a%20non-rooted%20Android%20device">Retreive an APK from a non-rooted Android device</h1>
+<p class="date">02 Jan 2021</p>
+
+
+<h2 id="Context">Context</h2>
+
+<p>I recently installed <a href="https://lineageos.org">LineageOS</a> and <a href="https://download.lineageos.org/extras">LineageOS addonsu</a> on my old OnePlus X phone to un-google it and get root access on it.
+The reason I did that is simple: I bought the device, it sould be normal I get root access on it, it should not be Google&#39;s.</p>
+
+<p>The system works perfectly.
+For most apps I used, a FOSS replacement was quickly found on <a href="https://f-droid.org">F-Droid</a>, but I still faced a problem for some apps, such as Discord, Magic Earth, etc.</p>
+
+<p>We&#39;ll focus on Magic Earth in this tutorial.
+Magic Earth is not on F-Droid and doesn&#39;t provide any APK (an Android application package) elsewhere than the Google Play Store.
+Sure, some websites say they&#39;ll give you &#8220;free magic earth apk no viruses no spyware&#8221;, but it seemed a little&#8230; unsafe to me.</p>
+
+<p>The thing is, Magic Earth is installed on my current, non-rooted phone, from Google Play Store.</p>
+
+<p>&#8220;In order to be installed, the APK file has to be downloaded, and is probably still somewhere on the phone&#8221;, I thought.</p>
+
+<p>Turns out I was right, here is how to retreive it from the non-rooted phone, just using <a href="https://developer.android.com/studio/releases/platform-tools">adb (Android Debug Bridge)</a>.</p>
+
+<h2 id="Installing%20ADB%20on%20a%20computer">Installing ADB on a computer</h2>
+
+<p>Download it from the above link.</p>
+
+<p>On most Linux distros, it is also available directly from the package manager (<code>android-tools</code> on Arch).</p>
+
+<h2 id="Enable%20USB%20debugging%20from%20the%20device">Enable USB debugging from the device</h2>
+
+<p>This will allow us to perform adb commands with our phone connected to a computer.</p>
+
+<p>To do so, head to the settings app.
+In the &#8220;About phone&#8221; section tap 7 times on the build number, a toast saying &#8220;You are now a developer&#8221; should appear.
+Go back home on the settings app, and to &#8220;Developer options&#8221;.
+From there, enable USB debugging.</p>
+
+<h2 id="Pair%20the%20phone%20to%20the%20computer">Pair the phone to the computer</h2>
+
+<p>Linux users might have to run the following commands as root (with sudo).</p>
+
+<p>First, run <code>adb devices</code>.
+You should get a pop-up on your phone asking to trust the computer, accept.</p>
+
+<pre><code>me : ~ $ sudo adb devices
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
+XXXXXXXXX   device
+</code></pre>
+
+<p>The device is now attached, we will be able to proceed!</p>
+
+<h2 id="Get%20the%20package%20id">Get the package id</h2>
+
+<p>We need to find the app&#39;s package name.
+To do so, we&#39;ll list every app installed on our phone: <code>adb shell pm list packages</code></p>
+
+<p>Which give us a list of all app packages installed.</p>
+
+<pre><code>me : ~ $ sudo adb shell pm list packages
+package:...
+package:com.generalmagic.magicearth
+package:...
+</code></pre>
+
+<p>💡 Linux users can use <code>grep</code> to filter the results: <code>adb shell pm list packages | grep magic</code></p>
+
+<p>We deduce Magic Earth&#39;s package id is <code>com.generalmagic.magicearth</code>.</p>
+
+<h2 id="Get%20the%20APK%20location">Get the APK location</h2>
+
+<p>This information allows us to ask the device the APK&#39;s location, with one command: <code>adb shell pm path com.generalmagic.magicearth</code>.</p>
+
+<pre><code>me : ~ $ sudo adb shell pm path com.generalmagic.magicearth
+package:&#47;data&#47;app&#47;com.generalmagic.magicearth-XXXXXXXXXXXXXXXXXXXXXX==&#47;base.apk
+</code></pre>
+
+<p>It&#39;s a path we can&#39;t access on Android (unless our phone has root access), but adb can!</p>
+
+<h2 id="Retreive%20the%20APK">Retreive the APK</h2>
+
+<p>adb allows us to pull data from our phone, just run <code>adb pull &#60;path&#62;</code>.</p>
+
+<pre><code>me : ~ $ sudo adb pull &#47;data&#47;app&#47;com.generalmagic.magicearth-XXXXXXXXXXXXXXXXXXxxXX==&#47;base.apk
+&#47;data&#47;app&#47;com.generalmagic.magicearth-XXXXXXXXXXXXXXXXXXXXXX==&#47;base.apk: 1 file pulled, 0 skipped. 37.6 MB&#47;s (52342418 bytes in 1.326s)
+</code></pre>
+
+<p>We now have a file <code>base.apk</code> we can rename <code>magicearth.apk</code>.</p>
+
+<p>I copied this file to my LineageOS phone, and installed it like a standard APK file.</p>
+	</main>
+	<footer>
+		by <a href="/">yoannlr</a> &middot; <a href="/blog/rss.xml">RSS Feed</a><br />
+		Generated with <a href="https://raw.githubusercontent.com/yoannlr/yoannlr.github.io/master/sbg">sbg</a>, my static blog generator inspired by <a href="https://www.romanzolotarev.com/ssg.html">ssg</a>.
+	</footer>
+</html>

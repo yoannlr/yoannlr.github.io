@@ -7,108 +7,102 @@
 <link>https://yoannlr.github.io/blog/rss.xml</link>
 <atom:link href="https://yoannlr.github.io/blog/rss.xml" rel="self" type="application/rss+xml" />
 <item>
-<title>Give these software a shot!</title>
-<guid>https://yoannlr.github.io/blog/links.html</guid>
-<pubDate>Tue, 08 Dec 2020 20:36:16 +0100</pubDate>
+<title>Retreive an APK from a non-rooted Android device</title>
+<guid>https://yoannlr.github.io/blog/tut/retreive_apk.html</guid>
+<pubDate>Sat, 02 Jan 2021 12:57:05 +0100</pubDate>
 <description>
 <![CDATA[
-<h1 id="Give%20these%20software%20a%20shot!">Give these software a shot!</h1>
-<p class="date">08 Dec 2020</p>
+<h1 id="Retreive%20an%20APK%20from%20a%20non-rooted%20Android%20device">Retreive an APK from a non-rooted Android device</h1>
+<p class="date">02 Jan 2021</p>
 
 
-<p>Here are some software&#47;websites&#47;tools I find and want to share!
-It&#39;s permanently updated.</p>
+<h2 id="Context">Context</h2>
 
-<h2 id="Linux">Linux</h2>
+<p>I recently installed <a href="https://lineageos.org">LineageOS</a> and <a href="https://download.lineageos.org/extras">LineageOS addonsu</a> on my old OnePlus X phone to un-google it and get root access on it.
+The reason I did that is simple: I bought the device, it sould be normal I get root access on it, it should not be Google&#39;s.</p>
 
-<ul>
-<li><a href="https://vim.org">&starf; &hearts; Vim - text editor</a></li>
-<li><a href="https://audacious-media-player.org">&starf; Audacious - lightweight but full-featured music player</a></li>
-<li><a href="https://brave.com">&starf; Brave - web browser</a></li>
-<li><a href="https://mpv.io">&starf; mpv - video player</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/Sxiv">&starf; sxiv - image viewer</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/Zathura">&starf; zathura - pdf reader (can read from stdin)</a></li>
-<li><a href="https://www.qemu.org">&starf; qemu - virtual machines</a></li>
-<li><a href="https://ardour.org">&starf; Ardour - audio editor</a></li>
-<li><a href="https://obsproject.com">&starf; OBS Studio - screen recorder, can livestream too</a></li>
-<li><a href="https://olivevideoeditor.org">&starf; Olive - video editor</a></li>
-<li><a href="https://ffmpeg.org">&starf; ffmpeg - manipulate video from command line</a></li>
-<li><a href="https://blender.org">&starf; Blender - 3D modeling, video editing</a></li>
-<li><a href="https://gimp.org">&starf; GIMP - image editor</a></li>
-<li><a href="https://krita.org">&starf; Krita - drawing</a></li>
-<li><a href="https://lmms.io">&starf; LMMS - music creation</a></li>
-<li><a href="https://kristaps.bsd.lv/lowdown/">&starf; lowdown - lightweight markdown compiler (I use it to run this blog!)</a></li>
-<li><a href="https://wiki.archlinux.org/index.php/Newsboat">&starf; newsboat - RSS Feed reader</a></li>
-<li><a href="https://youtube-dl.org/">&starf; youtube-dl - download videos from a large collection of websites</a></li>
-<li><a href="http://sonic-pi.net">Sonic-Pi - create music by programming (not tested)</a></li>
-<li><a href="https://github.com/andmarti1424/sc-im">sc-im - spreadsheets in terminal</a></li>
-<li><a href="https://github.com/visit1985/mdp">&starf; mdp - present markdown slides from terminal</a></li>
-<li><a href="https://github.com/aidygus/LinVAM">LinVAM - Linux voice recognition (not tested)</a></li>
-<li><a href="https://github.com/futpib/pagraphcontrol">pagraphcontrol - route sound with PulseAudio (not tested)</a></li>
-<li><a href="https://github.com/ventoy/Ventoy">&starf; Ventoy - one bootable media for all your ISO files!</a></li>
-<li><a href="https://lutris.net">&starf; Lutris - the future of gaming on Linux</a></li>
-<li><a href="https://github.com/debauchee/barrier">barrier - software KVM switch (not tested)</a> - <a href="https://www.youtube.com/watch?v=mAGTFAeA2Bo">Video</a></li>
-<li><a href="https://github.com/CatxFish/obs-v4l2sink">obs-v4l2sink - use OBS output as a virtual camera</a> - <a href="https://www.youtube.com/watch?v=Eca509IDLdM">Video</a></li>
-<li><a href="https://github.com/HaarigerHarald/omxiv">omxiv - an alternative to &#8220;Chromecast&#8221;</a> - <a href="https://thepi.io/how-to-use-your-raspberry-pi-as-a-chromecast-alternative/">Tutorial</a></li>
-<li><a href="https://github.com/chxrlt/lyrebird">Experimental - lyrebird - change your voice with PulseAudio</a></li>
-<li><a href="https://github.com/Genymobile/scrcpy">&starf; scrcpy - Android screen copy (with ADB)</a></li>
-<li><a href="https://github.com/carykh/jumpcutter">jumpcutter - automate video editing (not tested)</a></li>
-<li><a href="https://github.com/exeldro/obs-move-transition">obs-move-transition - better transitions in OBS</a></li>
-<li><a href="https://github.com/LibreSprite/LibreSprite">LibreSprite - FOSS alternative to Aseprite (a pixel art program)</a></li>
-</ul>
+<p>The system works perfectly.
+For most apps I used, a FOSS replacement was quickly found on <a href="https://f-droid.org">F-Droid</a>, but I still faced a problem for some apps, such as Discord, Magic Earth, etc.</p>
 
-<h2 id="Windows">Windows</h2>
+<p>We&#39;ll focus on Magic Earth in this tutorial.
+Magic Earth is not on F-Droid and doesn&#39;t provide any APK (an Android application package) elsewhere than the Google Play Store.
+Sure, some websites say they&#39;ll give you &#8220;free magic earth apk no viruses no spyware&#8221;, but it seemed a little&#8230; unsafe to me.</p>
 
-<ul>
-<li><a href="https://captvty.fr/">CapTvTy - download replays of french TV</a></li>
-<li><a href="https://ephtracy.github.io/">MagicaVoxel - 3d pixel art</a></li>
-<li><a href="https://www.sumatrapdfreader.org/">Sumatra PDF - minimalist pdf reader</a></li>
-</ul>
+<p>The thing is, Magic Earth is installed on my current, non-rooted phone, from Google Play Store.</p>
 
-<h2 id="Bulk%20websites&amp;#47;pages">Bulk websites&#47;pages</h2>
+<p>&#8220;In order to be installed, the APK file has to be downloaded, and is probably still somewhere on the phone&#8221;, I thought.</p>
 
-<ul>
-<li><a href="https://archive.org">archive.org - a library of books, music, videos, websites&#8230;</a></li>
-<li><a href="http://www.neverendingchartrendering.org/">Never Ending Chart Rendering - album covers compilation</a></li>
-<li><a href="http://maps.openrouteservice.org/">OpenRouteService - an alternative to Google Maps</a></li>
-<li><a href="https://f-droid.org/fr/">&starf; F-Droid - an alternative to Google Play Store, with open-source apps</a></li>
-<li><a href="https://github.com/tldr-pages/tldr">TLDR-Pages - summary from Linux man pages</a></li>
-<li><a href="https://www.overleaf.com/learn">Overleaf - learn LaTeX</a></li>
-<li><a href="https://mathpix.com/">Mathpix - convert in-real-life math to TeX</a></li>
-<li><a href="http://www.yopmail.com">&starf; Yopmail - throwaway email addresses</a></li>
-<li><a href="https://framatalk.org">FramaTalk - screen sharing without any account</a></li>
-<li><a href="https://devdocs.io/">DevDocs - documentation for a lot of programming tools &#38; languages</a></li>
-<li><a href="https://trianglify.io/">Trianfly.io - generate backgrounds with&#8230; triangles</a></li>
-<li><a href="http://cssicon.space/">CSS Icon - use CSS for your website&#39;s icons</a></li>
-<li><a href="https://www.songsterr.com">&starf; Songsterr - music tablatures</a></li>
-<li><a href="https://www.fontsquirrel.com/tools/webfont-generator">FontSquirrel - convert fonts to web format</a></li>
-<li><a href="https://github.com/the-akira/Computer-Science-Resources">Computer Science Resources</a></li>
-<li><a href="http://www.viemu.com/a_vi_vim_graphical_cheat_sheet_tutorial.html">Vi&#47;Vim cheatsheet</a></li>
-<li><a href="https://rendaw.gitlab.io/blog/2125f09a85f2.html#alsa-exposed">&#8220;rendaw - ALSA, exposed!&#8220; - ALSA Linux sound system documentation</a></li>
-<li><a href="https://plantnet.org">Plantet - idenfity plants</a></li>
-<li><a href="https://github.com/mayfrost/guides/blob/master/ALTERNATIVES.md">Alternatives to bloatware - another list of software, like this one!</a></li>
-</ul>
+<p>Turns out I was right, here is how to retreive it from the non-rooted phone, just using <a href="https://developer.android.com/studio/releases/platform-tools">adb (Android Debug Bridge)</a>.</p>
 
-<h2 id="Android%20Apps">Android Apps</h2>
+<h2 id="Installing%20ADB%20on%20a%20computer">Installing ADB on a computer</h2>
 
-<ul>
-<li><a href="https://lineageos.org/">LineageOS - ungoogled Android</a></li>
-<li><a href="https://e.foundation/">&#47;e&#47; - ungoogled Android (a fork of LineageOS), the one I use</a></li>
-<li><a href="https://f-droid.org/">&starf; F-Droid - an alternative to Google Play Store</a></li>
-<li><a href="https://f-droid.org/en/packages/org.schabi.newpipe/">&starf; NewPipe - an alternative to YouTube with download and background listening options, based off youtube-dl</a></li>
-<li><a href="https://f-droid.org/en/packages/org.billthefarmer.editor">&starf; Editor - text editor</a></li>
-<li><a href="https://f-droid.org/en/packages/com.simplemobiletools.gallery.pro">&starf; Simple Gallery Pro - photo gallery</a></li>
-<li><a href="https://f-droid.org/en/packages/org.kde.kdeconnect_tp">&starf; KDE Connect - connect a phone to Linux</a></li>
-<li><a href="https://world.openfoodfacts.org/files/off.apk">&starf; Open Food Facts - barcode food scan</a> - <a href="https://play.google.com/store/apps/details?id=org.openfoodfacts.scanner">Play Store</a></li>
-</ul>
+<p>Download it from the above link.</p>
 
-<h2 id="Videos,%20blogs">Videos, blogs</h2>
+<p>On most Linux distros, it is also available directly from the package manager (<code>android-tools</code> on Arch).</p>
 
-<ul>
-<li><a href="https://youtube.com/c/lukesmithxyz">Luke Smith (YouTube) - Linux tutorials, and some philosophy</a></li>
-<li><a href="https://lukesmith.xyz">Luke Smith (website)</a></li>
-<li><a href="https://www.youtube.com/c/WolfgangsChannel/">Wolfgang&#39;s Channel - tech tinkering</a></li>
-</ul>
+<h2 id="Enable%20USB%20debugging%20from%20the%20device">Enable USB debugging from the device</h2>
+
+<p>This will allow us to perform adb commands with our phone connected to a computer.</p>
+
+<p>To do so, head to the settings app.
+In the &#8220;About phone&#8221; section tap 7 times on the build number, a toast saying &#8220;You are now a developer&#8221; should appear.
+Go back home on the settings app, and to &#8220;Developer options&#8221;.
+From there, enable USB debugging.</p>
+
+<h2 id="Pair%20the%20phone%20to%20the%20computer">Pair the phone to the computer</h2>
+
+<p>Linux users might have to run the following commands as root (with sudo).</p>
+
+<p>First, run <code>adb devices</code>.
+You should get a pop-up on your phone asking to trust the computer, accept.</p>
+
+<pre><code>me : ~ $ sudo adb devices
+* daemon not running; starting now at tcp:5037
+* daemon started successfully
+List of devices attached
+XXXXXXXXX   device
+</code></pre>
+
+<p>The device is now attached, we will be able to proceed!</p>
+
+<h2 id="Get%20the%20package%20id">Get the package id</h2>
+
+<p>We need to find the app&#39;s package name.
+To do so, we&#39;ll list every app installed on our phone: <code>adb shell pm list packages</code></p>
+
+<p>Which give us a list of all app packages installed.</p>
+
+<pre><code>me : ~ $ sudo adb shell pm list packages
+package:...
+package:com.generalmagic.magicearth
+package:...
+</code></pre>
+
+<p>💡 Linux users can use <code>grep</code> to filter the results: <code>adb shell pm list packages | grep magic</code></p>
+
+<p>We deduce Magic Earth&#39;s package id is <code>com.generalmagic.magicearth</code>.</p>
+
+<h2 id="Get%20the%20APK%20location">Get the APK location</h2>
+
+<p>This information allows us to ask the device the APK&#39;s location, with one command: <code>adb shell pm path com.generalmagic.magicearth</code>.</p>
+
+<pre><code>me : ~ $ sudo adb shell pm path com.generalmagic.magicearth
+package:&#47;data&#47;app&#47;com.generalmagic.magicearth-XXXXXXXXXXXXXXXXXXXXXX==&#47;base.apk
+</code></pre>
+
+<p>It&#39;s a path we can&#39;t access on Android (unless our phone has root access), but adb can!</p>
+
+<h2 id="Retreive%20the%20APK">Retreive the APK</h2>
+
+<p>adb allows us to pull data from our phone, just run <code>adb pull &#60;path&#62;</code>.</p>
+
+<pre><code>me : ~ $ sudo adb pull &#47;data&#47;app&#47;com.generalmagic.magicearth-XXXXXXXXXXXXXXXXXXxxXX==&#47;base.apk
+&#47;data&#47;app&#47;com.generalmagic.magicearth-XXXXXXXXXXXXXXXXXXXXXX==&#47;base.apk: 1 file pulled, 0 skipped. 37.6 MB&#47;s (52342418 bytes in 1.326s)
+</code></pre>
+
+<p>We now have a file <code>base.apk</code> we can rename <code>magicearth.apk</code>.</p>
+
+<p>I copied this file to my LineageOS phone, and installed it like a standard APK file.</p>
 ]]>
 </description>
 </item>
@@ -288,6 +282,112 @@ To do so: <code>EDITOR=vim visudo</code>, and uncomment the line containing <cod
 <p><code>reboot</code></p>
 
 <p>And voilà!</p>
+]]>
+</description>
+</item>
+<item>
+<title>Give these software a shot!</title>
+<guid>https://yoannlr.github.io/blog/links.html</guid>
+<pubDate>Tue, 08 Dec 2020 20:36:16 +0100</pubDate>
+<description>
+<![CDATA[
+<h1 id="Give%20these%20software%20a%20shot!">Give these software a shot!</h1>
+<p class="date">08 Dec 2020</p>
+
+
+<p>Here are some software&#47;websites&#47;tools I find and want to share!
+It&#39;s permanently updated.</p>
+
+<h2 id="Linux">Linux</h2>
+
+<ul>
+<li><a href="https://vim.org">&starf; &hearts; Vim - text editor</a></li>
+<li><a href="https://audacious-media-player.org">&starf; Audacious - lightweight but full-featured music player</a></li>
+<li><a href="https://brave.com">&starf; Brave - web browser</a></li>
+<li><a href="https://mpv.io">&starf; mpv - video player</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Sxiv">&starf; sxiv - image viewer</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Zathura">&starf; zathura - pdf reader (can read from stdin)</a></li>
+<li><a href="https://www.qemu.org">&starf; qemu - virtual machines</a></li>
+<li><a href="https://ardour.org">&starf; Ardour - audio editor</a></li>
+<li><a href="https://obsproject.com">&starf; OBS Studio - screen recorder, can livestream too</a></li>
+<li><a href="https://olivevideoeditor.org">&starf; Olive - video editor</a></li>
+<li><a href="https://ffmpeg.org">&starf; ffmpeg - manipulate video from command line</a></li>
+<li><a href="https://blender.org">&starf; Blender - 3D modeling, video editing</a></li>
+<li><a href="https://gimp.org">&starf; GIMP - image editor</a></li>
+<li><a href="https://krita.org">&starf; Krita - drawing</a></li>
+<li><a href="https://lmms.io">&starf; LMMS - music creation</a></li>
+<li><a href="https://kristaps.bsd.lv/lowdown/">&starf; lowdown - lightweight markdown compiler (I use it to run this blog!)</a></li>
+<li><a href="https://wiki.archlinux.org/index.php/Newsboat">&starf; newsboat - RSS Feed reader</a></li>
+<li><a href="https://youtube-dl.org/">&starf; youtube-dl - download videos from a large collection of websites</a></li>
+<li><a href="http://sonic-pi.net">Sonic-Pi - create music by programming (not tested)</a></li>
+<li><a href="https://github.com/andmarti1424/sc-im">sc-im - spreadsheets in terminal</a></li>
+<li><a href="https://github.com/visit1985/mdp">&starf; mdp - present markdown slides from terminal</a></li>
+<li><a href="https://github.com/aidygus/LinVAM">LinVAM - Linux voice recognition (not tested)</a></li>
+<li><a href="https://github.com/futpib/pagraphcontrol">pagraphcontrol - route sound with PulseAudio (not tested)</a></li>
+<li><a href="https://github.com/ventoy/Ventoy">&starf; Ventoy - one bootable media for all your ISO files!</a></li>
+<li><a href="https://lutris.net">&starf; Lutris - the future of gaming on Linux</a></li>
+<li><a href="https://github.com/debauchee/barrier">barrier - software KVM switch (not tested)</a> - <a href="https://www.youtube.com/watch?v=mAGTFAeA2Bo">Video</a></li>
+<li><a href="https://github.com/CatxFish/obs-v4l2sink">obs-v4l2sink - use OBS output as a virtual camera</a> - <a href="https://www.youtube.com/watch?v=Eca509IDLdM">Video</a></li>
+<li><a href="https://github.com/HaarigerHarald/omxiv">omxiv - an alternative to &#8220;Chromecast&#8221;</a> - <a href="https://thepi.io/how-to-use-your-raspberry-pi-as-a-chromecast-alternative/">Tutorial</a></li>
+<li><a href="https://github.com/chxrlt/lyrebird">Experimental - lyrebird - change your voice with PulseAudio</a></li>
+<li><a href="https://github.com/Genymobile/scrcpy">&starf; scrcpy - Android screen copy (with ADB)</a></li>
+<li><a href="https://github.com/carykh/jumpcutter">jumpcutter - automate video editing (not tested)</a></li>
+<li><a href="https://github.com/exeldro/obs-move-transition">obs-move-transition - better transitions in OBS</a></li>
+<li><a href="https://github.com/LibreSprite/LibreSprite">LibreSprite - FOSS alternative to Aseprite (a pixel art program)</a></li>
+</ul>
+
+<h2 id="Windows">Windows</h2>
+
+<ul>
+<li><a href="https://captvty.fr/">CapTvTy - download replays of french TV</a></li>
+<li><a href="https://ephtracy.github.io/">MagicaVoxel - 3d pixel art</a></li>
+<li><a href="https://www.sumatrapdfreader.org/">Sumatra PDF - minimalist pdf reader</a></li>
+</ul>
+
+<h2 id="Bulk%20websites&amp;#47;pages">Bulk websites&#47;pages</h2>
+
+<ul>
+<li><a href="https://archive.org">archive.org - a library of books, music, videos, websites&#8230;</a></li>
+<li><a href="http://www.neverendingchartrendering.org/">Never Ending Chart Rendering - album covers compilation</a></li>
+<li><a href="http://maps.openrouteservice.org/">OpenRouteService - an alternative to Google Maps</a></li>
+<li><a href="https://f-droid.org/fr/">&starf; F-Droid - an alternative to Google Play Store, with open-source apps</a></li>
+<li><a href="https://github.com/tldr-pages/tldr">TLDR-Pages - summary from Linux man pages</a></li>
+<li><a href="https://www.overleaf.com/learn">Overleaf - learn LaTeX</a></li>
+<li><a href="https://mathpix.com/">Mathpix - convert in-real-life math to TeX</a></li>
+<li><a href="http://www.yopmail.com">&starf; Yopmail - throwaway email addresses</a></li>
+<li><a href="https://framatalk.org">FramaTalk - screen sharing without any account</a></li>
+<li><a href="https://devdocs.io/">DevDocs - documentation for a lot of programming tools &#38; languages</a></li>
+<li><a href="https://trianglify.io/">Trianfly.io - generate backgrounds with&#8230; triangles</a></li>
+<li><a href="http://cssicon.space/">CSS Icon - use CSS for your website&#39;s icons</a></li>
+<li><a href="https://www.songsterr.com">&starf; Songsterr - music tablatures</a></li>
+<li><a href="https://www.fontsquirrel.com/tools/webfont-generator">FontSquirrel - convert fonts to web format</a></li>
+<li><a href="https://github.com/the-akira/Computer-Science-Resources">Computer Science Resources</a></li>
+<li><a href="http://www.viemu.com/a_vi_vim_graphical_cheat_sheet_tutorial.html">Vi&#47;Vim cheatsheet</a></li>
+<li><a href="https://rendaw.gitlab.io/blog/2125f09a85f2.html#alsa-exposed">&#8220;rendaw - ALSA, exposed!&#8220; - ALSA Linux sound system documentation</a></li>
+<li><a href="https://plantnet.org">Plantet - idenfity plants</a></li>
+<li><a href="https://github.com/mayfrost/guides/blob/master/ALTERNATIVES.md">Alternatives to bloatware - another list of software, like this one!</a></li>
+</ul>
+
+<h2 id="Android%20Apps">Android Apps</h2>
+
+<ul>
+<li><a href="https://lineageos.org/">LineageOS - ungoogled Android</a></li>
+<li><a href="https://e.foundation/">&#47;e&#47; - ungoogled Android (a fork of LineageOS), the one I use</a></li>
+<li><a href="https://f-droid.org/">&starf; F-Droid - an alternative to Google Play Store</a></li>
+<li><a href="https://f-droid.org/en/packages/org.schabi.newpipe/">&starf; NewPipe - an alternative to YouTube with download and background listening options, based off youtube-dl</a></li>
+<li><a href="https://f-droid.org/en/packages/org.billthefarmer.editor">&starf; Editor - text editor</a></li>
+<li><a href="https://f-droid.org/en/packages/com.simplemobiletools.gallery.pro">&starf; Simple Gallery Pro - photo gallery</a></li>
+<li><a href="https://f-droid.org/en/packages/org.kde.kdeconnect_tp">&starf; KDE Connect - connect a phone to Linux</a></li>
+<li><a href="https://world.openfoodfacts.org/files/off.apk">&starf; Open Food Facts - barcode food scan</a> - <a href="https://play.google.com/store/apps/details?id=org.openfoodfacts.scanner">Play Store</a></li>
+</ul>
+
+<h2 id="Videos,%20blogs">Videos, blogs</h2>
+
+<ul>
+<li><a href="https://youtube.com/c/lukesmithxyz">Luke Smith (YouTube) - Linux tutorials, and some philosophy</a></li>
+<li><a href="https://lukesmith.xyz">Luke Smith (website)</a></li>
+<li><a href="https://www.youtube.com/c/WolfgangsChannel/">Wolfgang&#39;s Channel - tech tinkering</a></li>
+</ul>
 ]]>
 </description>
 </item>

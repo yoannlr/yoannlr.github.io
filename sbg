@@ -30,7 +30,7 @@ main() {
 	echo '' > "$src/_list"
 
 	# render articles as html files
-	find . -type f -name '*.md' ! -name '*_index.md' ! -name '_*' -printf '%T@\t%p\n' | sort | cut -d$'\t' -f2 | colrm 1 2 | render_articles isart
+	find . -type f -name '*.md' ! -name '*_index.md' ! -name '_*' -printf '%T@\t%p\n' | sort -r | cut -d$'\t' -f2 | colrm 1 2 | render_articles isart
 	echo -e '</channel>\n</rss>' >> $RSSFILE
 
 	echo "Articles processed"
