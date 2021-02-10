@@ -38,6 +38,7 @@ It's permanently updated.
 * [jumpcutter - automate video editing (not tested)](https://github.com/carykh/jumpcutter)
 * [obs-move-transition - better transitions in OBS](https://github.com/exeldro/obs-move-transition)
 * [LibreSprite - FOSS alternative to Aseprite (a pixel art program)](https://github.com/LibreSprite/LibreSprite)
+* [FreeTube - alternative YouTube front-end (it's an app)](https://github.com/FreeTubeApp/FreeTube)
 
 ## Windows
 
