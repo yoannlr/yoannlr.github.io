@@ -7,6 +7,40 @@
 <link>https://yoannlr.github.io/blog/rss.xml</link>
 <atom:link href="https://yoannlr.github.io/blog/rss.xml" rel="self" type="application/rss+xml" />
 <item>
+<title>Two ways to retreive your Windows product key</title>
+<guid>https://yoannlr.github.io/blog/tut/get_windows_key.html</guid>
+<pubDate>Tue, 16 Feb 2021 17:20:58 +0100</pubDate>
+<description>
+<![CDATA[
+<h1 id="Two%20ways%20to%20retreive%20your%20Windows%20product%20key">Two ways to retreive your Windows product key</h1>
+<p class="date">16 Feb 2021</p>
+
+
+<p>I have almost no reason to use Windows, but my laptop came with Windows 10 pre-installed on it.
+I thought retreiving my Windows product key might still be useful in the future, so here are two ways you can do it.</p>
+
+<h2 id="From%20Windows">From Windows</h2>
+
+<p>Windows won&#39;t let you find your product key from the settings or from the control panel &#8212; well, at least I couldn&#39;t find it.
+Fortunately, there is a command you can type in an administrator command prompt (cmd or Powershell, ran as administrator).</p>
+
+<pre><code>wmic path softwarelicensingservice get OA3xOriginalProductKey
+</code></pre>
+
+<h2 id="From%20Linux">From Linux</h2>
+
+<p>You can get your Windows product key from a simple pseudo-file: <code>&#47;sys&#47;firmware&#47;acpi&#47;tables&#47;MSDM</code>.
+Just use <code>more</code>, or <code>cat</code>, or whatever you want to read it&#39;s content.</p>
+
+<pre><code>sudo cat &#47;sys&#47;firmware&#47;acpi&#47;tables&#47;MSDM
+</code></pre>
+
+<p>The file contains a bit more than the product key, but the product key is present.
+It is formatted as such: <code>XXXXX-XXXXX-XXXXX-XXXXX-XXXXX</code>, at the end of the file.</p>
+]]>
+</description>
+</item>
+<item>
 <title>Give these software a shot!</title>
 <guid>https://yoannlr.github.io/blog/links.html</guid>
 <pubDate>Wed, 10 Feb 2021 21:36:49 +0100</pubDate>
