@@ -14,6 +14,8 @@ Long story short: it's a nightmare.
 
 * No jack output
    * I have to use a stupid USB-C to jack adapter or wireless headphones &mdash; no thanks for that last option
+   * I can't listen to music and charge the phone at the same time
+   * It's advertised as a way to make the phone thinner. My OnePlus X is as thin if not thinner with the jack output and none of these problems.
 * No SD card slot, which means I have to use the [MTP](https://wikipedia.org/wiki/Media_Transfer_Protocol). It's **full of bugs and almost never works** (from my experience).
 * Recent Android version (9, I think). Makes me feel like I'm being spied on in every way possible with all those Google things.
 * About one day of battery. I could do &mdash; and still can &mdash; at least 5 days with my OnePlus.
