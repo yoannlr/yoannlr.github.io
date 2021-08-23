@@ -9,7 +9,7 @@
 <item>
 <title>Ranting about modern phones</title>
 <guid>https://yoannlr.github.io/blog/art/mobilephones.html</guid>
-<pubDate>Mon, 23 Aug 2021 19:20:55 +0200</pubDate>
+<pubDate>Mon, 23 Aug 2021 19:49:36 +0200</pubDate>
 <description>
 <![CDATA[
 <h1 id="Ranting%20about%20modern%20phones">Ranting about modern phones</h1>
@@ -32,14 +32,16 @@ Long story short: it&#39;s a nightmare.</p>
 <li>No jack output
 
 <ul>
-<li>I have to use a stupid USB-C to jack adapter or wireless headphones &#8212; no thanks for that last option</li>
-<li>I can&#39;t listen to music and charge the phone at the same time</li>
-<li>It&#39;s advertised as a way to make the phone thinner. My OnePlus X is as thin if not thinner with the jack output and none of these problems.</li>
+<li>I have to use a stupid USB-C to jack adapter or wireless headphones &#8212; no thanks for that last option.</li>
+<li>I can&#39;t listen to music and charge the phone at the same time.</li>
+<li>It&#39;s advertised as a way to make the phone thinner.
+My OnePlus X is as thin if not thinner with the jack output and none of these problems.
+Plus I don&#39;t care about how thick is my phone.</li>
 </ul></li>
 <li>No SD card slot, which means I have to use the <a href="https://wikipedia.org/wiki/Media_Transfer_Protocol">MTP</a>. It&#39;s <strong>full of bugs and almost never works</strong> (from my experience).</li>
 <li>Recent Android version (9, I think). Makes me feel like I&#39;m being spied on in every way possible with all those Google things.</li>
 <li>About one day of battery. I could do &#8212; and still can &#8212; at least 5 days with my OnePlus.</li>
-<li>It&#39;s getting slower and slower with no reasons&#8230; when it works&#8230;</li>
+<li>It&#39;s getting slower and slower&#8230; when it works&#8230;<sup id="fnref1"><a href="#fn1" rel="footnote">1</a></sup></li>
 </ul>
 
 <p>We used to have simple things that worked.
@@ -76,6 +78,18 @@ It would solve at least a few of the previously mentioned problems.
 I&#39;m thinking about flashing my Pixel with <a href="https://calyxos.org/">Calyx OS</a> or <a href="https://grapheneos.org">Graphene OS</a>.</p>
 
 <p>One could also take a first step into &#8220;better&#8221; phone usage by trying to switch away from all G-Apps (feaseable, I&#39;ve done it).</p>
+
+<div class="footnotes">
+<hr/>
+<ol>
+
+<li id="fn1">
+<p>The reason for that seems to be a constant need of Internet for the phone to perform basic operations.
+  I use <a href="https://netguard.me">NetGuard</a> to block some apps (such as Calculator, which definitely needs it&#8230;) from accessing Internet, and to use a <a href="https://wikipedia.org/wiki/Hosts_(file)">hosts file</a> which allows me to block certain domains.&#160;<a href="#fnref1" rev="footnote">&#8617;</a></p>
+</li>
+
+</ol>
+</div>
 ]]>
 </description>
 </item>

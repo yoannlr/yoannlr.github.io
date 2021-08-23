@@ -1,5 +1,8 @@
 html {}
 :root {
+	--text: #222;
+	--background: white;
+	--header: lightgray;
 	--date: gray;
 	--codefont: monospace;
 	--code: #ddd;
@@ -11,13 +14,13 @@ body {
 	max-width: 42em;
 	margin: 2em auto;
 	padding: 1em;
-	color: #222;
-	background-color: white;
+	color: var(--text);
+	background-color: var(--background);
 	line-height: 1.6;
 	font-size: max(1em, 18px);
 }
 header {
-	color: lightgray;
+	color: var(--header);
 	margin-bottom: 3em;
 }
 header a {
@@ -30,7 +33,7 @@ header a:first-child {
 footer {
 	font-size: 0.9em;
 	margin-top: 5em;
-	color: #222;
+	color: inherit;
 }
 footer a {
 	text-decoration: underline;
@@ -55,13 +58,13 @@ pre, code {
 pre > code {
 	background-color: transparent;
 }
+h2, h3, h4, h5, h6 {
+	margin-top: 2.5em;
+}
 hr {
 	border: 0;
 	height: 1px;
-	background: var(--fg);
-}
-h2, h3, h4, h5, h6 {
-	margin-top: 2.5em;
+	background: var(--date);
 }
 table, table td, table th {
 	border: 1px solid black;
@@ -69,6 +72,11 @@ table, table td, table th {
 }
 table td, table th {
 	padding: 0.5em;
+}
+div.footnotes {
+	color: inherit;
+	font-size: initial;
+	margin-top: 2.5em;
 }
 @media (prefers-color-scheme: dark) {
 	html {

@@ -13,13 +13,15 @@ For the past 2 years, I've been using a Pixel 3.
 Long story short: it's a nightmare.
 
 * No jack output
-   * I have to use a stupid USB-C to jack adapter or wireless headphones &mdash; no thanks for that last option
-   * I can't listen to music and charge the phone at the same time
-   * It's advertised as a way to make the phone thinner. My OnePlus X is as thin if not thinner with the jack output and none of these problems.
+   * I have to use a stupid USB-C to jack adapter or wireless headphones &mdash; no thanks for that last option.
+   * I can't listen to music and charge the phone at the same time.
+   * It's advertised as a way to make the phone thinner.
+     My OnePlus X is as thin if not thinner with the jack output and none of these problems.
+     Plus I don't care about how thick is my phone.
 * No SD card slot, which means I have to use the [MTP](https://wikipedia.org/wiki/Media_Transfer_Protocol). It's **full of bugs and almost never works** (from my experience).
 * Recent Android version (9, I think). Makes me feel like I'm being spied on in every way possible with all those Google things.
 * About one day of battery. I could do &mdash; and still can &mdash; at least 5 days with my OnePlus.
-* It's getting slower and slower with no reasons... when it works...
+* It's getting slower and slower... when it works...[^1]
 
 We used to have simple things that worked.
 Now we have complex pieces of bloatware selling themselves as "intelligent devices" but that won't allow you to do what you want with them.
@@ -51,3 +53,6 @@ It would solve at least a few of the previously mentioned problems.
 I'm thinking about flashing my Pixel with [Calyx OS](https://calyxos.org/) or [Graphene OS](https://grapheneos.org).
 
 One could also take a first step into "better" phone usage by trying to switch away from all G-Apps (feaseable, I've done it).
+
+[^1]: The reason for that seems to be a constant need of Internet for the phone to perform basic operations.
+      I use [NetGuard](https://netguard.me) to block some apps (such as Calculator, which definitely needs it...) from accessing Internet, and to use a [hosts file](https://wikipedia.org/wiki/Hosts_(file)) which allows me to block certain domains.
