@@ -7,6 +7,66 @@
 <link>https://yoannlr.github.io/blog/rss.xml</link>
 <atom:link href="https://yoannlr.github.io/blog/rss.xml" rel="self" type="application/rss+xml" />
 <item>
+<title>Audio on Linux explained: ALSA, Pulse, Jack, Pipewire&#8230;</title>
+<guid>https://yoannlr.github.io/blog/tut/audio_on_linux.html</guid>
+<pubDate>Tue, 28 Dec 2021 14:22:19 +0100</pubDate>
+<description>
+<![CDATA[
+<h1 id="Audio%20on%20Linux%20explained:%20ALSA,%20Pulse,%20Jack,%20Pipewire&amp;#8230;">Audio on Linux explained: ALSA, Pulse, Jack, Pipewire&#8230;</h1>
+<p class="date">28 Dec 2021</p>
+
+
+<p><em>This article is a small, simplified explanation of audio on Linux. Let&#39;s understand audio on Linux!</em></p>
+
+<ul>
+<li><strong>The Soundcard:</strong> in your computer, the soundcard is responsible of converting digital information, understood by the operating system, to analogic signal, used by devices (a jack headphone or microphone), and vice-versa.</li>
+<li>The operating system, by itself, doesn&#39;t know how to read&#47;write bytes to the soundcard. It needs a <strong>driver</strong>.
+
+<ul>
+<li>In the early days of audio on Linux, the driver was <strong>OSS</strong> (Open Sound System), but it had some limitations and became proprietary.</li>
+<li>Now, the commonly used driver is <strong>ALSA</strong> (Advanced Linux Sound Architecture).</li>
+</ul></li>
+<li>With these drivers, it is possible for an application to use the soundcard: VLC can output directly to ALSA.</li>
+<li>However, these drivers have an important problem: they don&#39;t handle multiplexing. This means only one application can use the soundcard (microphone or speakers) at a time.</li>
+<li>This problem is solved by using a <strong>sound server</strong>: it merges all audio streams into one, which it then sends to ALSA.</li>
+<li>The sound server is also responsible of <strong>resampling</strong> the audio. If two streams use a different frenquency, let&#39;s say 44.1kHz and 48kHz, the server will &#8220;convert&#8221; (resample) these streams to the frequency of it&#39;s configuration, 44.1kHz for example.</li>
+<li>The commonly used sound server nowadays is <strong>PulseAudio</strong>, which provides an abstraction layer to the applications. From the application point of view, they&#39;re just reading&#47;writing to PulseAudio.</li>
+<li>PulseAudio even allows using multiple sound cards at once: the integraded soundcard in your computer, a USB microphone, the HDMI audio output of your graphics card, &#8230; This can be easily configured in <code>pavucontrol</code>. See picture below.</li>
+<li>PulseAudio has two main limitations.
+
+<ul>
+<li>It hardly handles managing audio as a graph (eg. having an applications streaming to two sound cards).</li>
+<li>It is not real-time, there&#39;s a small latency of 40-80ms.</li>
+<li>These two drawbacks are irrelevant to the majority of users, but&#8230;</li>
+</ul></li>
+<li><strong>JACK</strong>, an alternative sound server, solves these problems. It&#39;s designed for the audio profesionnals: very low latency, flexible audio connections (with graphs if you install <code>qjackctl</code>), even MIDI support for instruments.
+
+<ul>
+<li>There are two &#8220;versions&#8221; of JACK: JACK and JACK2. JACK2 is written in C++, whereas JACK is written in C.</li>
+<li>Most applications are written for PulseAudio. If you run JACK for a specific app (Ardour, for example), you will notice the other apps trying to emmit sound are like frozen. Indeed, the soundcard is used by JACK, which means PulseAudio cannot read&#47;write to it. This problem can be solved by adding <a href="https://gist.github.com/yoannlr/e55d8755e8b87ba450719f6bed30a91c">these commands</a> to the adequate events in <code>qjackctl</code>. See picture below.</li>
+</ul></li>
+<li>That&#39;s quite a lot of programs for audio on Linux&#8230; Now, let&#39;s introduce <strong>Pipewire</strong>. Pipewire combines the simplicity of PulseAudio and the advantages of JACK.
+
+<ul>
+<li>Pipewire can act as a drop-in replacement for PulseAudio by installing the <code>pipewire-pulse</code> addon. This should be transparent to apps, as they &#8220;think&#8221; they are interacting with PulseAudio.</li>
+<li>The same applies to JACK by installing <code>pipewire-jack</code>. However, you might need to run JACK apps with the <code>pw_jack</code> command: eg. <code>pw_jack ardour6</code>.</li>
+</ul></li>
+<li>We&#39;ve talked about audio&#8230; video on Linux is still at the &#8220;driver step&#8221;: a webcam on Linux can only be used by one app at a time. There is no &#8220;video server&#8221; which handles multiplexing video&#8230; Well&#8230; there wasn&#39;t. Pipewire also introduces video multiplexing and native screen-sharing under the wayland display server.</li>
+</ul>
+
+<p>And&#8230; That&#39;s it! Hope it helped you get a clearer understanding of audio on Linux.</p>
+
+<h2 id="pavucontrol">pavucontrol</h2>
+
+<p><img src="/res/pavucontrol.png" alt="pavucontrol" /></p>
+
+<h2 id="qjackctl%20compatiblity">qjackctl compatiblity</h2>
+
+<p><img src="/res/qjackctl_commands.png" alt="qjackctl configutation" /></p>
+]]>
+</description>
+</item>
+<item>
 <title>Ranting about modern phones</title>
 <guid>https://yoannlr.github.io/blog/art/mobilephones.html</guid>
 <pubDate>Mon, 23 Aug 2021 19:49:36 +0200</pubDate>
