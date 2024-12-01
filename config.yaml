@@ -1,0 +1,19 @@
+baseURL: https://yoannlr.github.io/
+
+# pour le rss
+languageCode: fr-fr
+# pour la localisation de la date
+defaultContentLanguage: fr
+
+title: yoannlr, notes d'un admin sys
+theme: yoannlr
+
+disableKinds:
+  # /categories, /tags
+  - taxonomy
+  # /categories/article, /tags/linux...
+  - term
+
+# taille du paginator
+# la conf documentee ne fonctionne pas https://gohugo.io/templates/pagination/#configuration
+paginate: 8

@@ -1,0 +1,7 @@
+{{ define "main" -}}
+<article>
+	{{ .Content }}
+	<p class="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+</article>
+{{- end}}

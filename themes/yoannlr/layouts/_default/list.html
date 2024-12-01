@@ -1,0 +1,23 @@
+{{ define "main" -}}
+{{ range .Paginator.Pages }}
+	<article>
+		{{ .Content | safeHTML | truncate 1000 }}
+		<p class="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
+		<p class="read-full"><a href="{{ .RelPermalink }}">Tout lire</a></p>
+	</article>
+{{ end }}
+<!-- https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/pagination.html -->
+{{ if gt .Paginator.TotalPages 1 }}
+	<p class="index-pages">
+		{{ if .Paginator.HasPrev }}<a href="{{ .Paginator.Prev.URL }}">Pr&eacute;c&eacute;dent</a>{{ end }}
+		{{ range $n := seq 1 .Paginator.TotalPages }}
+			{{ if eq $.Paginator.PageNumber $n }}
+				<span>{{ $n }}</span>
+			{{ else }}
+				<a href="{{ (index $.Paginator.Pagers (sub $n 1)).URL }}">{{ $n }}</a>
+			{{ end }}
+		{{ end }}
+		{{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL }}">Suivant</a>{{ end }}
+	</p>
+{{ end }}
+{{- end }}

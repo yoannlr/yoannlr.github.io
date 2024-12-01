@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="{{ .Site.Language }}">
+<head>
+	<title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+	<meta charset="utf-8">
+	{{ with .Page }}
+		<meta name="keywords" content="{{ delimit .Keywords ", " }}">
+	{{ else }}
+		<meta name="keywords" content="linux, sysadmin, blog">
+	{{ end }}
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	<!-- tres important pour le responsive -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main>
+	{{- block "main" . }}{{- end }}
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

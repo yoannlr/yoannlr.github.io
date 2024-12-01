@@ -1,0 +1,158 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');*/
+@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
+
+html, body {
+	margin: 0;
+	padding: 0;
+	font-family: "Red Hat Text", sans-serif;
+	font-size: max(1em, 18px);
+}
+body {
+	margin: 0 auto;
+	max-width: 60em;
+}
+:root {
+	--bordure: lightgray;
+	--code: #eee;
+	--lien: #2b55ca;
+	--lien_visite: #3E228C;
+	--lien_bg: #f8f8f8;
+	--lien_bg_hover: lightgray;
+}
+header h1 {
+	text-align: center;
+	font-family: "Red Hat Mono", monospace;
+	margin-bottom: 0;
+}
+header h1 a, header h1 a:visited {
+	color: inherit;
+}
+header > p {
+	text-align: center;
+	margin-left: 6em;
+	font-style: italic;
+	margin-top: 0;
+}
+header nav p {
+	text-align: right
+}
+header nav p a {
+	background-color: var(--lien_bg);
+	padding: 0.1em 0.4em;
+}
+header nav p a:hover {
+	background-color: var(--lien_bg_hover);
+}
+header {
+	padding: 0 0.5em;
+}
+footer {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+footer p {
+	text-align: center;
+}
+footer p > *, header nav p > * {
+	padding-left: 0.5em;
+	padding-right: 0.5em;
+}
+article {
+	padding: 0.5em;
+	border-top: 1px solid var(--bordure);
+}
+article p {
+	line-height: 1.6;
+}
+p.art-date {
+	font-size: 80%;
+}
+a {
+	color: var(--lien);
+	text-decoration: none;
+}
+a:visited {
+	color: var(--lien_visite);
+}
+p.back-home, p.read-full {
+	text-align: center;
+}
+p.index-pages {
+	text-align: right;
+	font-size: 80%;
+}
+p.index-pages > * {
+	padding: 0.5em;
+}
+p.rss {
+	font-size: 80%;
+}
+p.index-pages > span {
+	text-decoration: underline dotted;
+}
+pre {
+	background-color: var(--code);
+	padding: 0.3em 0.5em;
+	overflow: scroll;
+} 
+pre, code {
+	font-family: "Red Hat Mono", monospace;
+	background-color: var(--code);
+}
+@media screen and (max-width: 60em) {
+	header, main, footer {
+		padding: 1em;
+	}
+}
+@media screen and (max-width: 450px) {
+	body {
+		margin: 0 0;
+		max-width: initial;
+	}
+	header, main, footer {
+		padding: 1em;
+	}
+	header nav p {
+		margin-bottom: 0;
+		margin-top: 2em;
+		text-align: center;
+	}
+	article {
+		padding: initial;
+	}
+}
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #222;
+		color: white;
+	}
+	:root {
+		--bordure: #333;
+		--code: #333;
+		--lien: #769DFF;
+		--lien_visite: #876ECB;
+		--lien_bg: #333;
+		--lien_bg_hover: #444;
+	}
+}
+@media print {
+	body {
+		font-size: initial;
+	}
+	header nav, footer, p.back-home {
+		display: none;
+	}
+	article {
+		padding: initial;
+	}
+	pre {
+		padding: initial;
+		overflow: visible;
+		word-wrap: break-word;
+		white-space: pre-wrap;
+	}
+	code, pre {
+		background-color: initial;
+		font-size: 90%;
+	}
+}

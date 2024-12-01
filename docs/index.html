@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta name="generator" content="Hugo 0.111.3">
+	<title>yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main>
+	<article>
+		<h1 id="installit-des-scripts-pour-faciliter-linstallation-de-programmes-debian">installit, des scripts pour faciliter l&rsquo;installation de programmes Debian</h1>
+<p><a href="https://github.com/yoannlr/installit">https://github.com/yoannlr/installit</a></p>
+<p>Se chargent d&rsquo;ajouter automatiquement les dépots à APT, et de certaines configurations si nécessaire.</p>
+<p>Avec curl : <code>curl https://raw.githubusercontent.com/yoannlr/installit/master/&lt;script&gt;.sh | sh</code></p>
+<p>Avec wget : <code>wget -q https://raw.githubusercontent.com/yoannlr/installit/master/&lt;script&gt;.sh -O - | sh</code></p>
+
+		<p class="art-date">Publi&eacute; le 29 novembre 2024</p>
+		<p class="read-full"><a href="/installit/">Tout lire</a></p>
+	</article>
+
+	<article>
+		<h1 id="trouvez-léquipement-réseau-et-le-port-auxquels-vous-êtes-connecté">Trouvez l&rsquo;équipement réseau et le port auxquels vous êtes connecté</h1>
+<p>Le programme <a href="https://github.com/chall32/LDWin">Link Discovery for Windows</a> remonte les infos du lien auquel on est connecté (nom du switch, port, numéro de vlan&hellip;).
+Il utilise tcpdump pour capturer un paquet LLDP ou CDP émis par le switch toutes les 60 secondes max.</p>
+<p>Sous Linux, la commande suivante fait la même chose (à exécuter en root) :</p>
+<pre tabindex="0"><code>tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
+</code></pre><p>(<code>eno1</code> à remplacer par l&rsquo;interface réseau concernée)</p>
+<p>Exemple de sortie :</p>
+<pre tabindex="0"><code>root@localhost:~# tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
+tcpdump: listening on eno1, link-type EN10MB (Ethernet), snapshot length 1500 bytes
+09:26:57.257496 CDPv2, ttl: 180s, checksum: 0x9274 (unverified), length 447
+	Device-ID (0x01), value length: 32 bytes: &#39;c9300x.xxxxxx.net&#39;
+	Version String (0x05), value length: 250 bytes: 
+	  Cisco IOS Software [Amsterdam], Catalyst L3 Switch Software …</code></pre>
+		<p class="art-date">Publi&eacute; le 28 novembre 2024</p>
+		<p class="read-full"><a href="/link-discovery-tcpdump/">Tout lire</a></p>
+	</article>
+
+	<article>
+		<h1 id="récupérez-la-clé-windows-dun-ordinateur">Récupérez la clé Windows d&rsquo;un ordinateur</h1>
+<p>Sous Windows, en cmd admin :</p>
+<pre tabindex="0"><code>wmic path softwarelicensingservice get OA3xOriginalProductKey
+</code></pre><p>Sous Linux en root :</p>
+<pre tabindex="0"><code>sudo grep -Eo &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
+</code></pre>
+		<p class="art-date">Publi&eacute; le 20 août 2021</p>
+		<p class="read-full"><a href="/recuperer-cle-windows/">Tout lire</a></p>
+	</article>
+
+
+
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

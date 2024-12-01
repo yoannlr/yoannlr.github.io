@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Trouvez l&#39;équipement réseau et le port auxquels vous êtes connecté - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="reseau, tcpdump, cdp, lldp, switch, port, vlan">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main><article>
+	<h1 id="trouvez-léquipement-réseau-et-le-port-auxquels-vous-êtes-connecté">Trouvez l&rsquo;équipement réseau et le port auxquels vous êtes connecté</h1>
+<p>Le programme <a href="https://github.com/chall32/LDWin">Link Discovery for Windows</a> remonte les infos du lien auquel on est connecté (nom du switch, port, numéro de vlan&hellip;).
+Il utilise tcpdump pour capturer un paquet LLDP ou CDP émis par le switch toutes les 60 secondes max.</p>
+<p>Sous Linux, la commande suivante fait la même chose (à exécuter en root) :</p>
+<pre tabindex="0"><code>tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
+</code></pre><p>(<code>eno1</code> à remplacer par l&rsquo;interface réseau concernée)</p>
+<p>Exemple de sortie :</p>
+<pre tabindex="0"><code>root@localhost:~# tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
+tcpdump: listening on eno1, link-type EN10MB (Ethernet), snapshot length 1500 bytes
+09:26:57.257496 CDPv2, ttl: 180s, checksum: 0x9274 (unverified), length 447
+	Device-ID (0x01), value length: 32 bytes: &#39;c9300x.xxxxxx.net&#39;
+	Version String (0x05), value length: 250 bytes: 
+	  Cisco IOS Software [Amsterdam], Catalyst L3 Switch Software (CAT9K_IOSXE), Version xxx, RELEASE SOFTWARE xxx
+	  Technical Support: http://www.cisco.com/techsupport
+	  Copyright (c) 1986-2022 by Cisco Systems, Inc.
+	  Compiled xxx by xxx
+	Platform (0x06), value length: 17 bytes: &#39;cisco C9300-xxx&#39;
+	Address (0x02), value length: 13 bytes: IPv4 (1) c9300x.xxxxxx.net
+	Port-ID (0x03), value length: 24 bytes: &#39;TwoGigabitEthernet1/0/25&#39;
+	Capability (0x04), value length: 4 bytes: (0x00000028): L2 Switch, IGMP snooping
+	VTP Management Domain (0x09), value length: 6 bytes: &#39;xxxxxx&#39;
+	Native VLAN ID (0x0a), value length: 2 bytes: 70
+	Duplex (0x0b), value length: 1 byte: full
+	Management Addresses (0x16), value length: 13 bytes: IPv4 (1) c9300x.xxxxxx.net
+	unknown field type (0x1009), value length: 37 bytes: 
+	  0x0000:  xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+	  0x0010:  xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+	  0x0020:  xxxx xxxx xx
+1 packet captured
+1 packet received by filter
+0 packets dropped by kernel
+</code></pre>
+	<p class="art-date">Publi&eacute; le 28 novembre 2024</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>
