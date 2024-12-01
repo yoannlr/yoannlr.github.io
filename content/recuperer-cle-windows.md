@@ -13,5 +13,5 @@ wmic path softwarelicensingservice get OA3xOriginalProductKey
 Sous Linux en root :
 
 ```
-sudo grep -Eo '([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}' /sys/firmware/acpi/tables/MSDM
+sudo grep -Eoa '([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}' /sys/firmware/acpi/tables/MSDM
 ```

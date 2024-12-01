@@ -24,7 +24,7 @@
 <p>Sous Windows, en cmd admin :</p>
 <pre tabindex="0"><code>wmic path softwarelicensingservice get OA3xOriginalProductKey
 </code></pre><p>Sous Linux en root :</p>
-<pre tabindex="0"><code>sudo grep -Eo &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
+<pre tabindex="0"><code>sudo grep -Eoa &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
 </code></pre>
 	<p class="art-date">Publi&eacute; le 20 août 2021</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>

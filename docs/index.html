@@ -25,9 +25,11 @@
 		<h1 id="installit-des-scripts-pour-faciliter-linstallation-de-programmes-debian">installit, des scripts pour faciliter l&rsquo;installation de programmes Debian</h1>
 <p><a href="https://github.com/yoannlr/installit">https://github.com/yoannlr/installit</a></p>
 <p>Se chargent d&rsquo;ajouter automatiquement les dépots à APT, et de certaines configurations si nécessaire.</p>
-<p>Avec curl : <code>curl https://raw.githubusercontent.com/yoannlr/installit/master/&lt;script&gt;.sh | sh</code></p>
-<p>Avec wget : <code>wget -q https://raw.githubusercontent.com/yoannlr/installit/master/&lt;script&gt;.sh -O - | sh</code></p>
-
+<p>Avec curl :</p>
+<pre tabindex="0"><code>curl https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh | sh
+</code></pre><p>Avec wget :</p>
+<pre tabindex="0"><code>wget -q https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh -O - | sh`
+</code></pre>
 		<p class="art-date">Publi&eacute; le 29 novembre 2024</p>
 		<p class="read-full"><a href="/installit/">Tout lire</a></p>
 	</article>
@@ -55,7 +57,7 @@ tcpdump: listening on eno1, link-type EN10MB (Ethernet), snapshot length 1500 by
 <p>Sous Windows, en cmd admin :</p>
 <pre tabindex="0"><code>wmic path softwarelicensingservice get OA3xOriginalProductKey
 </code></pre><p>Sous Linux en root :</p>
-<pre tabindex="0"><code>sudo grep -Eo &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
+<pre tabindex="0"><code>sudo grep -Eoa &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
 </code></pre>
 		<p class="art-date">Publi&eacute; le 20 août 2021</p>
 		<p class="read-full"><a href="/recuperer-cle-windows/">Tout lire</a></p>

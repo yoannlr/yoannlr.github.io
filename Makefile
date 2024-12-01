@@ -1,4 +1,4 @@
-all:
+all: clean
 	hugo --destination docs
 clean:
-	rm -r public/*
+	rm -r docs/*
