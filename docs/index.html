@@ -22,13 +22,52 @@
 </header>
 <main>
 	<article>
+		<h1 id="une-disposition-de-clavier-pour-les-admin-sys">Une disposition de clavier pour les admin sys</h1>
+<p>Certains caractères sont pénibles à taper, par exemple : @ | - _ `.
+Sous Linux, il est possible de changer la combinaison de touches qui les produit pour éviter les mouvements de mains compliqués.</p>
+<p>Pour ma part :</p>
+<ul>
+<li>@ = AltGr + A</li>
+<li>| = AltGr + P</li>
+<li>_ = Maj + Espace</li>
+<li>- = AltGr + S</li>
+<li>` = AltGr + œ (la touche en dessous de Echap)</li>
+</ul>
+<p>Deux possibilités pour faire ça :</p>
+<p>Sous Xorg, au runtime avec xmodmap (exemple de script) :</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#00f">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#00f"></span><span style="color:#008000"># reset to default layout</span>
+</span></span><span style="display:flex;"><span>setxkbmap fr
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altgr+a = @</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 24 = a A a A at adiaeresis acircumflex&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altr+p = |</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 33 = p P p P bar grave paragraph&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altgr+oe = `</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 49 = oe OE oe OE grave&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altgr+s = -</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 39 = s S s S minus Oslash oslash&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># shift+space = _</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode  65 = space underscore space NoSymbol space&#39;</span>
+</span></span></code></pre></div><p>Sous Wayland (et Xorg), en modifiant le fichier de layout : <code>/usr/share/X11/xkb/symbols/fr</code> (par exemple) …</p>
+		<p class="art-date">Publi&eacute; le 2 décembre 2024</p>
+		<p class="read-full"><a href="/layout-clavier-pour-sysadmin/">Tout lire</a></p>
+	</article>
+
+	<article>
 		<h1 id="installit-des-scripts-pour-faciliter-linstallation-de-programmes-debian">installit, des scripts pour faciliter l&rsquo;installation de programmes Debian</h1>
-<p><a href="https://github.com/yoannlr/installit">https://github.com/yoannlr/installit</a></p>
+
+<div class="repo repo-github">
+	<p class="repo-name"><a href="https://github.com/yoannlr/installit">yoannlr/installit : Easy installation of some Debian programs</a></p>
+	
+		<p class="repo-type">GitHub</p>
+	
+</div>
+
 <p>Se chargent d&rsquo;ajouter automatiquement les dépots à APT, et de certaines configurations si nécessaire.</p>
 <p>Avec curl :</p>
 <pre tabindex="0"><code>curl https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh | sh
 </code></pre><p>Avec wget :</p>
-<pre tabindex="0"><code>wget -q https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh -O - | sh`
+<pre tabindex="0"><code>wget -q https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh -O - | sh
 </code></pre>
 		<p class="art-date">Publi&eacute; le 29 novembre 2024</p>
 		<p class="read-full"><a href="/installit/">Tout lire</a></p>

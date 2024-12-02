@@ -1,4 +1,4 @@
 all: clean
 	hugo --destination docs
 clean:
-	rm -r docs/*
+	rm -r docs/* || true

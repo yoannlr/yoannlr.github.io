@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Une disposition de clavier pour les admin sys - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main><article>
+	<h1 id="une-disposition-de-clavier-pour-les-admin-sys">Une disposition de clavier pour les admin sys</h1>
+<p>Certains caractères sont pénibles à taper, par exemple : @ | - _ `.
+Sous Linux, il est possible de changer la combinaison de touches qui les produit pour éviter les mouvements de mains compliqués.</p>
+<p>Pour ma part :</p>
+<ul>
+<li>@ = AltGr + A</li>
+<li>| = AltGr + P</li>
+<li>_ = Maj + Espace</li>
+<li>- = AltGr + S</li>
+<li>` = AltGr + œ (la touche en dessous de Echap)</li>
+</ul>
+<p>Deux possibilités pour faire ça :</p>
+<p>Sous Xorg, au runtime avec xmodmap (exemple de script) :</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#00f">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#00f"></span><span style="color:#008000"># reset to default layout</span>
+</span></span><span style="display:flex;"><span>setxkbmap fr
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altgr+a = @</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 24 = a A a A at adiaeresis acircumflex&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altr+p = |</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 33 = p P p P bar grave paragraph&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altgr+oe = `</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 49 = oe OE oe OE grave&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># altgr+s = -</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode 39 = s S s S minus Oslash oslash&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#008000"># shift+space = _</span>
+</span></span><span style="display:flex;"><span>xmodmap -e <span style="color:#a31515">&#39;keycode  65 = space underscore space NoSymbol space&#39;</span>
+</span></span></code></pre></div><p>Sous Wayland (et Xorg), en modifiant le fichier de layout : <code>/usr/share/X11/xkb/symbols/fr</code> (par exemple)</p>
+<pre tabindex="0"><code># ordre dans les tableaux : touche, shift+touche, altgr+touche, shift+altgr+touche
+key &lt;AD01&gt; { [ a, A, at, adiaeresis ] };
+key &lt;AD10&gt; { [ p, P, bar, grave ] };
+key &lt;SPCE&gt; { [ space, underscore, space, space ] };
+key &lt;AC02&gt; { [ s, S, minus, Ooblique ] };
+key &lt;TLDE&gt; { [ oe, OE, grave, rightdoublequotemark ] };
+</code></pre>
+	<p class="art-date">Publi&eacute; le 2 décembre 2024</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

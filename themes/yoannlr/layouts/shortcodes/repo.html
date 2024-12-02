@@ -1,0 +1,12 @@
+<!--
+	url: url of the repo
+	type: github, gitlab...
+-->
+<div class="repo repo-{{ .Get "type" }}">
+	<p class="repo-name"><a href="{{ .Get "url" }}">{{ .Get "name" }}</a></p>
+	{{ if eq (.Get "type") "github" }}
+		<p class="repo-type">GitHub</p>
+	{{ else if eq (.Get "type") "gitlab" }}
+		<p class="repo-type">GitLab</p>
+	{{ end }}
+</div>

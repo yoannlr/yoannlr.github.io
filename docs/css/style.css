@@ -1,4 +1,3 @@
-/*@import url('https://fonts.googleapis.com/css2?family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');*/
 @import url('https://fonts.googleapis.com/css2?family=Red+Hat+Mono:ital,wght@0,300..700;1,300..700&family=Red+Hat+Text:ital,wght@0,300..700;1,300..700&display=swap');
 
 html, body {
@@ -95,9 +94,26 @@ pre {
 	padding: 0.3em 0.5em;
 	overflow: scroll;
 } 
-pre, code {
+pre, code, div.highlight {
 	font-family: "Red Hat Mono", monospace;
-	background-color: var(--code);
+	background-color: var(--code) !important;
+}
+.repo {
+	background-color: var(--lien_bg);
+	padding: 0.3em 2em 0.3em 0.6em;
+	display: inline-block;
+}
+.repo p {
+	margin: 0;
+}
+.repo p.repo-type {
+	font-size: 80%;
+}
+.repo-github {
+	border-left: 4px solid black;
+}
+.repo-gitlab {
+	border-left: 4px solid #fc6d26;
 }
 @media screen and (max-width: 60em) {
 	header, main, footer {
