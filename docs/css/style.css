@@ -109,6 +109,7 @@ img {
 }
 .repo p {
 	margin: 0;
+	line-height: initial;
 }
 .repo p.repo-type {
 	font-size: 80%;
@@ -133,6 +134,7 @@ img {
 }
 .youtube p {
 	margin: 0;
+	line-height: initial;
 }
 .youtube .youtube-thumb .youtube-play {
 	position: absolute;
