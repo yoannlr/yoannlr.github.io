@@ -1,0 +1,16 @@
+<!--
+	videoid: le code de la video
+	title: titre de la video
+-->
+<div class="youtube">
+	<a href="https://youtube.com/watch?v={{ .Get "videoid" }}">
+		<div class="youtube-thumb">
+			<img src="/play.png" class="youtube-play">
+			<img src="https://i.ytimg.com/vi/{{ .Get "videoid" }}/maxresdefault.jpg">
+		</div>
+	</a>
+	{{ if .Get "title" }}
+		<p><a href="https://youtube.com/watch?v={{ .Get "videoid" }}">{{ .Get "title" }}</a></p>
+	{{ end }}
+	<p>YouTube</p>
+</div>

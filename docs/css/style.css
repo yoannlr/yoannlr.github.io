@@ -98,6 +98,10 @@ pre, code, div.highlight {
 	font-family: "Red Hat Mono", monospace;
 	background-color: var(--code) !important;
 }
+img {
+	max-width: 100%;
+}
+/* shortcode repo */
 .repo {
 	background-color: var(--lien_bg);
 	padding: 0.3em 2em 0.3em 0.6em;
@@ -114,6 +118,28 @@ pre, code, div.highlight {
 }
 .repo-gitlab {
 	border-left: 4px solid #fc6d26;
+}
+/* shortcode youtube */
+.youtube {
+	background-color: var(--lien_bg);
+	padding: 0.4em;
+	border-left: 4px solid red;
+}
+.youtube .youtube-thumb {
+	position: relative;
+}
+.youtube p:last-child {
+	font-size: 80%;
+}
+.youtube p {
+	margin: 0;
+}
+.youtube .youtube-thumb .youtube-play {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	max-width: 25%;
 }
 @media screen and (max-width: 60em) {
 	header, main, footer {
