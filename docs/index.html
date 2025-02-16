@@ -22,6 +22,24 @@
 </header>
 <main>
 	<article>
+		<h1 id="comment-faire-fonctionner-le-microphone-auna-mic-900-sous-linux">Comment faire fonctionner le microphone Auna Mic 900 sous Linux</h1>
+<p><em><strong>&hellip; ou tout autre périphérique de son USB non reconnu  !</strong></em></p>
+<p>Ce microphone USB, supposément plug-and-play n&rsquo;est pas reconnu nativement sous Linux.
+J&rsquo;ai essayé sous Debian, sous Arch et sous Fedora : même résultat.
+Même sous Windows, rien n&rsquo;est détecté !</p>
+<p>Il est pourtant détecté par le noyau (<code>sudo dmesg -Tw</code> pour voir les messages du noyau en direct) :</p>
+<pre tabindex="0"><code>[Sun Feb 16 12:23:24 2025] usb 2-1.1: new full-speed USB device number 14 using ehci-pci
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: New USB device found, idVendor=0d8c, idProduct=0134, bcdDevice= 1.00
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: Product: USB PnP Audio Device
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: Manufacturer: C-Media Electronics Inc.
+[Sun Feb 16 12:23:24 2025] hid-generic 0003:0D8C:0134.000C: No inputs registered, leaving
+[Sun Feb 16 12:23:24 2025] hid-generic …</code></pre>
+		<p class="art-date">Publi&eacute; le 16 février 2025</p>
+		<p class="read-full"><a href="/auna-mic-900-linux/">Tout lire</a></p>
+	</article>
+
+	<article>
 		<h1 id="comprendre-laudio-sous-linux">Comprendre l&rsquo;audio sous Linux</h1>
 
 <div class="youtube">

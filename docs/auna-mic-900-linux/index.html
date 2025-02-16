@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Auna Mic 900 sous Linux ? - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="linux, kernel, noyau, usb, driver, micro, casque, son, snd-usb-audio, sysfs, hid, auna mic 900, udev, modprobe">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main><article>
+	<h1 id="comment-faire-fonctionner-le-microphone-auna-mic-900-sous-linux">Comment faire fonctionner le microphone Auna Mic 900 sous Linux</h1>
+<p><em><strong>&hellip; ou tout autre périphérique de son USB non reconnu  !</strong></em></p>
+<p>Ce microphone USB, supposément plug-and-play n&rsquo;est pas reconnu nativement sous Linux.
+J&rsquo;ai essayé sous Debian, sous Arch et sous Fedora : même résultat.
+Même sous Windows, rien n&rsquo;est détecté !</p>
+<p>Il est pourtant détecté par le noyau (<code>sudo dmesg -Tw</code> pour voir les messages du noyau en direct) :</p>
+<pre tabindex="0"><code>[Sun Feb 16 12:23:24 2025] usb 2-1.1: new full-speed USB device number 14 using ehci-pci
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: New USB device found, idVendor=0d8c, idProduct=0134, bcdDevice= 1.00
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: Product: USB PnP Audio Device
+[Sun Feb 16 12:23:24 2025] usb 2-1.1: Manufacturer: C-Media Electronics Inc.
+[Sun Feb 16 12:23:24 2025] hid-generic 0003:0D8C:0134.000C: No inputs registered, leaving
+[Sun Feb 16 12:23:24 2025] hid-generic 0003:0D8C:0134.000C: hidraw5: USB HID v1.11 Device [C-Media Electronics Inc. USB PnP Audio Device] on usb-0000:00:1d.0-1.1/input2
+</code></pre><p>Cependant, si on compare cette sortie à celle d&rsquo;un micro fonctionnel (exemple avec un Blue Snowball), on constate une différence :</p>
+<pre tabindex="0"><code>[Sun Feb 16 14:41:05 2025] usb 2-1.2.1: new full-speed USB device number 7 using ehci-pci
+[Sun Feb 16 14:41:06 2025] usb 2-1.2.1: New USB device found, idVendor=0d8c, idProduct=0005, bcdDevice= 1.00
+[Sun Feb 16 14:41:06 2025] usb 2-1.2.1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[Sun Feb 16 14:41:06 2025] usb 2-1.2.1: Product: Blue Snowball 
+[Sun Feb 16 14:41:06 2025] usb 2-1.2.1: Manufacturer: BLUE MICROPHONE
+[Sun Feb 16 14:41:06 2025] usb 2-1.2.1: SerialNumber: XXX
+[Sun Feb 16 14:41:06 2025] hid-generic 0003:0D8C:0005.0006: No inputs registered, leaving
+[Sun Feb 16 14:41:06 2025] hid-generic 0003:0D8C:0005.0006: hidraw5: USB HID v1.11 Device [BLUE MICROPHONE Blue Snowball ] on usb-0000:00:1d.0-1.2.1/input2
+[Sun Feb 16 14:41:06 2025] usbcore: registered new interface driver snd-usb-audio
+</code></pre><p>Voici ce qu&rsquo;il se passe :</p>
+<ul>
+<li>Lorsqu&rsquo;un de ces micros est branché, il est détecté comme appareil HID (Human Interface Device) par Linux.
+Concrètement, cela signifie que Linux le voit comme un appareil avec lequel un humain va interagir, constitué de boutons physiques (même si aucun de ces micros n&rsquo;en est équipé), donc il charge le module noyau <code>usbhid</code> pour recevoir les inputs de ces boutons.</li>
+<li>Dans le cas du Snowball, il est ensuite détecté comme un équipement de son branché en USB, donc Linux charge le module <code>snd-usb-audio</code> pour s&rsquo;en servir à cette fin.
+Ça n&rsquo;est pas le cas pour le micro Auna.</li>
+</ul>
+<h2 id="ajouter-le-micro-à-la-volée-grâce-à-sysfs">Ajouter le micro à la volée grâce à sysfs</h2>
+<p>On peut indiquer à <code>snd-usb-audio</code> qu&rsquo;il est capable de supporter le micro Auna.
+Pour cela, il faut lui indiquer qu&rsquo;il supporte un nouveau produit identifié par un vendor id et un product id.</p>
+<ol>
+<li>S&rsquo;il n&rsquo;y pas d&rsquo;autre équipement audio USB connecté à votre ordinateur, commencez par charger le module <code>snd-usb-audio</code> :</li>
+</ol>
+<pre tabindex="0"><code>sudo modprobe snd-usb-audio
+</code></pre><ol start="2">
+<li>Indiquez lui qu&rsquo;il supporte le micro Auna :</li>
+</ol>
+<pre tabindex="0"><code>sudo echo 0d8c 0134 &gt; /sys/bus/usb/drivers/snd-usb-audio/new_id
+</code></pre><h2 id="persistance-au-reboot">Persistance au reboot</h2>
+<p>Pour que le support du micro persiste au reboot, créez les fichiers suivants :</p>
+<p><code>/etc/udev/rules.d/aunamic.rules</code> :</p>
+<pre tabindex="0"><code># load snd-usb-audio when this device is plugged in
+# (also needs to register new_id for this device, see /etc/modprobe.d/aunamic.conf)
+ACTION==&#34;add&#34;, SUBSYSTEM==&#34;usb&#34;, ATTR{idVendor}==&#34;0d8c&#34;, ATTR{idProduct}==&#34;0134&#34;, RUN+=&#34;/sbin/modprobe -qba snd-usb-audio&#34;
+</code></pre><p><code>/etc/modprobe.d/aunamic.conf</code> :</p>
+<pre tabindex="0"><code># make snd-usb-audio automatically bind to auna mic 900
+install snd-usb-audio /sbin/modprobe --ignore-install snd-usb-audio $CMDLINE_OPTS; /bin/echo &#34;0d8c 0134&#34; &gt; /sys/bus/usb/drivers/snd-usb-audio/new_id
+</code></pre><p>Le fichier de règles udev indique que, si le périphérique usb d&rsquo;id vendeur <code>0d8c</code> et d&rsquo;id produit <code>0134</code> est branché, Linux doit charger le module noyau <code>snd-usb-audio</code>.</p>
+<p>Le fichier de configuration modprobe indique qu&rsquo;au chargement du module, la commande echo précédente doit être exécutée.</p>
+<p>Grâce à ces configurations, nous avons rendu ce micro plug and play !</p>
+<h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
+<p>En exécutant la commande <code>usb-devices</code> (en root, sous Debian), on peut voir quel module noyau est associé à quel appareil (ou subsystem) USB.
+C&rsquo;est l&rsquo;équivalent de <code>lspci -k</code> pour les cartes PCI.</p>
+<pre tabindex="0"><code>T:  Bus=02 Lev=02 Prnt=02 Port=00 Cnt=01 Dev#=  8 Spd=12  MxCh= 0
+D:  Ver= 1.10 Cls=00(&gt;ifc ) Sub=00 Prot=00 MxPS=16 #Cfgs=  1
+P:  Vendor=0d8c ProdID=0134 Rev=01.00
+S:  Manufacturer=C-Media Electronics Inc.
+S:  Product=USB PnP Audio Device
+C:  #Ifs= 3 Cfg#= 1 Atr=a0 MxPwr=100mA
+I:  If#= 0 Alt= 0 #EPs= 0 Cls=01(audio) Sub=21 Prot=00 Driver=snd-usb-audio
+I:  If#= 1 Alt= 1 #EPs= 1 Cls=01(audio) Sub=02 Prot=00 Driver=snd-usb-audio
+E:  Ad=82(I) Atr=05(Isoc) MxPS= 100 Ivl=1ms
+I:  If#= 2 Alt= 0 #EPs= 1 Cls=03(HID  ) Sub=00 Prot=00 Driver=usbhid
+E:  Ad=87(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+</code></pre><p>En exécutant la commande <code>modinfo snd-usb-audio</code> (en root, sous Debian), on peut confirmer ou infirmer le support d&rsquo;un appareil par un module</p>
+<pre tabindex="0"><code>filename:       /lib/modules/6.1.0-18-amd64/kernel/sound/usb/snd-usb-audio.ko
+license:        GPL
+description:    USB Audio
+author:         Takashi Iwai &lt;tiwai@suse.de&gt;
+alias:          usb:v*p*d*dc*dsc*dp*ic01isc01ip*in*
+alias:          usb:vFFADpA001d*dc*dsc*dp*icFFisc*ip*in*
+alias:          usb:v2B53p0031d*dc*dsc*dp*ic*isc*ip*in*
+alias:          usb:v2B53p0024d*dc*dsc*dp*ic*isc*ip*in*
+alias:          usb:v2B53p0023d*dc*dsc*dp*ic*isc*ip*in*
+alias:          usb:v1395p0300d*dc*dsc*dp*ic*isc*ip*in*
+...
+</code></pre><p>Si ce micro était supporté, on aurait normalement une ligne d&rsquo;alias ou on retrouverait <code>usb:v0d8cp0134</code>.</p>
+<p>Encore un bon exemple de la facilité avec laquelle on peut interagir avec Linux et de sa flexibilité !</p>
+
+	<p class="art-date">Publi&eacute; le 16 février 2025</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>
