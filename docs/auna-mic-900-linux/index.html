@@ -60,7 +60,7 @@ Pour cela, il faut lui indiquer qu&rsquo;il supporte un nouveau produit identifi
 </code></pre><ol start="2">
 <li>Indiquez lui qu&rsquo;il supporte le micro Auna :</li>
 </ol>
-<pre tabindex="0"><code>sudo echo 0d8c 0134 &gt; /sys/bus/usb/drivers/snd-usb-audio/new_id
+<pre tabindex="0"><code>echo 0d8c 0134 | sudo tee /sys/bus/usb/drivers/snd-usb-audio/new_id
 </code></pre><h2 id="persistance-au-reboot">Persistance au reboot</h2>
 <p>Pour que le support du micro persiste au reboot, créez les fichiers suivants :</p>
 <p><code>/etc/udev/rules.d/aunamic.rules</code> :</p>

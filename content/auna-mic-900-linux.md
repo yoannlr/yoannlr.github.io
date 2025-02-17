@@ -74,7 +74,7 @@ sudo modprobe snd-usb-audio
 2. Indiquez lui qu'il supporte le micro Auna :
 
 ```
-sudo echo 0d8c 0134 > /sys/bus/usb/drivers/snd-usb-audio/new_id
+echo 0d8c 0134 | sudo tee /sys/bus/usb/drivers/snd-usb-audio/new_id
 ```
 
 ## Persistance au reboot
