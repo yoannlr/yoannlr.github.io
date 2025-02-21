@@ -21,6 +21,7 @@
 </header>
 <main><article>
 	<h1 id="comprendre-laudio-sous-linux">Comprendre l&rsquo;audio sous Linux</h1>
+<p>Cet article est aussi disponible en vidéo 👇</p>
 
 <div class="youtube">
 	<a href="https://youtube.com/watch?v=lTv2jJDcPns">
@@ -35,6 +36,47 @@
 	<p>YouTube</p>
 </div>
 
+<h2 id="problématique-du-son">Problématique du son</h2>
+<p>Gérer du son pour un ordinateur, c&rsquo;est simplement acheminer des données binaires aux bons endroits : d&rsquo;une application à la carte son, ou dans l&rsquo;autre sens.
+La carte son, c&rsquo;est le périphérique capable de convertir les données binaires en audio et vice-versa.</p>
+<p>Pour que le système soit capable de parler à la carte son dans une langue qu&rsquo;elle comprend, il lui faut un driver.
+Ce driver, sous Linux, c&rsquo;est ALSA : Advanced Linux Sound Architecture.</p>
+<h2 id="multiplexage">Multiplexage</h2>
+<p>ALSA peut être utilisé tout seul pour permettre à une application d&rsquo;émettre ou de recevoir de l&rsquo;audio.
+Par exemple, VLC est tout à fait capable de s&rsquo;adresser à ALSA.</p>
+<p>En revanche, avec ALSA la carte son ne peut être utilisée que par une application à la fois.
+Si VLC utilise la carte son et que Firefox en a besoin aussi, Firefox devra attendre que VLC la libère.</p>
+<p>En d&rsquo;autres termes, il n&rsquo;y a pas de multiplexage.
+C&rsquo;est là qu&rsquo;interviennent les serveurs de son : PulseAudio, JACK et PipeWire.</p>
+<p>Le principe est simple : le serveur de son est <strong>le seul</strong> programme qui parle à la carte son par l&rsquo;intermédiaire de ALSA.
+Les autres applications parlent au serveur, qui combine tous les flux audio en un seul.
+C&rsquo;est ce mécanisme qui vous permet d&rsquo;écouter VLC et Firefox en même temps.</p>
+<h3 id="pulseaudio">PulseAudio</h3>
+<p>C&rsquo;était le serveur de son principal pour le grand public jusqu&rsquo;à récemment.
+Toutes les applications sont capables de communiquer avec lui, c&rsquo;était le standard.
+Depuis l&rsquo;arrivée de PipeWire et son adoption, il tombe peu à peu en désuetude.</p>
+<h3 id="jack">JACK</h3>
+<p>Un serveur de son dédié aux musiciens !
+JACK fonctionne en temps réel et permet de faire du routage audio, difficilement réalisable avec PulseAudio.</p>
+<h3 id="pipewire">PipeWire</h3>
+<p>PipeWire combine le meilleur des deux mondes d&rsquo;une façon élégante.
+Il offre les fonctionnalités temps réel de JACK, le routage audio et le support des applications programmées pour Pulse en se faisant passer pour ce dernier.</p>
+<h2 id="fonctionnement-de-pipewire">Fonctionnement de PipeWire</h2>
+<p>La simplicité de PipeWire réside dans le fait que c&rsquo;est un programme très simple.
+Son unique objectif est de router l&rsquo;audio (des données binaires) d&rsquo;un noeud du graphe au suivant.
+Un noeud peut être une source (micro ou application) ou un puits (haut-parleur ou application).</p>
+<p>PipeWire ne fait rien d&rsquo;autre, il ne se charge même pas d&rsquo;ajouter les nouvelles applications ou nouveaux périphériques audio au graphe.
+Ces fonctions sont déléguées à deux daemons : <code>pipewire-pulse</code> pour l&rsquo;ajout des clients Pulse et <code>wireplumber</code> pour l&rsquo;ajout des périphériques audio.</p>
+<p>Pour que PipeWire supporte les clients JACK, une petite manipulation est nécessaire.
+Il faut lancer ces applications en changeant les chemins de leurs bibliothèques afin qu&rsquo;elles se connectent au graphe PipeWire plutôt qu&rsquo;au graphe JACK.
+On pourrait le faire à la main, avec la variable d&rsquo;environnement <code>LD_LIBRARY_PATH</code>, mais PipeWire fournit le script <code>pw-jack</code> (dans le paquet <code>pipewire-audio-client-libraries</code> sous Debian).
+Pour lancer Qtractor sous PipeWire, on exécuterait par exemple <code>pw-jack qtractor</code>.</p>
+<p>L&rsquo;utilitaire <code>pw-link</code> permet de manipuler le graphe PipeWire.
+qpwgraph propose la même chose en graphique.</p>
+<p>Pour plus d&rsquo;infos, je recommande la lecture de <a href="https://bootlin.com/blog/an-introduction-to-pipewire/">cet excellent article de Bootlin</a> sur le sujet.</p>
+<h3 id="bluetooth-et-pipewire">Bluetooth et PipeWire</h3>
+<p>Pour permettre à PipeWire de gérer les équipements Bluetooth, le paquet <code>libspa-0.2-bluetooth</code> (Debian) est requis.
+Une fois ce paquet installé, votre environnement de bureau devrait vous permettre de connecter vos écouteurs bluetooth à l&rsquo;audio de votre système.</p>
 
 	<p class="art-date">Publi&eacute; le 5 décembre 2024</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>

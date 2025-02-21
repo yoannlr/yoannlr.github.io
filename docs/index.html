@@ -41,6 +41,7 @@ Même sous Windows, rien n&rsquo;est détecté !</p>
 
 	<article>
 		<h1 id="comprendre-laudio-sous-linux">Comprendre l&rsquo;audio sous Linux</h1>
+<p>Cet article est aussi disponible en vidéo 👇</p>
 
 <div class="youtube">
 	<a href="https://youtube.com/watch?v=lTv2jJDcPns">
@@ -55,7 +56,16 @@ Même sous Windows, rien n&rsquo;est détecté !</p>
 	<p>YouTube</p>
 </div>
 
-
+<h2 id="problématique-du-son">Problématique du son</h2>
+<p>Gérer du son pour un ordinateur, c&rsquo;est simplement acheminer des données binaires aux bons endroits : d&rsquo;une application à la carte son, ou dans l&rsquo;autre sens.
+La carte son, c&rsquo;est le périphérique capable de convertir les données binaires en audio et vice-versa.</p>
+<p>Pour que le système soit capable de parler à la carte son dans une langue qu&rsquo;elle comprend, il lui faut un driver.
+Ce driver, sous Linux, c&rsquo;est ALSA : Advanced Linux Sound Architecture.</p>
+<h2 id="multiplexage">Multiplexage</h2>
+<p>ALSA peut être utilisé tout seul pour permettre à une application d&rsquo;émettre ou de recevoir de l&rsquo;audio.
+Par exemple, VLC est tout à fait capable de s&rsquo;adresser à ALSA.</p>
+<p>En revanche, avec ALSA la carte son ne peut être utilisée que par une application à la fois.
+Si VLC utilise la …</p></div></a></div>
 		<p class="art-date">Publi&eacute; le 5 décembre 2024</p>
 		<p class="read-full"><a href="/audio-sous-linux/">Tout lire</a></p>
 	</article>
