@@ -50,7 +50,7 @@ Il offre les fonctionnalités temps réel de JACK, le routage audio et le suppor
 
 ## Fonctionnement de PipeWire
 
-La simplicité de PipeWire réside dans le fait que c'est un programme très simple.
+La qualité et la puissance de PipeWire résident dans le fait que c'est un programme très simple.
 Son unique objectif est de router l'audio (des données binaires) d'un noeud du graphe au suivant.
 Un noeud peut être une source (micro ou application) ou un puits (haut-parleur ou application).
 
