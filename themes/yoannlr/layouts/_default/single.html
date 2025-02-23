@@ -1,7 +1,18 @@
 {{ define "main" -}}
 <article>
 	{{ .Content }}
-	<p class="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
+	<p class="art-date" id="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	<!-- comptage du nombre de consultations -->
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/{{ .Site.Params.abacusNamespace }}/{{ .File.TranslationBaseName }}");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", consult&eacute; " + count + " fois";
+		}
+		xhr.send();
+	</script>
 </article>
 {{- end}}

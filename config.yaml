@@ -21,3 +21,6 @@ paginate: 8
 markup:
   highlight:
     style: vs
+
+params:
+  abacusNamespace: yoannlr.github.io
