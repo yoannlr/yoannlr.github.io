@@ -3,16 +3,18 @@
 	{{ .Content }}
 	<p class="art-date" id="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	{{ if .Site.Params.counting.enable }}
 	<!-- comptage du nombre de consultations -->
 	<script type="text/javascript">
 		let xhr = new XMLHttpRequest();
-		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/{{ .Site.Params.abacusNamespace }}/{{ .File.TranslationBaseName }}");
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/{{ .Site.Params.counting.namespace }}/{{ .File.TranslationBaseName }}");
 		xhr.responseType = "json";
 		xhr.onload = function() {
 			count = this.response.value;
-			document.getElementById("art-date").innerHTML += ", consult&eacute; " + count + " fois";
+			document.getElementById("art-date").innerHTML += ", <span title=\"Compt&eacute; avec Abacus, une API libre et open-source\">consult&eacute; " + count + " fois</span>";
 		}
 		xhr.send();
 	</script>
+	{{ end }}
 </article>
 {{- end}}

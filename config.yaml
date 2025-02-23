@@ -23,4 +23,7 @@ markup:
     style: vs
 
 params:
-  abacusNamespace: yoannlr.github.io
+  counting:
+    # https://jasoncameron.dev/abacus/
+    enable: true
+    namespace: yoannlr.github.io
