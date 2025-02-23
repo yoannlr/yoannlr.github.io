@@ -102,8 +102,19 @@ alias:          usb:v1395p0300d*dc*dsc*dp*ic*isc*ip*in*
 </code></pre><p>Si ce micro était supporté, on aurait normalement une ligne d&rsquo;alias ou on retrouverait <code>usb:v0d8cp0134</code>.</p>
 <p>Encore un bon exemple de la facilité avec laquelle on peut interagir avec Linux et de sa flexibilité !</p>
 
-	<p class="art-date">Publi&eacute; le 16 février 2025</p>
+	<p class="art-date" id="art-date">Publi&eacute; le 16 février 2025</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/auna-mic-900-linux");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", consult&eacute; " + count + " fois";
+		}
+		xhr.send();
+	</script>
 </article>
 </main>
 <footer>

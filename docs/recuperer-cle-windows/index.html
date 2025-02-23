@@ -26,8 +26,19 @@
 </code></pre><p>Sous Linux en root :</p>
 <pre tabindex="0"><code>sudo grep -Eoa &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
 </code></pre>
-	<p class="art-date">Publi&eacute; le 20 août 2021</p>
+	<p class="art-date" id="art-date">Publi&eacute; le 20 août 2021</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/recuperer-cle-windows");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", consult&eacute; " + count + " fois";
+		}
+		xhr.send();
+	</script>
 </article>
 </main>
 <footer>

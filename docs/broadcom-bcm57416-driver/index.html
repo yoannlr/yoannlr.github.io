@@ -134,8 +134,19 @@ Nov 29 13:06:30 pve2-xxx systemd[1]: zfs-import-scan.service: Job zfs-import-sca
 <pre tabindex="0"><code>sudo echo &#34;blacklist bnxt_re&#34; &gt; /etc/modprobe.d/blacklist_bnxt_re.conf
 </code></pre><p>Pour plus d&rsquo;infos : <a href="https://utcc.utoronto.ca/~cks/space/blog/linux/BroadcomNetworkDriverAndRDMA">https://utcc.utoronto.ca/~cks/space/blog/linux/BroadcomNetworkDriverAndRDMA</a>.</p>
 
-	<p class="art-date">Publi&eacute; le 3 décembre 2024</p>
+	<p class="art-date" id="art-date">Publi&eacute; le 3 décembre 2024</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/broadcom-bcm57416-driver");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", consult&eacute; " + count + " fois";
+		}
+		xhr.send();
+	</script>
 </article>
 </main>
 <footer>
