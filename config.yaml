@@ -15,8 +15,8 @@ disableKinds:
   - term
 
 # taille du paginator
-# la conf documentee ne fonctionne pas https://gohugo.io/templates/pagination/#configuration
-paginate: 8
+pagination:
+  pagerSize: 8
 
 markup:
   highlight:

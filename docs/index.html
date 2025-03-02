@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
-	<meta name="generator" content="Hugo 0.111.3">
+	<meta name="generator" content="Hugo 0.145.0">
 	<title>yoannlr, notes d&#39;un admin sys</title>
 	<meta charset="utf-8">
 	
@@ -21,6 +21,21 @@
 	</nav>
 </header>
 <main>
+	<article>
+		<h1 id="comment-installer-plusieurs-versions-de-la-libstdc">Comment installer plusieurs versions de la libstdc++</h1>
+<p>Il n&rsquo;est pas rare de vouloir exécuter un programme et d&rsquo;obtenir une erreur du type :</p>
+<p><code>libxxx.so: /lib/x86_64-linux-gnu/libstdc++.so.6: version GLIBCXX_3.4.32 not found (required by .../libxxx.so)</code></p>
+<p>La libstdc++ est fournie par gcc (le compilateur GNU).
+Pour trouver la version de gcc qui fournit la version GLIBCXX qui vous manque, vous pouvez vous référer à <a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html">son ABI</a>.</p>
+<p>Dans mon exemple, il faut installer gcc 13.2.0 minimum.
+Malheureusement, ça n&rsquo;est pas forcément possible depuis le gestionnaire de paquet de votre distribution.
+Sous Debian 12 par exemple, je ne peux pas aller au delà de gcc 12 avec apt.</p>
+<p>Il est en revanche possible de compiler soi-même gcc et la bibliothèque dans un répertoire séparé des bibliothèques du système, puis d&rsquo;exécuter le programme en lui indiquant d&rsquo;aller y chercher les bibliothèques.</p>
+<p>La compilation peut prendre une trentaine de minutes (la durée varie selon la puissance de votre …</p>
+		<p class="art-date">Publi&eacute; le 28 février 2025</p>
+		<p class="read-full"><a href="/version-libstdc&#43;&#43;/">Tout lire</a></p>
+	</article>
+
 	<article>
 		<h1 id="comment-faire-fonctionner-le-microphone-auna-mic-900-sous-linux">Comment faire fonctionner le microphone Auna Mic 900 sous Linux</h1>
 <p><em><strong>&hellip; ou tout autre périphérique de son USB non reconnu  !</strong></em></p>

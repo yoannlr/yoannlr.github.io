@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Plusieurs versions de la libstdc&#43;&#43; - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main><article>
+	<h1 id="comment-installer-plusieurs-versions-de-la-libstdc">Comment installer plusieurs versions de la libstdc++</h1>
+<p>Il n&rsquo;est pas rare de vouloir exécuter un programme et d&rsquo;obtenir une erreur du type :</p>
+<p><code>libxxx.so: /lib/x86_64-linux-gnu/libstdc++.so.6: version GLIBCXX_3.4.32 not found (required by .../libxxx.so)</code></p>
+<p>La libstdc++ est fournie par gcc (le compilateur GNU).
+Pour trouver la version de gcc qui fournit la version GLIBCXX qui vous manque, vous pouvez vous référer à <a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html">son ABI</a>.</p>
+<p>Dans mon exemple, il faut installer gcc 13.2.0 minimum.
+Malheureusement, ça n&rsquo;est pas forcément possible depuis le gestionnaire de paquet de votre distribution.
+Sous Debian 12 par exemple, je ne peux pas aller au delà de gcc 12 avec apt.</p>
+<p>Il est en revanche possible de compiler soi-même gcc et la bibliothèque dans un répertoire séparé des bibliothèques du système, puis d&rsquo;exécuter le programme en lui indiquant d&rsquo;aller y chercher les bibliothèques.</p>
+<p>La compilation peut prendre une trentaine de minutes (la durée varie selon la puissance de votre machine).
+Elle peut être effectuée en suivant les étapes suivantes :</p>
+<ol>
+<li>
+<p>Télécharger le code source de gcc dans la version qui nous convient <a href="https://ftp.gnu.org/gnu/gcc/">depuis le serveur de GNU</a>.
+Exemple : <code>wget https://ftp.gnu.org/gnu/gcc/gcc-13.2.0/gcc-13.2.0.tar.gz</code>.</p>
+</li>
+<li>
+<p>Extraire l&rsquo;archive : <code>tar zxf gcc-13.2.0.tar.gz</code> et s&rsquo;y rendre <code>cd gcc-13.2.0</code>.</p>
+</li>
+<li>
+<p>Télécharger les pré-requis à la compilation.
+Heureusement, un script qui s&rsquo;en charge est fournit ! <code>./contrib/download_prerequisites</code>.</p>
+</li>
+<li>
+<p>Créer un dossier build en dehors du répertoire des sources de gcc et s&rsquo;y rendre : <code>mkdir ../gccbuild ; cd ../gccbuild</code>.</p>
+</li>
+<li>
+<p>Configurer le build : <code>../gcc-13.2.0/configure --prefix=/usr/local/lib/gcc13.2.0 --disable-multilib</code>.
+On indique ici l&rsquo;emplacement de la future installation de gcc et des bibliothèques avec l&rsquo;option prefix.
+On indique aussi qu&rsquo;on ne souhaite pas supporter l&rsquo;architecture 32 bits (ajustez selon votre besoin).
+À l&rsquo;issue de cette commande, un fichier <code>Makefile</code> est généré dans le répertoire de build.</p>
+</li>
+<li>
+<p>Lancer la compilation avec <code>make</code>.
+Pour l&rsquo;accélérer, on peut indiquer à make de paralléliser les jobs : <code>make -j4</code> par exemple pour lancer 4 jobs ; <code>make -j$(nproc)</code> pour utiliser tous vos coeurs de processeur.
+C&rsquo;est de loin l&rsquo;étape la plus longue (environ 30 minutes avec 10 jobs sur ma machine).
+Avec un seul job, j&rsquo;ai annulé la compilation au bout d'1h30&hellip;</p>
+</li>
+<li>
+<p>Installer le résultat de la compilation dans le préfixe : <code>sudo make install</code>.</p>
+</li>
+</ol>
+<p>À la fin du processus, on nous indique l&rsquo;emplacement de &ldquo;LIBDIR&rdquo;, c&rsquo;est-à-dire le répertoire où se trouve notre installation de la bibliothèque dans sa version souhaitée.
+On peut indiquer à notre programme en erreur de l&rsquo;utiliser :</p>
+<pre tabindex="0"><code>$ LD_LIBRARY_PATH=/usr/local/lib/gcc13.2.0/lib64:$LD_LIBRARY_PATH ./prog
+</code></pre><p>Ici, vous l&rsquo;aurez déduit, LIBDIR est <code>/usr/local/lib/gcc13.2.0/lib64</code>.</p>
+<h2 id="pour-aller-plus-loin">Pour aller plus loin</h2>
+<p>Afin de savoir quelle version fournit votre installation de cette bibliothèque, vous pouvez exécuter la commande suivante :</p>
+<pre tabindex="0"><code>$ strings /lib/x86_64-linux-gnu/libstdc++.so.6 | grep GLIBCXX
+GLIBCXX_3.4
+GLIBCXX_3.4.1
+GLIBCXX_3.4.2
+GLIBCXX_3.4.3
+GLIBCXX_3.4.4
+</code></pre>
+	<p class="art-date" id="art-date">Publi&eacute; le 28 février 2025</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/version-libstdc\u002b\u002b");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", <span title=\"Compt&eacute; avec Abacus, une API libre et open-source\">consult&eacute; " + count + " fois</span>";
+		}
+		xhr.send();
+	</script>
+	
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

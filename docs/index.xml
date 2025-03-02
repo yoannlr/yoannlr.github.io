@@ -5,12 +5,20 @@
 	<description>Derniers articles sur yoannlr, notes d&#39;un admin sys</description>
 	<generator>Hugo -- gohugo.io</generator>
 	<language>fr-fr</language>
-	
+	<lastBuildDate>Fri, 28 Feb 2025 19:16:31 +0100</lastBuildDate>
 
 	
 		<atom:link href="https://yoannlr.github.io/index.xml" rel="self" type="application/rss+xml" />
 	
 
+	
+	<item>
+		<title>Plusieurs versions de la libstdc&#43;&#43;</title>
+		<link>https://yoannlr.github.io/version-libstdc&#43;&#43;/</link>
+		<pubDate>Fri, 28 Feb 2025 19:16:31 +0100</pubDate>
+		<guid>https://yoannlr.github.io/version-libstdc&#43;&#43;/</guid>
+		<description>Plusieurs versions de la libstdc++</description>
+	</item>
 	
 	<item>
 		<title>Auna Mic 900 sous Linux ?</title>
