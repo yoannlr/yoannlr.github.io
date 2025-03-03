@@ -25,10 +25,9 @@
 <p><code>libxxx.so: /lib/x86_64-linux-gnu/libstdc++.so.6: version GLIBCXX_3.4.32 not found (required by .../libxxx.so)</code></p>
 <p>La libstdc++ est fournie par gcc (le compilateur GNU).
 Pour trouver la version de gcc qui fournit la version GLIBCXX qui vous manque, vous pouvez vous référer à <a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html">son ABI</a>.</p>
-<p>Dans mon exemple, il faut installer gcc 13.2.0 minimum.
-Malheureusement, ça n&rsquo;est pas forcément possible depuis le gestionnaire de paquet de votre distribution.
-Sous Debian 12 par exemple, je ne peux pas aller au delà de gcc 12 avec apt.</p>
-<p>Il est en revanche possible de compiler soi-même gcc et la bibliothèque dans un répertoire séparé des bibliothèques du système, puis d&rsquo;exécuter le programme en lui indiquant d&rsquo;aller y chercher les bibliothèques.</p>
+<p>Dans mon exemple, l&rsquo;ABI indique qu&rsquo;il faut installer gcc 13.2.0 minimum.
+Malheureusement, cette version n&rsquo;est pas installable avec apt sous Debian 12.</p>
+<p>Je vais donc compiler moi-même gcc et la bibliothèque dans un répertoire séparé des bibliothèques du système, puis exécuter le programme en lui indiquant d&rsquo;aller y chercher les bibliothèques.</p>
 <p>La compilation peut prendre une trentaine de minutes (la durée varie selon la puissance de votre machine).
 Elle peut être effectuée en suivant les étapes suivantes :</p>
 <ol>
@@ -45,6 +44,9 @@ Heureusement, un script qui s&rsquo;en charge est fournit ! <code>./contrib/down
 </li>
 <li>
 <p>Créer un dossier build en dehors du répertoire des sources de gcc et s&rsquo;y rendre : <code>mkdir ../gccbuild ; cd ../gccbuild</code>.</p>
+</li>
+<li>
+<p>Pour s&rsquo;assurer que les configurations de notre environnement n&rsquo;interfèreront pas avec le build, désaffecter les variables suivantes dans le shell courant : <code>unset LIBRARY_PATH CPATH C_INCLUDE_PATH PKG_CONFIG_PATH CPLUS_INCLUDE_PATH INCLUDE LD_LIBRARY_PATH CFLAGS CXXFLAGS</code></p>
 </li>
 <li>
 <p>Configurer le build : <code>../gcc-13.2.0/configure --prefix=/usr/local/lib/gcc13.2.0 --disable-multilib</code>.
@@ -74,7 +76,10 @@ GLIBCXX_3.4.1
 GLIBCXX_3.4.2
 GLIBCXX_3.4.3
 GLIBCXX_3.4.4
-</code></pre>
+</code></pre><p>Pour en apprendre davantage sur la compilation de gcc, je vous recommande la lecture de <a href="https://d-meiser.github.io/2015/11/30/building-gcc-trunk.html">cet article de Dominic Meiser</a>.
+Certains flags y sont présentés qui peuvent s&rsquo;avérer pertinents lors de la compilation, comme <code>--disable-bootstrap</code> par exemple.</p>
+<p>La lecture de <a href="https://d-meiser.github.io/2015/12/10/build-times.html">cet autre article du même auteur</a> peut aussi être intéressante si vous cherchez à optimiser le temps de compilation.</p>
+
 	<p class="art-date" id="art-date">Publi&eacute; le 28 février 2025</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
 	

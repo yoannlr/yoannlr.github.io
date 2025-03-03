@@ -27,11 +27,14 @@
 <p><code>libxxx.so: /lib/x86_64-linux-gnu/libstdc++.so.6: version GLIBCXX_3.4.32 not found (required by .../libxxx.so)</code></p>
 <p>La libstdc++ est fournie par gcc (le compilateur GNU).
 Pour trouver la version de gcc qui fournit la version GLIBCXX qui vous manque, vous pouvez vous référer à <a href="https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html">son ABI</a>.</p>
-<p>Dans mon exemple, il faut installer gcc 13.2.0 minimum.
-Malheureusement, ça n&rsquo;est pas forcément possible depuis le gestionnaire de paquet de votre distribution.
-Sous Debian 12 par exemple, je ne peux pas aller au delà de gcc 12 avec apt.</p>
-<p>Il est en revanche possible de compiler soi-même gcc et la bibliothèque dans un répertoire séparé des bibliothèques du système, puis d&rsquo;exécuter le programme en lui indiquant d&rsquo;aller y chercher les bibliothèques.</p>
-<p>La compilation peut prendre une trentaine de minutes (la durée varie selon la puissance de votre …</p>
+<p>Dans mon exemple, l&rsquo;ABI indique qu&rsquo;il faut installer gcc 13.2.0 minimum.
+Malheureusement, cette version n&rsquo;est pas installable avec apt sous Debian 12.</p>
+<p>Je vais donc compiler moi-même gcc et la bibliothèque dans un répertoire séparé des bibliothèques du système, puis exécuter le programme en lui indiquant d&rsquo;aller y chercher les bibliothèques.</p>
+<p>La compilation peut prendre une trentaine de minutes (la durée varie selon la puissance de votre machine).
+Elle peut être effectuée en suivant les étapes suivantes :</p>
+<ol>
+<li>
+<p>Télécharger le code source de gcc …</p></li></ol>
 		<p class="art-date">Publi&eacute; le 28 février 2025</p>
 		<p class="read-full"><a href="/version-libstdc&#43;&#43;/">Tout lire</a></p>
 	</article>
