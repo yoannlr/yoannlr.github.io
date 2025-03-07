@@ -3,11 +3,14 @@
 	{{ .Content }}
 	<p class="art-date" id="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
-	{{ if and (.Site.Params.counting.enable) (not hugo.IsServer) }}
+	{{ if .Site.Params.counting.enable }}
+		{{ $slug := .File.TranslationBaseName | replaceRE "[^A-Za-z0-9_\\-.]" "x" }}
+		{{ $slug = substr $slug 0 63 }}
+		{{ if not hugo.IsServer }}
 	<!-- comptage du nombre de consultations -->
 	<script type="text/javascript">
 		let xhr = new XMLHttpRequest();
-		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/{{ .Site.Params.counting.namespace }}/{{ .File.TranslationBaseName }}");
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/{{ .Site.Params.counting.namespace }}/{{ $slug }}");
 		xhr.responseType = "json";
 		xhr.onload = function() {
 			count = this.response.value;
@@ -15,6 +18,9 @@
 		}
 		xhr.send();
 	</script>
+		{{ else }}
+	<p>abacus slug is <b>{{ $slug }}</b></p>
+		{{ end }}
 	{{ end }}
 </article>
 {{- end}}
