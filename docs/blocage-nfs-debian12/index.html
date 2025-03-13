@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Blocage NFS sous Debian 12 - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p><a href="https://github.com/yoannlr">GitHub</a>
+	</nav>
+</header>
+<main><article>
+	<h1 id="résoudre-les-blocages-du-serveur-nfs-sous-debian-12-nfsd-stuck-in-d-state">Résoudre les blocages du serveur NFS sous Debian 12 (nfsd stuck in D state)</h1>
+<p>Si vous utilisez <code>nfs-kernel-server</code> avec le noyau Linux par défaut sous Debian 12 (6.1.94 au moment de l&rsquo;écriture de cet article), vous avez peut-être constaté des blocages du serveur.
+En cas de forte charge, il se peut que tous les threads <code>nfsd</code> passent en état <code>D</code> (uninterruptible sleep) et n&rsquo;en sortent jamais.
+Lorsque cela se produit, vous ne pouvez rien faire : tenter de tous les tuer avec <code>kill -9</code> ou d&rsquo;arrêter les services nfs (<code>nfs-server</code>, <code>rpcbind</code> etc) ne rédoudra rien.</p>
+<p>La seule chose à faire est alors de redémarrer l&rsquo;OS&hellip; ce qui rend indisponible quelques minutes d&rsquo;autres services parfaitement fonctionnels sur le serveur (Samba par exemple).
+Le bug peut arriver assez fréquemment, jusqu&rsquo;à plusieurs fois par semaine si le serveur est beaucoup sollicité.</p>
+<p>Dans un premier temps, on peut penser qu&rsquo;il n&rsquo;y a pas assez de threads nfsd pour répondre à la demande.
+Il est possible d&rsquo;augmenter leur nombre :</p>
+<ul>
+<li>à la volée avec la commande <code>rpc.nfsd nproc</code> (où nproc est le nouveau nombre de threads nfsd)</li>
+<li>dans <code>/etc/nfs.conf</code> (qui remplace <code>/etc/default/nfs-kernel-server</code>, désormais ignoré), section <code>[threads]</code>, pour rendre le changement persistent</li>
+</ul>
+<p>Hélas, si ce changement peut retarder un peu l&rsquo;échéance à laquelle le serveur freeze, il ne résoud pas le problème.</p>
+<p>La consultation des messages noyau (<code>dmesg -T</code>) révèle le bug suivant (message répété pour chaque thread nfsd) :</p>
+<pre tabindex="0"><code>Feb 05 14:02:15 xxx-fs kernel: INFO: task nfsd:1271 blocked for more than 120 seconds.
+Feb 05 14:02:15 xxx-fs kernel:       Not tainted 6.1.0-22-amd64 #1 Debian 6.1.94-1
+Feb 05 14:02:15 xxx-fs kernel: &#34;echo 0 &gt; /proc/sys/kernel/hung_task_timeout_secs&#34; disables this message.
+Feb 05 14:02:15 xxx-fs kernel: task:nfsd            state:D stack:0     pid:1271  ppid:2      flags:0x00004000
+Feb 05 14:02:15 xxx-fs kernel: Call Trace:
+Feb 05 14:02:15 xxx-fs kernel:  &lt;TASK&gt;
+Feb 05 14:02:15 xxx-fs kernel:  __schedule+0x34d/0x9e0
+Feb 05 14:02:15 xxx-fs kernel:  schedule+0x5a/0xd0
+Feb 05 14:02:15 xxx-fs kernel:  schedule_timeout+0x118/0x150
+Feb 05 14:02:15 xxx-fs kernel:  wait_for_completion+0x86/0x160
+Feb 05 14:02:15 xxx-fs kernel:  __flush_workqueue+0x152/0x420
+Feb 05 14:02:15 xxx-fs kernel:  nfsd4_destroy_session+0x1b6/0x250 [nfsd]
+Feb 05 14:02:15 xxx-fs kernel:  nfsd4_proc_compound+0x352/0x660 [nfsd]
+Feb 05 14:02:15 xxx-fs kernel:  nfsd_dispatch+0x19e/0x2b0 [nfsd]
+Feb 05 14:02:15 xxx-fs kernel:  svc_process_common+0x286/0x5e0 [sunrpc]
+Feb 05 14:02:15 xxx-fs kernel:  ? svc_recv+0x48e/0x810 [sunrpc]
+Feb 05 14:02:15 xxx-fs kernel:  ? nfsd_svc+0x360/0x360 [nfsd]
+Feb 05 14:02:15 xxx-fs kernel:  ? nfsd_shutdown_threads+0x90/0x90 [nfsd]
+Feb 05 14:02:15 xxx-fs kernel:  svc_process+0xad/0x100 [sunrpc]
+Feb 05 14:02:15 xxx-fs kernel:  nfsd+0x99/0x140 [nfsd]
+Feb 05 14:02:15 xxx-fs kernel:  kthread+0xd7/0x100
+Feb 05 14:02:15 xxx-fs kernel:  ? kthread_complete_and_exit+0x20/0x20
+Feb 05 14:02:15 xxx-fs kernel:  ret_from_fork+0x1f/0x30
+Feb 05 14:02:15 xxx-fs kernel:  &lt;/TASK&gt;
+</code></pre><p>En recherchant longuement sur internet, on finit par tomber sur <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071562">ce thread</a> du traqueur de bug de Debian et en particulier sur <a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1071562;msg=53">ce message</a>.</p>
+<p>La solution proposée est d&rsquo;installer une version du noyau qui résoud ce bug.
+Cette version n&rsquo;est pas disponible dans les dépots principaux de Debian 12, mais elle l&rsquo;est dans les <a href="https://backports.debian.org/">backports</a>.
+Une des versions du noyau qui n&rsquo;est pas impactée par le bug est la 6.11.5.</p>
+<p>Il est possible de l&rsquo;installer en suivant ces étapes :</p>
+<ol>
+<li>Ajouter les backports aux dépots APT : <code>echo deb http://deb.debian.org/debian bookworm-backports main | sudo tee -a /etc/apt/sources.list</code></li>
+<li>Mettre à jour le cache APT : <code>sudo apt update</code></li>
+<li>Installer la version du noyau ci-dessus : <code>sudo apt install linux-image-6.11.5+bpo-amd64 linux-headers-6.11.5+bpo-amd64</code></li>
+<li>Redémarrer le serveur</li>
+</ol>
+<p>L&rsquo;opération peut s&rsquo;effectuer rapidement et n&rsquo;occasionner que quelques minutes d&rsquo;indisponibilité.
+Quelques minutes une fois c&rsquo;est toujours mieux que quelques minutes plusieurs fois par semaine !</p>
+<p>Après plusieurs semaines avec ce fix, le problème de freeze NFS ne se présente plus.</p>
+
+	<p class="art-date" id="art-date">Publi&eacute; le 13 mars 2025</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+		
+		
+		
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/blocage-nfs-debian12");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", <span title=\"Compt&eacute; avec Abacus, une API libre et open-source\">consult&eacute; " + count + " fois</span>";
+		}
+		xhr.send();
+	</script>
+		
+	
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

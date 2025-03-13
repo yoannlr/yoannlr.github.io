@@ -5,12 +5,20 @@
 	<description>Derniers articles sur yoannlr, notes d&#39;un admin sys</description>
 	<generator>Hugo -- gohugo.io</generator>
 	<language>fr-fr</language>
-	<lastBuildDate>Fri, 28 Feb 2025 19:16:31 +0100</lastBuildDate>
+	<lastBuildDate>Thu, 13 Mar 2025 16:49:08 +0100</lastBuildDate>
 
 	
 		<atom:link href="https://yoannlr.github.io/index.xml" rel="self" type="application/rss+xml" />
 	
 
+	
+	<item>
+		<title>Blocage NFS sous Debian 12</title>
+		<link>https://yoannlr.github.io/blocage-nfs-debian12/</link>
+		<pubDate>Thu, 13 Mar 2025 16:49:08 +0100</pubDate>
+		<guid>https://yoannlr.github.io/blocage-nfs-debian12/</guid>
+		<description>Blocage NFS sous Debian 12</description>
+	</item>
 	
 	<item>
 		<title>Plusieurs versions de la libstdc&#43;&#43;</title>
