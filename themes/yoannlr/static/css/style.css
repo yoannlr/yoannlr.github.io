@@ -58,7 +58,12 @@ footer p > *, header nav p > * {
 }
 article {
 	padding: 0.5em;
+}
+article:not(:first-child) {
 	border-top: 1px solid var(--bordure);
+}
+header {
+	border-bottom: 1px solid var(--bordure);
 }
 article p {
 	line-height: 1.6;
@@ -100,6 +105,10 @@ pre, code, div.highlight {
 }
 img {
 	max-width: 100%;
+	/* centrage */
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 /* shortcode repo */
 .repo {
@@ -143,11 +152,29 @@ img {
 	transform: translate(-50%, -50%);
 	max-width: 25%;
 }
+/* index tiles */
+main > h1 {
+	text-align: center;
+}
+.index-tiles {
+	display: grid;
+	grid-template-columns: repeat(2, 50%);
+	gap: 8px;
+}
+.index-tiles a {
+	border: 1px solid var(--bordure);
+	color: inherit;
+	padding: 0.5em;
+}
+.index-tiles a:hover {
+	background-color: var(--lien_bg);
+}
 @media screen and (max-width: 60em) {
 	header, main, footer {
 		padding: 1em;
 	}
 }
+/* mobile */
 @media screen and (max-width: 450px) {
 	body {
 		margin: 0 0;
@@ -163,6 +190,9 @@ img {
 	}
 	article {
 		padding: initial;
+	}
+	.index-tiles {
+		grid-template-columns: repeat(1, 100%);
 	}
 }
 @media (prefers-color-scheme: dark) {

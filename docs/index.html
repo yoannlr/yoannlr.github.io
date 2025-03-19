@@ -17,10 +17,54 @@
 	<h1><a href="/">yoannlr:~$</a></h1>
 	<p>notes d&apos;un admin sys</p>
 	<nav>
-		<p><a href="https://github.com/yoannlr">GitHub</a>
+		<p>
+			<a href="https://github.com/yoannlr">GitHub</a>
+			<a href="/cheatsheet">Cheatsheets</a>
+		</p>
 	</nav>
 </header>
 <main>
+
+
+	<article>
+		<h1 id="configurer-flatpak-pour-utiliser-le-curseur-du-bureau">Configurer Flatpak pour utiliser le curseur du bureau</h1>
+<p><img src="/img/flatpak-curseur.png" alt="C&rsquo;est plus joli quand ça respecte le thème !"></p>
+<p>Pour que les applications installées en flatpak respectent la configuration de votre curseur (thème et taille), il faut leur autoriser l&rsquo;accès à <code>~/.icons</code>.</p>
+<p>Exemple avec Dino :</p>
+<pre tabindex="0"><code>flatpak --user override im.dino.Dino --filesystem=${HOME}/.icons/:ro
+</code></pre>
+		<p class="art-date">Publi&eacute; le 19 mars 2025</p>
+		<p class="read-full"><a href="/flatpak-curseur/">Tout lire</a></p>
+	</article>
+
+	<article>
+		<h1 id="cheatsheet-git">Cheatsheet Git</h1>
+<h2 id="tags">tags</h2>
+<p>Un tag pointe vers un numéro de commit.</p>
+<pre tabindex="0"><code>git tag v1.0 # tag le commit actuel
+git push origin v1.0 # push le tag sur le remote
+git tag -d v1.0 # supprime le tag
+git push origin -d v1.0 # supprime sur le remote
+git push origin --tags # push tous les tags
+
+git tag v0.9 hash_ancien_commit # cree un tag d&#39;un ancien commit
+</code></pre><h2 id="stash">stash</h2>
+<p>&ldquo;stasher&rdquo; permet de mettre de côté le travail pour réorganiser le dépot.</p>
+<pre tabindex="0"><code>(main) git stash # nos modifs sont mises de coté et disparaissent de la branche courante
+(main) git branch test-feature # nouvelle branche
+(main) git checkout test-feature
+(test-feature) git stash pop # nos modifs reviennent sur la nouvelle branche
+(test-feature) git add, git commit ...
+</code></pre><h2 id="cloner-une-branche-spécifique">cloner une branche spécifique</h2>
+<pre tabindex="0"><code>git clone -b nom_branche url
+</code></pre><h2 id="grep-dans-lhistorique">grep dans l&rsquo;historique</h2>
+<pre tabindex="0"><code>git grep &#34;du texte a rechercher&#34; $(git rev-list --all)
+</code></pre><p>Affiche le commit et le fichier de chaque occurence, suivis par la ligne qui contient le texte recherché.</p>
+<h2 id="revenir-en-arrière">revenir en arrière …</h2>
+		<p class="art-date">Publi&eacute; le 18 mars 2025</p>
+		<p class="read-full"><a href="/cheatsheet/git/">Tout lire</a></p>
+	</article>
+
 	<article>
 		<h1 id="résoudre-les-blocages-du-serveur-nfs-sous-debian-12-nfsd-stuck-in-d-state">Résoudre les blocages du serveur NFS sous Debian 12 (nfsd stuck in D state)</h1>
 <p>Si vous utilisez <code>nfs-kernel-server</code> avec le noyau Linux par défaut sous Debian 12 (6.1.94 au moment de l&rsquo;écriture de cet article), vous avez peut-être constaté des blocages du serveur.
@@ -147,44 +191,6 @@ Sous Linux, il est possible de changer la combinaison de touches qui les produit
 		<p class="read-full"><a href="/layout-clavier-pour-sysadmin/">Tout lire</a></p>
 	</article>
 
-	<article>
-		<h1 id="installit-des-scripts-pour-faciliter-linstallation-de-programmes-debian">installit, des scripts pour faciliter l&rsquo;installation de programmes Debian</h1>
-
-<div class="repo repo-github">
-	<p class="repo-name"><a href="https://github.com/yoannlr/installit">yoannlr/installit : Easy installation of some Debian programs</a></p>
-	
-		<p class="repo-type">GitHub</p>
-	
-</div>
-
-<p>Se chargent d&rsquo;ajouter automatiquement les dépots à APT, et de certaines configurations si nécessaire.</p>
-<p>Avec curl :</p>
-<pre tabindex="0"><code>curl https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh | sh
-</code></pre><p>Avec wget :</p>
-<pre tabindex="0"><code>wget -q https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh -O - | sh
-</code></pre>
-		<p class="art-date">Publi&eacute; le 29 novembre 2024</p>
-		<p class="read-full"><a href="/installit/">Tout lire</a></p>
-	</article>
-
-	<article>
-		<h1 id="trouvez-léquipement-réseau-et-le-port-auxquels-vous-êtes-connecté">Trouvez l&rsquo;équipement réseau et le port auxquels vous êtes connecté</h1>
-<p>Le programme <a href="https://github.com/chall32/LDWin">Link Discovery for Windows</a> remonte les infos du lien auquel on est connecté (nom du switch, port, numéro de vlan&hellip;).
-Il utilise tcpdump pour capturer un paquet LLDP ou CDP émis par le switch toutes les 60 secondes max.</p>
-<p>Sous Linux, la commande suivante fait la même chose (à exécuter en root) :</p>
-<pre tabindex="0"><code>tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
-</code></pre><p>(<code>eno1</code> à remplacer par l&rsquo;interface réseau concernée)</p>
-<p>Exemple de sortie :</p>
-<pre tabindex="0"><code>root@localhost:~# tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
-tcpdump: listening on eno1, link-type EN10MB (Ethernet), snapshot length 1500 bytes
-09:26:57.257496 CDPv2, ttl: 180s, checksum: 0x9274 (unverified), length 447
-	Device-ID (0x01), value length: 32 bytes: &#39;c9300x.xxxxxx.net&#39;
-	Version String (0x05), value length: 250 bytes: 
-	  Cisco IOS Software [Amsterdam], Catalyst L3 Switch Software …</code></pre>
-		<p class="art-date">Publi&eacute; le 28 novembre 2024</p>
-		<p class="read-full"><a href="/link-discovery-tcpdump/">Tout lire</a></p>
-	</article>
-
 
 
 	<p class="index-pages">
@@ -200,6 +206,7 @@ tcpdump: listening on eno1, link-type EN10MB (Ethernet), snapshot length 1500 by
 		
 		<a href="/page/2/">Suivant</a>
 	</p>
+
 
 </main>
 <footer>

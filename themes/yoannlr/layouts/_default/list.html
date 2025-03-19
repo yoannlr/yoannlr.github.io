@@ -1,4 +1,14 @@
 {{ define "main" -}}
+{{ .Content }}
+{{ if eq .Params.indextype "tiles" }}
+<div class="index-tiles">
+{{ range .Pages }}
+	<a href="{{ .RelPermalink }}"><article>
+		{{ .Content | safeHTML | truncate 100 }}
+	</article></a>
+{{ end }}
+</div>
+{{ else }}
 {{ range .Paginator.Pages }}
 	<article>
 		{{ .Content | safeHTML | truncate 1000 }}
@@ -21,3 +31,4 @@
 	</p>
 {{ end }}
 {{- end }}
+{{ end }}

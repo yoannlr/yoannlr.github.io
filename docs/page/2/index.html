@@ -17,10 +17,53 @@
 	<h1><a href="/">yoannlr:~$</a></h1>
 	<p>notes d&apos;un admin sys</p>
 	<nav>
-		<p><a href="https://github.com/yoannlr">GitHub</a>
+		<p>
+			<a href="https://github.com/yoannlr">GitHub</a>
+			<a href="/cheatsheet">Cheatsheets</a>
+		</p>
 	</nav>
 </header>
 <main>
+
+
+	<article>
+		<h1 id="installit-des-scripts-pour-faciliter-linstallation-de-programmes-debian">installit, des scripts pour faciliter l&rsquo;installation de programmes Debian</h1>
+
+<div class="repo repo-github">
+	<p class="repo-name"><a href="https://github.com/yoannlr/installit">yoannlr/installit : Easy installation of some Debian programs</a></p>
+	
+		<p class="repo-type">GitHub</p>
+	
+</div>
+
+<p>Se chargent d&rsquo;ajouter automatiquement les dépots à APT, et de certaines configurations si nécessaire.</p>
+<p>Avec curl :</p>
+<pre tabindex="0"><code>curl https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh | sh
+</code></pre><p>Avec wget :</p>
+<pre tabindex="0"><code>wget -q https://raw.githubusercontent.com/yoannlr/installit/main/&lt;script&gt;.sh -O - | sh
+</code></pre>
+		<p class="art-date">Publi&eacute; le 29 novembre 2024</p>
+		<p class="read-full"><a href="/installit/">Tout lire</a></p>
+	</article>
+
+	<article>
+		<h1 id="trouvez-léquipement-réseau-et-le-port-auxquels-vous-êtes-connecté">Trouvez l&rsquo;équipement réseau et le port auxquels vous êtes connecté</h1>
+<p>Le programme <a href="https://github.com/chall32/LDWin">Link Discovery for Windows</a> remonte les infos du lien auquel on est connecté (nom du switch, port, numéro de vlan&hellip;).
+Il utilise tcpdump pour capturer un paquet LLDP ou CDP émis par le switch toutes les 60 secondes max.</p>
+<p>Sous Linux, la commande suivante fait la même chose (à exécuter en root) :</p>
+<pre tabindex="0"><code>tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
+</code></pre><p>(<code>eno1</code> à remplacer par l&rsquo;interface réseau concernée)</p>
+<p>Exemple de sortie :</p>
+<pre tabindex="0"><code>root@localhost:~# tcpdump -i eno1 &#39;(ether[12:2]=0x88cc or ether[20:2]=0x2000)&#39; -c 1 -s 1500 -v
+tcpdump: listening on eno1, link-type EN10MB (Ethernet), snapshot length 1500 bytes
+09:26:57.257496 CDPv2, ttl: 180s, checksum: 0x9274 (unverified), length 447
+	Device-ID (0x01), value length: 32 bytes: &#39;c9300x.xxxxxx.net&#39;
+	Version String (0x05), value length: 250 bytes: 
+	  Cisco IOS Software [Amsterdam], Catalyst L3 Switch Software …</code></pre>
+		<p class="art-date">Publi&eacute; le 28 novembre 2024</p>
+		<p class="read-full"><a href="/link-discovery-tcpdump/">Tout lire</a></p>
+	</article>
+
 	<article>
 		<h1 id="récupérez-la-clé-windows-dun-ordinateur">Récupérez la clé Windows d&rsquo;un ordinateur</h1>
 <p>Sous Windows, en cmd admin :</p>
@@ -47,6 +90,7 @@
 		
 		
 	</p>
+
 
 </main>
 <footer>

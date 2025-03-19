@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="fr">
 <head>
-	<title>Récupérez la clé Windows d&#39;un ordinateur - yoannlr, notes d&#39;un admin sys</title>
+	<title>Curseurs et Flatpak - yoannlr, notes d&#39;un admin sys</title>
 	<meta charset="utf-8">
 	
 		<meta name="keywords" content="">
@@ -23,13 +23,13 @@
 	</nav>
 </header>
 <main><article>
-	<h1 id="récupérez-la-clé-windows-dun-ordinateur">Récupérez la clé Windows d&rsquo;un ordinateur</h1>
-<p>Sous Windows, en cmd admin :</p>
-<pre tabindex="0"><code>wmic path softwarelicensingservice get OA3xOriginalProductKey
-</code></pre><p>Sous Linux en root :</p>
-<pre tabindex="0"><code>sudo grep -Eoa &#39;([A-Za-z0-9]{5}-){4}[A-Za-z0-9]{5}&#39; /sys/firmware/acpi/tables/MSDM
+	<h1 id="configurer-flatpak-pour-utiliser-le-curseur-du-bureau">Configurer Flatpak pour utiliser le curseur du bureau</h1>
+<p><img src="/img/flatpak-curseur.png" alt="C&rsquo;est plus joli quand ça respecte le thème !"></p>
+<p>Pour que les applications installées en flatpak respectent la configuration de votre curseur (thème et taille), il faut leur autoriser l&rsquo;accès à <code>~/.icons</code>.</p>
+<p>Exemple avec Dino :</p>
+<pre tabindex="0"><code>flatpak --user override im.dino.Dino --filesystem=${HOME}/.icons/:ro
 </code></pre>
-	<p class="art-date" id="art-date">Publi&eacute; le 20 août 2021</p>
+	<p class="art-date" id="art-date">Publi&eacute; le 19 mars 2025</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
 	
 		
@@ -38,7 +38,7 @@
 	
 	<script type="text/javascript">
 		let xhr = new XMLHttpRequest();
-		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/recuperer-cle-windows");
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/flatpak-curseur");
 		xhr.responseType = "json";
 		xhr.onload = function() {
 			count = this.response.value;

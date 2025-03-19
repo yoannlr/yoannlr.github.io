@@ -1,16 +1,14 @@
 <!doctype html>
-<html lang="{{ .Site.Language }}">
+<html lang="fr">
 <head>
-	<title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+	<title>Cheatsheets - yoannlr, notes d&#39;un admin sys</title>
 	<meta charset="utf-8">
-	{{ with .Page }}
-		<meta name="keywords" content="{{ delimit .Keywords ", " }}">
-	{{ else }}
-		<meta name="keywords" content="linux, sysadmin, blog">
-	{{ end }}
+	
+		<meta name="keywords" content="">
+	
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
-	<!-- tres important pour le responsive -->
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -24,8 +22,22 @@
 		</p>
 	</nav>
 </header>
-<main>
-	{{- block "main" . }}{{ .Content }}{{- end }}
+<main><h1 id="cheatsheets">Cheatsheets</h1>
+
+
+<div class="index-tiles">
+
+	<a href="/cheatsheet/git/"><article>
+		<h1 id="cheatsheet-git">Cheatsheet Git</h1>
+<h2 id="tags">tags</h2>
+<p>Un tag pointe vers un numéro de commit.</p>
+<pre tabindex="0"><code>git tag v1.0 # tag le commit actuel
+git …</code></pre>
+	</article></a>
+
+</div>
+
+
 </main>
 <footer>
 	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>

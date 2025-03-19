@@ -1,14 +1,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
 	<title>yoannlr, notes d&#39;un admin sys</title>
-	<link>https://yoannlr.github.io/</link>
+	<link>https://yoannlr.github.io/cheatsheet/</link>
 	<description>Derniers articles sur yoannlr, notes d&#39;un admin sys</description>
 	<generator>Hugo -- gohugo.io</generator>
 	<language>fr-fr</language>
-	<lastBuildDate>Wed, 19 Mar 2025 13:48:44 +0100</lastBuildDate>
+	<lastBuildDate>Tue, 18 Mar 2025 10:44:29 +0100</lastBuildDate>
 
 	
-		<atom:link href="https://yoannlr.github.io/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="https://yoannlr.github.io/cheatsheet/index.xml" rel="self" type="application/rss+xml" />
 	
 
 	
