@@ -29,10 +29,14 @@
 	<article>
 		<h1 id="configurer-flatpak-pour-utiliser-le-curseur-du-bureau">Configurer Flatpak pour utiliser le curseur du bureau</h1>
 <p><img src="/img/flatpak-curseur.png" alt="C&rsquo;est plus joli quand ça respecte le thème !"></p>
-<p>Pour que les applications installées en flatpak respectent la configuration de votre curseur (thème et taille), il faut leur autoriser l&rsquo;accès à <code>~/.icons</code>.</p>
+<p>Pour que les applications installées en flatpak respectent la configuration de votre curseur (thème et taille), il faut leur autoriser l&rsquo;accès à <code>~/.icons</code>.
+C&rsquo;est dans <code>~/.icons</code> que la configuration du curseur (taille et apparence) est définie.</p>
 <p>Exemple avec Dino :</p>
 <pre tabindex="0"><code>flatpak --user override im.dino.Dino --filesystem=${HOME}/.icons/:ro
-</code></pre>
+</code></pre><p>Une autre solution, possiblement meilleure, consiste à créer un lien symbolique de <code>~/.local/share/icons</code> vers <code>~/.icons</code> :</p>
+<pre tabindex="0"><code>ls -s ~/.icons ~/.local/share/icons
+</code></pre><p>Il semble en effet que la plupart des flatpak ont déjà accès à ce répertoire.</p>
+
 		<p class="art-date">Publi&eacute; le 19 mars 2025</p>
 		<p class="read-full"><a href="/flatpak-curseur/">Tout lire</a></p>
 	</article>
