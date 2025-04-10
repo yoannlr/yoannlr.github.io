@@ -59,12 +59,14 @@ git tag v0.9 hash_ancien_commit # cree un tag d&#39;un ancien commit
 (main) git checkout test-feature
 (test-feature) git stash pop # nos modifs reviennent sur la nouvelle branche
 (test-feature) git add, git commit ...
+</code></pre><pre tabindex="0"><code>git stash list
+git stash drop # drop le dernier stash (haut de la pile)
+git stash drop stash@{n} # drop le stash n
 </code></pre><h2 id="cloner-une-branche-spécifique">cloner une branche spécifique</h2>
 <pre tabindex="0"><code>git clone -b nom_branche url
 </code></pre><h2 id="grep-dans-lhistorique">grep dans l&rsquo;historique</h2>
 <pre tabindex="0"><code>git grep &#34;du texte a rechercher&#34; $(git rev-list --all)
-</code></pre><p>Affiche le commit et le fichier de chaque occurence, suivis par la ligne qui contient le texte recherché.</p>
-<h2 id="revenir-en-arrière">revenir en arrière …</h2>
+</code></pre><p>Affiche le …</p>
 		<p class="art-date">Publi&eacute; le 18 mars 2025</p>
 		<p class="read-full"><a href="/cheatsheet/git/">Tout lire</a></p>
 	</article>

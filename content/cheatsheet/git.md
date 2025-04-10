@@ -30,6 +30,12 @@ git tag v0.9 hash_ancien_commit # cree un tag d'un ancien commit
 (test-feature) git add, git commit ...
 ```
 
+```
+git stash list
+git stash drop # drop le dernier stash (haut de la pile)
+git stash drop stash@{n} # drop le stash n
+```
+
 ## cloner une branche spécifique
 
 ```

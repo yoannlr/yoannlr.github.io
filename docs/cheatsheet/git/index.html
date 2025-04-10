@@ -40,6 +40,9 @@ git tag v0.9 hash_ancien_commit # cree un tag d&#39;un ancien commit
 (main) git checkout test-feature
 (test-feature) git stash pop # nos modifs reviennent sur la nouvelle branche
 (test-feature) git add, git commit ...
+</code></pre><pre tabindex="0"><code>git stash list
+git stash drop # drop le dernier stash (haut de la pile)
+git stash drop stash@{n} # drop le stash n
 </code></pre><h2 id="cloner-une-branche-spécifique">cloner une branche spécifique</h2>
 <pre tabindex="0"><code>git clone -b nom_branche url
 </code></pre><h2 id="grep-dans-lhistorique">grep dans l&rsquo;historique</h2>
