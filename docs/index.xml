@@ -5,12 +5,20 @@
 	<description>Derniers articles sur yoannlr, notes d&#39;un admin sys</description>
 	<generator>Hugo -- gohugo.io</generator>
 	<language>fr-fr</language>
-	<lastBuildDate>Thu, 20 Mar 2025 09:23:12 +0100</lastBuildDate>
+	<lastBuildDate>Thu, 05 Jun 2025 00:00:00 +0200</lastBuildDate>
 
 	
 		<atom:link href="https://yoannlr.github.io/index.xml" rel="self" type="application/rss+xml" />
 	
 
+	
+	<item>
+		<title>Utiliser SSH pour exposer un serveur derrière un NAT</title>
+		<link>https://yoannlr.github.io/tunnel-ssh-serveur-nat/</link>
+		<pubDate>Thu, 05 Jun 2025 00:00:00 +0200</pubDate>
+		<guid>https://yoannlr.github.io/tunnel-ssh-serveur-nat/</guid>
+		<description>Utiliser SSH pour exposer un serveur derrière un NAT</description>
+	</item>
 	
 	<item>
 		<title>Curseurs et Flatpak</title>

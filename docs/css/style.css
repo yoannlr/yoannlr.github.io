@@ -17,6 +17,7 @@ body {
 	--lien_visite: #3E228C;
 	--lien_bg: #f8f8f8;
 	--lien_bg_hover: lightgray;
+    --notice_bordure: #fff18b;
 }
 header h1 {
 	text-align: center;
@@ -152,6 +153,12 @@ img {
 	transform: translate(-50%, -50%);
 	max-width: 25%;
 }
+/* shortcode notice */
+div.notice {
+	background-color: var(--lien_bg);
+	padding: 0.1em 0.5em;
+    border-left: 4px solid var(--notice_bordure);
+}
 /* index tiles */
 main > h1 {
 	text-align: center;
@@ -207,6 +214,7 @@ main > h1 {
 		--lien_visite: #876ECB;
 		--lien_bg: #333;
 		--lien_bg_hover: #444;
+        --notice_bordure: #b1a544;
 	}
 }
 @media print {

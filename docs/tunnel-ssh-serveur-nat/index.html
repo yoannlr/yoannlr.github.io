@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Utiliser SSH pour exposer un serveur derrière un NAT - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+	
+		<meta name="keywords" content="tunnel, ssh, cloudflare tunnel">
+	
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p>
+			<a href="https://github.com/yoannlr">GitHub</a>
+			<a href="/cheatsheet">Cheatsheets</a>
+		</p>
+	</nav>
+</header>
+<main><article>
+	<h1 id="utiliser-ssh-pour-exposer-un-serveur-derrière-un-nat">Utiliser SSH pour exposer un serveur derrière un NAT</h1>
+<p>À l&rsquo;aide d&rsquo;un petit VPS et de rien de plus que SSH, il est possible d&rsquo;exposer une machine derrière un NAT ou dans un LAN sans devoir configurer un mapping de port (aka &ldquo;ouvrir les ports de la box&rdquo;).
+La manip&rsquo; consiste à initier un tunnel SSH depuis la machine que l&rsquo;on souhaite exposer sur internet, vers le VPS qui dispose d&rsquo;une adresse IP publique.
+Ensuite, sur le VPS, il suffit d&rsquo;ouvrir un socket et de rediriger le traffic dans le tunnel.
+Excellente nouvelle : openssh fait tout cela de manière transparente, en une commande.</p>
+<p>Depuis la machine que l&rsquo;on souhaite exposer :</p>
+<pre tabindex="0"><code>ssh -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+</code></pre><p>Cette commande ouvre un tunnel de notre machine locale port 1234 vers un socket créé automatiquement sur le VPS port 1234, à l&rsquo;écoute de toutes les adresses.</p>
+<div class="notice">
+<p><strong>Important !</strong> Pour pouvoir écouter sur toutes les adresses (dont 0.0.0.0), il faut d&rsquo;abord configurer l&rsquo;option <code>GatewayPorts</code> du daemon SSH du VPS :</p>
+<p><code>/etc/ssh/sshd_config</code> :</p>
+<pre tabindex="0"><code>GatewayPorts clientspecified
+</code></pre><p>Puis <code>systemctl restart ssh</code></p>
+
+</div>
+
+<p>Pour que ssh ne lance pas de shell et se contente de gérer le tunnel, on peut ajouter l&rsquo;option <code>-N</code> à la commande.
+Si on souhaite exécuter le tunnel en arrière plan, on peut aussi rajouter l&rsquo;option <code>-f</code>.</p>
+<pre tabindex="0"><code>ssh -Nf -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+</code></pre><p>L&rsquo;avantage principal, selon moi, de cette manipulation, est de louer un petit VPS comme point d&rsquo;entrée vers un gros serveur qu&rsquo;on auto-héberge.
+On peut utiliser n&rsquo;importe quel protocole basé sur TCP.</p>
+<h3 id="un-exemple">Un exemple</h3>
+<p>Un exemple pour rendre publiquement accessible un serveur Minecraft (port 25565 par défaut) hébergé sur son propre LAN :</p>
+<pre tabindex="0"><code>ssh -Nf -R 0.0.0.0:25565:localhost:25565 tunneluser@vps
+</code></pre><p>Les clients indiqueront alors qu&rsquo;il souhaitent se connecter au VPS, mais le VPS ne servira que d&rsquo;intermédiaire entre eux et la machine du LAN.</p>
+<p>J&rsquo;ai testé cette solution et la latence est tout à fait acceptable : 40ms avec une box fibre optique et un VPS loué chez un hébergeur bien connu.</p>
+<h2 id="sécurisation-côté-vps">Sécurisation côté VPS</h2>
+<p>Pour limiter les risques, je vous recommande de créer un utilisateur dédié au tunnel, avec <code>/bin/true</code> comme shell :</p>
+<pre tabindex="0"><code>useradd -m -s /bin/true tunneluser
+</code></pre><p>Malgré cette configuration, notre <code>tunneluser</code> peut toujours spécifier une commande à lancer (<code>ssh tunneluser@vps ls /</code> par exemple).</p>
+<p>On va donc configurer le daemon SSH pour vraiment restreindre <code>tunneluser</code>.</p>
+<p>Édition de <code>/etc/ssh/sshd_config</code> :</p>
+<pre tabindex="0"><code>Match User tunneluser
+	X11Forwarding no
+	AllowAgentForwarding no
+	PermitTTY no
+	AllowTcpForwarding yes
+</code></pre><p>Puis <code>systemctl restart ssh</code></p>
+<h2 id="clé-ssh">Clé SSH</h2>
+<p>La nécessité de saisir un mot de passe à la connexion SSH empêche d&rsquo;ouvrir le tunnel automatiquement (avec un service par exemple).
+Pour résoudre ce problème, on va générer une clé SSH pour notre <code>tunneluser</code>.</p>
+<pre tabindex="0"><code>ssh-keygen -f tunneluser_rsa -t rsa -b 4096
+</code></pre><p>Puis copier la clé sur son compte, sur le VPS (d&rsquo;où la nécessité de lui avoir créé un homedir).</p>
+<pre tabindex="0"><code>ssh-copy-id -i tunneluser_rsa.pub tunneluser@vps
+</code></pre><h2 id="résilience-aux-pannes">Résilience aux pannes</h2>
+<p>On peut imaginer un script similaire à celui-ci pour rouvrir le tunnel en cas d&rsquo;incident réseau.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#00f">#!/bin/sh
+</span></span></span><span style="display:flex;"><span><span style="color:#00f"></span><span style="color:#00f">while</span> true
+</span></span><span style="display:flex;"><span><span style="color:#00f">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00f">if</span> nc -z vps ssh; <span style="color:#00f">then</span>
+</span></span><span style="display:flex;"><span>        echo <span style="color:#a31515">&#34;opening tunnel&#34;</span>
+</span></span><span style="display:flex;"><span>        ssh -N -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+</span></span><span style="display:flex;"><span>        echo <span style="color:#a31515">&#34;tunnel closed&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#00f">else</span>
+</span></span><span style="display:flex;"><span>        echo <span style="color:#a31515">&#34;vps currently unreachable, trying again in 20 seconds&#34;</span>
+</span></span><span style="display:flex;"><span>        sleep 20
+</span></span><span style="display:flex;"><span>    <span style="color:#00f">fi</span>
+</span></span><span style="display:flex;"><span><span style="color:#00f">done</span>
+</span></span></code></pre></div>
+	<p class="art-date" id="art-date">Publi&eacute; le 5 juin 2025</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+		
+		
+		
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/tunnel-ssh-serveur-nat");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", <span title=\"Compt&eacute; avec Abacus, une API libre et open-source\">consult&eacute; " + count + " fois</span>";
+		}
+		xhr.send();
+	</script>
+		
+	
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

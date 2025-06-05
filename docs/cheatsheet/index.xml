@@ -13,6 +13,14 @@
 
 	
 	<item>
+		<title>Utiliser SSH pour exposer un serveur derrière un NAT</title>
+		<link>https://yoannlr.github.io/tunnel-ssh-serveur-nat/</link>
+		<pubDate>Thu, 05 Jun 2025 00:00:00 +0200</pubDate>
+		<guid>https://yoannlr.github.io/tunnel-ssh-serveur-nat/</guid>
+		<description>Utiliser SSH pour exposer un serveur derrière un NAT</description>
+	</item>
+	
+	<item>
 		<title>Curseurs et Flatpak</title>
 		<link>https://yoannlr.github.io/flatpak-curseur/</link>
 		<pubDate>Wed, 19 Mar 2025 13:48:44 +0100</pubDate>
