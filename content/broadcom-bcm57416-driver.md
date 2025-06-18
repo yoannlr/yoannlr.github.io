@@ -2,6 +2,7 @@
 title: Résoudre le problème de compatibilité entre Linux et les cartes Broadcom BCM57416
 date: 2024-12-03
 draft: false
+description: Investigation et résolution d'un problème de modules noyaux pour cette carte réseau
 keywords:
   - linux
   - kernel

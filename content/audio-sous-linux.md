@@ -2,6 +2,15 @@
 title: "Comprendre l'audio sous Linux"
 date: 2024-12-05
 draft: false
+keywords:
+  - carte son
+  - linux
+  - audio
+  - alsa
+  - jack
+  - pipewire
+  - pulseaudio
+description: Comprendre le fonctionnement des différents composants utilisés pour le son sous Linux (ALSA, PulseAudio, Jack, PipeWire...)
 ---
 # Comprendre l'audio sous Linux
 

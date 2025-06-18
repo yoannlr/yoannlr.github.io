@@ -1,6 +1,7 @@
 ---
 title: Trouvez l'équipement réseau et le port auxquels vous êtes connecté
 date: 2024-11-28
+description: Utilisez l'utilitaire tcpdump pour capturer les informations que vous envoie le switch
 keywords:
   - reseau
   - tcpdump

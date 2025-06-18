@@ -1,6 +1,16 @@
 ---
 title: Récupérez la clé Windows d'un ordinateur
+description: Récupérez la clé Windows d'un ordinateur
 date: 2021-08-20
+keywords:
+  - windows
+  - linux
+  - license
+  - clé
+  - récupérer
+  - originale
+  - activation
+  - microsoft
 ---
 # Récupérez la clé Windows d'un ordinateur
 

@@ -3,11 +3,16 @@
 <head>
 	<title>{{ if not .IsHome }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
 	<meta charset="utf-8">
-	{{ with .Page }}
-		<meta name="keywords" content="{{ delimit .Keywords ", " }}">
-	{{ else }}
-		<meta name="keywords" content="linux, sysadmin, blog">
-	{{ end }}
+    {{ if not .IsHome }}
+        {{ with .Page }}
+            <meta name="keywords" content="{{ delimit .Keywords ", " }}">
+            <meta name="description" content="{{ .Description }}">
+        {{ end }}
+    {{ else }}
+        <meta name="description" content="Notes d'un admin sys">
+        <meta name="keywords" content="linux, sysadmin, blog">
+    {{ end }}
+    <meta name="author" content="yoannlr">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
 	<!-- tres important pour le responsive -->

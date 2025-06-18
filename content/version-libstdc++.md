@@ -1,6 +1,14 @@
 ---
 title: "Plusieurs versions de la libstdc++"
 date: 2025-02-28T19:16:31+01:00
+description: Installer dans un répertoire standalone la libstdc++ et gcc
+keywords:
+  - gcc
+  - standalone
+  - compiler
+  - glibc
+  - not found
+  - gnu
 ---
 # Comment installer plusieurs versions de la libstdc++
 

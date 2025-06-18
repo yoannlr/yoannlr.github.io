@@ -5,8 +5,8 @@
 <div class="youtube">
 	<a href="https://youtube.com/watch?v={{ .Get "videoid" }}">
 		<div class="youtube-thumb">
-			<img src="/play.png" class="youtube-play">
-			<img src="https://i.ytimg.com/vi/{{ .Get "videoid" }}/maxresdefault.jpg">
+			<img src="/play.webp" class="youtube-play" alt="Bouton Play">
+			<img src="https://i.ytimg.com/vi/{{ .Get "videoid" }}/maxresdefault.jpg" alt="{{ .Get "title" }}">
 		</div>
 	</a>
 	{{ if .Get "title" }}

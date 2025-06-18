@@ -2,6 +2,7 @@
 title: "Une disposition de clavier pour les admin sys"
 date: 2024-12-02
 draft: false
+description: Utiliser xkb ou xmodmap pour changer le layout du clavier afin de rendre certains caractères plus faciles à taper
 ---
 # Une disposition de clavier pour les admin sys
 

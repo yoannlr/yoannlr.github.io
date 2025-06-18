@@ -2,6 +2,7 @@
 title: "Auna Mic 900 sous Linux ?"
 date: 2025-02-16T14:55:54+01:00
 draft: false
+description: Configurer le chargement du bon module noyau pour rendre ce microphone plug and play
 keywords:
   - linux
   - kernel

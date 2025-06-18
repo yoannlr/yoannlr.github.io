@@ -1,6 +1,17 @@
 ---
 title: "Blocage NFS sous Debian 12"
 date: 2025-03-13T16:49:08+01:00
+keywords:
+  - linux
+  - debian
+  - noyau
+  - kernel
+  - nfs
+  - session destroy
+  - freeze
+  - stuck in d state
+  - blocage
+description: Investigation et résolution d'un blocage du serveur NFS de Debian 12 causé par un bug noyau
 ---
 # Résoudre les blocages du serveur NFS sous Debian 12 (nfsd stuck in D state)
 

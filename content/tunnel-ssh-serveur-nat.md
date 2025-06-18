@@ -2,6 +2,7 @@
 title: "Utiliser SSH pour exposer un serveur derrière un NAT"
 date: 2025-06-05T00:00:00+02:00
 draft: false
+description: SSH permet d'utiliser un VPS comme intermédiaire pour exposer une machine de votre LAN sur Internet
 keywords:
   - tunnel
   - ssh
