@@ -92,8 +92,14 @@ a {
 a:visited {
 	color: var(--lien_visite);
 }
+article a {
+	border-bottom: 1px dashed;
+}
 p.back-home, p.read-full {
 	text-align: center;
+}
+p.back-home a, p.read-full a {
+	border-bottom: none;
 }
 p.index-pages {
 	text-align: right;
