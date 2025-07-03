@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
     
         
-            <meta name="keywords" content="tunnel, ssh, cloudflare tunnel">
+            <meta name="keywords" content="tunnel, ssh, cloudflare tunnel, tcp, udp, autossh, robuste, resilient, automatique, nat, forwarding, transfert, remote">
             <meta name="description" content="SSH permet d&#39;utiliser un VPS comme intermédiaire pour exposer une machine de votre LAN sur Internet">
         
     
@@ -72,20 +72,48 @@ Pour résoudre ce problème, on va générer une clé SSH pour notre <code>tunne
 </code></pre><p>Puis copier la clé sur son compte, sur le VPS (d&rsquo;où la nécessité de lui avoir créé un homedir).</p>
 <pre tabindex="0"><code>ssh-copy-id -i tunneluser_rsa.pub tunneluser@vps
 </code></pre><h2 id="résilience-aux-pannes">Résilience aux pannes</h2>
-<p>On peut imaginer un script similaire à celui-ci pour rouvrir le tunnel en cas d&rsquo;incident réseau.</p>
+<p>Plusieurs options SSH sont intéressantes pour détecter les pannes réseau et rouvrir le tunnel dès le rétablissement.</p>
+<p>Dans <code>man ssh_config</code> (options côté client) :</p>
+<ul>
+<li>
+<p>l&rsquo;option <code>ServerAliveInterval</code> permet d&rsquo;envoyer des paquets pour tester la connexion à intervalle régulier (défini en secondes)</p>
+</li>
+<li>
+<p>l&rsquo;option <code>ServerAliveCountMax</code> définit le nombre de paquets sans réponse toléré avant de considérer que la connexion a timeout et de rendre la main</p>
+</li>
+<li>
+<p>l&rsquo;option <code>ExitOnForwardFailure</code> (définir à yes) rend la main si le tunnel ne s&rsquo;est pas ouvert correctement</p>
+</li>
+</ul>
+<p>Ces options nous donnent la commande suivante, plus robuste, que l&rsquo;on pourrait exéctuer dans une boucle pour toujours rouvrir le tunnel :</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>ssh -N -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+</span></span></code></pre></div><p>Avec ces options, le client SSH rendra la main au bout de 30 secondes d&rsquo;incident réseau (3 × 10 secondes) ou si la connexion SSH s&rsquo;est bien passée mais pas l&rsquo;ouverture du tunnel.</p>
+<p>On peut aussi s&rsquo;intéresser aux options côté serveur (<code>man sshd_config</code>) :</p>
+<ul>
+<li>
+<p>les options <code>ClientAliveInterval</code> et <code>ClientAliveCountMax</code>, mécanisme équivalent côté serveur.
+On peut les définir aux mêmes valeurs que côté client.</p>
+</li>
+<li>
+<p>l&rsquo;option <code>StreamLocalBindUnlink</code> (définir à yes) s&rsquo;assure que les sockets &ldquo;zombies&rdquo; ouverts par des tunnels précédents sont nettoyés avant de créer des nouveaux sockets.
+Ça permet d&rsquo;éviter des erreurs &ldquo;cannot listen on port 1234&rdquo; car un socket existe toujours !</p>
+<p>Si vous n&rsquo;aviez pas activé cette option et que des sockets &ldquo;zombies&rdquo; vous bloquent, utilisez <code>ss</code> pour les fermer : <code>ss --kill state close-wait src :1234</code></p>
+</li>
+</ul>
+<p>Ces trois dernières options sont à définir dans <code>/etc/ssh/sshd_config</code>.</p>
+<p>Côté client, on peut imaginer un script similaire à celui-ci pour un tunnel résilient aux incidents réseau :</p>
 <div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span><span style="color:#00f">#!/bin/sh
-</span></span></span><span style="display:flex;"><span><span style="color:#00f"></span><span style="color:#00f">while</span> true
-</span></span><span style="display:flex;"><span><span style="color:#00f">do</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#00f">if</span> nc -z vps ssh; <span style="color:#00f">then</span>
-</span></span><span style="display:flex;"><span>        echo <span style="color:#a31515">&#34;opening tunnel&#34;</span>
-</span></span><span style="display:flex;"><span>        ssh -N -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
-</span></span><span style="display:flex;"><span>        echo <span style="color:#a31515">&#34;tunnel closed&#34;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#00f">else</span>
-</span></span><span style="display:flex;"><span>        echo <span style="color:#a31515">&#34;vps currently unreachable, trying again in 20 seconds&#34;</span>
-</span></span><span style="display:flex;"><span>        sleep 20
-</span></span><span style="display:flex;"><span>    <span style="color:#00f">fi</span>
+</span></span></span><span style="display:flex;"><span><span style="color:#00f"></span><span style="color:#00f">while</span> true; <span style="color:#00f">do</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#a31515">&#34;opening tunnel&#34;</span>
+</span></span><span style="display:flex;"><span>    ssh -N -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+</span></span><span style="display:flex;"><span>    echo <span style="color:#a31515">&#34;tunnel closed, trying again in 20 seconds&#34;</span>
 </span></span><span style="display:flex;"><span><span style="color:#00f">done</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><h2 id="et-pour-le-traffic-udp-">Et pour le traffic UDP ?</h2>
+<p>Cette méthode est limitée à l&rsquo;ouverture de tunnels TCP.
+Des hacks basés sur <code>socat</code> ou <code>netcat</code> existent pour faire transiter les datagrammes UDP dans des paquets TCP, mais la nature totalement différente des protocoles n&rsquo;offre aucune garantie quand à la fiabilité de ces méthodes.</p>
+<p>L&rsquo;outil <a href="https://securesocketfunneling.github.io/ssf/#home">ssf</a> répond au besoin, avec une latence plus importante (140 ms dans le même contexte).
+Un article est à venir au sujet de sa configuration et de son utilisation.</p>
+
 	<p class="art-date" id="art-date">Publi&eacute; le 5 juin 2025</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
 	

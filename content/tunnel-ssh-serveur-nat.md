@@ -7,6 +7,16 @@ keywords:
   - tunnel
   - ssh
   - cloudflare tunnel
+  - tcp
+  - udp
+  - autossh
+  - robuste
+  - resilient
+  - automatique
+  - nat
+  - forwarding
+  - transfert
+  - remote
 ---
 # Utiliser SSH pour exposer un serveur derrière un NAT
 
@@ -98,19 +108,51 @@ ssh-copy-id -i tunneluser_rsa.pub tunneluser@vps
 
 ## Résilience aux pannes
 
-On peut imaginer un script similaire à celui-ci pour rouvrir le tunnel en cas d'incident réseau.
+Plusieurs options SSH sont intéressantes pour détecter les pannes réseau et rouvrir le tunnel dès le rétablissement.
+
+Dans `man ssh_config` (options côté client) :
+
+- l'option `ServerAliveInterval` permet d'envoyer des paquets pour tester la connexion à intervalle régulier (défini en secondes)
+
+- l'option `ServerAliveCountMax` définit le nombre de paquets sans réponse toléré avant de considérer que la connexion a timeout et de rendre la main
+
+- l'option `ExitOnForwardFailure` (définir à yes) rend la main si le tunnel ne s'est pas ouvert correctement
+
+Ces options nous donnent la commande suivante, plus robuste, que l'on pourrait exéctuer dans une boucle pour toujours rouvrir le tunnel :
+
+```sh
+ssh -N -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+```
+
+Avec ces options, le client SSH rendra la main au bout de 30 secondes d'incident réseau (3 × 10 secondes) ou si la connexion SSH s'est bien passée mais pas l'ouverture du tunnel.
+
+On peut aussi s'intéresser aux options côté serveur (`man sshd_config`) :
+
+- les options `ClientAliveInterval` et `ClientAliveCountMax`, mécanisme équivalent côté serveur.
+  On peut les définir aux mêmes valeurs que côté client.
+
+- l'option `StreamLocalBindUnlink` (définir à yes) s'assure que les sockets "zombies" ouverts par des tunnels précédents sont nettoyés avant de créer des nouveaux sockets.
+  Ça permet d'éviter des erreurs "cannot listen on port 1234" car un socket existe toujours !
+
+  Si vous n'aviez pas activé cette option et que des sockets "zombies" vous bloquent, utilisez `ss` pour les fermer : `ss --kill state close-wait src :1234`
+
+Ces trois dernières options sont à définir dans `/etc/ssh/sshd_config`.
+
+Côté client, on peut imaginer un script similaire à celui-ci pour un tunnel résilient aux incidents réseau :
 
 ```sh
 #!/bin/sh
-while true
-do
-    if nc -z vps ssh; then
-        echo "opening tunnel"
-        ssh -N -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
-        echo "tunnel closed"
-    else
-        echo "vps currently unreachable, trying again in 20 seconds"
-        sleep 20
-    fi
+while true; do
+    echo "opening tunnel"
+    ssh -N -o ServerAliveInterval=10 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -R 0.0.0.0:1234:localhost:1234 tunneluser@vps
+    echo "tunnel closed, trying again in 20 seconds"
 done
 ```
+
+## Et pour le traffic UDP ?
+
+Cette méthode est limitée à l'ouverture de tunnels TCP.
+Des hacks basés sur `socat` ou `netcat` existent pour faire transiter les datagrammes UDP dans des paquets TCP, mais la nature totalement différente des protocoles n'offre aucune garantie quand à la fiabilité de ces méthodes.
+
+L'outil [ssf](https://securesocketfunneling.github.io/ssf/#home) répond au besoin, avec une latence plus importante (140 ms dans le même contexte).
+Un article est à venir au sujet de sa configuration et de son utilisation.
