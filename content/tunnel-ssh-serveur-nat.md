@@ -156,4 +156,4 @@ Des hacks basés sur `socat` ou `netcat` existent pour faire transiter les datag
 
 L'outil [ssf](https://securesocketfunneling.github.io/ssf/#home) répond au besoin, avec une latence plus importante (140 ms dans le même contexte).
 
-👉 Mon article sur le sujet : [Créer un tunnel UDP pour avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT](/tunnel-udp-ssf)
+👉 Mon article sur le sujet : [Créer un tunnel UDP avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT](/tunnel-udp-ssf)

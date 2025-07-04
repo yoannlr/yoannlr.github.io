@@ -11,10 +11,10 @@ keywords:
   - exposer
 description: À l'instar de SSH pour les tunnels TCP, il est possible d'utiliser SSF pour exposer le traffic UDP d'un serveur derrière un NAT.
 ---
-# Créer un tunnel UDP pour avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT
+# Créer un tunnel UDP avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT
 
-Dans [cet article précédent](/tunnel-ssh-serveur-nat/), je vous expliquais comment créer un tunnel SSH pour exposer les services d'une machine sur votre LAN, publiquement sur Internet en passant par un VPS.
-Les tunnels SSH sont cependant restreints aux protocoles basés sur TCP.
+Dans [cet article précédent](/tunnel-ssh-serveur-nat/), je vous expliquais comment créer un tunnel SSH pour exposer les services d'une machine de votre LAN, publiquement sur Internet en passant par un VPS.
+Cette méthode présente une limite principale : seuls les tunnels TCP fonctionnent.
 
 Des hacks[^1] basés sur `socat` ou `netcat` existent pour embarquer des datagrammes UDP dans des trames TCP qui transitent dans le tunnel, mais les protocoles sont fondamentalement différents donc rien ne garantit la fiabilité des tunnels.
 Notamment, TCP s'assure que les données sont acheminées alors qu'UDP peut renvoyer des données.
