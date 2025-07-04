@@ -5,12 +5,20 @@
 	<description>Derniers articles sur yoannlr, notes d&#39;un admin sys</description>
 	<generator>Hugo -- gohugo.io</generator>
 	<language>fr-fr</language>
-	<lastBuildDate>Thu, 05 Jun 2025 00:00:00 +0200</lastBuildDate>
+	<lastBuildDate>Fri, 04 Jul 2025 11:31:19 +0200</lastBuildDate>
 
 	
 		<atom:link href="https://yoannlr.github.io/index.xml" rel="self" type="application/rss+xml" />
 	
 
+	
+	<item>
+		<title>Créer un tunnel UDP avec SSF (Secure Socket Funneling)</title>
+		<link>https://yoannlr.github.io/tunnel-udp-ssf/</link>
+		<pubDate>Fri, 04 Jul 2025 11:31:19 +0200</pubDate>
+		<guid>https://yoannlr.github.io/tunnel-udp-ssf/</guid>
+		<description>Créer un tunnel UDP avec SSF (Secure Socket Funneling)</description>
+	</item>
 	
 	<item>
 		<title>Utiliser SSH pour exposer un serveur derrière un NAT</title>

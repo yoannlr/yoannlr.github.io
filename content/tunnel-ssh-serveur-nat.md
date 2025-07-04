@@ -155,4 +155,5 @@ Cette méthode est limitée à l'ouverture de tunnels TCP.
 Des hacks basés sur `socat` ou `netcat` existent pour faire transiter les datagrammes UDP dans des paquets TCP, mais la nature totalement différente des protocoles n'offre aucune garantie quand à la fiabilité de ces méthodes.
 
 L'outil [ssf](https://securesocketfunneling.github.io/ssf/#home) répond au besoin, avec une latence plus importante (140 ms dans le même contexte).
-Un article est à venir au sujet de sa configuration et de son utilisation.
+
+👉 Mon article sur le sujet : [Créer un tunnel UDP pour avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT](/tunnel-udp-ssf)

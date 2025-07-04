@@ -95,10 +95,14 @@ a:visited {
 article a {
 	border-bottom: 1px dashed;
 }
+a.footnote-ref {
+    font-family: "Red Hat Mono";
+    border-bottom: none;
+}
 p.back-home, p.read-full {
 	text-align: center;
 }
-p.back-home a, p.read-full a {
+p.back-home a, p.read-full a, .youtube a, .repo a {
 	border-bottom: none;
 }
 p.index-pages {

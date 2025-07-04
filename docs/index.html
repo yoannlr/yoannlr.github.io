@@ -29,6 +29,21 @@
 
 
 	<article>
+		<h1 id="créer-un-tunnel-udp-pour-avec-ssf-secure-socket-funneling-pour-exposer-un-service-derrière-un-nat">Créer un tunnel UDP pour avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT</h1>
+<p>Dans <a href="/tunnel-ssh-serveur-nat/">cet article précédent</a>, je vous expliquais comment créer un tunnel SSH pour exposer les services d&rsquo;une machine sur votre LAN, publiquement sur Internet en passant par un VPS.
+Les tunnels SSH sont cependant restreints aux protocoles basés sur TCP.</p>
+<p>Des hacks<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> basés sur <code>socat</code> ou <code>netcat</code> existent pour embarquer des datagrammes UDP dans des trames TCP qui transitent dans le tunnel, mais les protocoles sont fondamentalement différents donc rien ne garantit la fiabilité des tunnels.
+Notamment, TCP s&rsquo;assure que les données sont acheminées alors qu&rsquo;UDP peut renvoyer des données.
+On pourrait donc recevoir plusieurs fois les mêmes données.</p>
+<p>Il nous faut donc utiliser un autre outil, comme <a href="https://securesocketfunneling.github.io/ssf/#home">SSF (Secure Socket Funneling)</a>.</p>
+<p>SSF peut être exécuté comme serveur sur votre VPS.
+Le serveur attend les demandes d&rsquo;ouverture de tunnels de la part des clients.
+SSF supporte TCP et UDP, …</p>
+		<p class="art-date">Publi&eacute; le 4 juillet 2025</p>
+		<p class="read-full"><a href="/tunnel-udp-ssf/">Tout lire</a></p>
+	</article>
+
+	<article>
 		<h1 id="utiliser-ssh-pour-exposer-un-serveur-derrière-un-nat">Utiliser SSH pour exposer un serveur derrière un NAT</h1>
 <p>À l&rsquo;aide d&rsquo;un petit VPS et de rien de plus que SSH, il est possible d&rsquo;exposer une machine derrière un NAT ou dans un LAN sans devoir configurer un mapping de port (aka &ldquo;ouvrir les ports de la box&rdquo;).
 La manip&rsquo; consiste à initier un tunnel SSH depuis la machine que l&rsquo;on souhaite exposer sur internet, vers le VPS qui dispose d&rsquo;une adresse IP publique.
@@ -166,20 +181,6 @@ Par exemple, VLC est tout à fait capable de s&rsquo;adresser à ALSA.</p>
 Si VLC utilise la …</p></div></a></div>
 		<p class="art-date">Publi&eacute; le 5 décembre 2024</p>
 		<p class="read-full"><a href="/audio-sous-linux/">Tout lire</a></p>
-	</article>
-
-	<article>
-		<h1 id="résoudre-le-problème-de-compatibilité-entre-linux-et-les-cartes-broadcom-bcm57416">Résoudre le problème de compatibilité entre Linux et les cartes Broadcom BCM57416</h1>
-<p>Les versions récentes du noyau Linux (apparemment 6.5+) ne reconnaissent pas correctement ces cartes réseau qu&rsquo;on peut acheter par exemple chez HPE.
-En Linux 6.2, aucun souci.</p>
-<p>Messages d&rsquo;erreur type dans dmesg :</p>
-<pre tabindex="0"><code>Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.0 (unnamed net_device) (uninitialized): Device requests max timeout of 100 seconds, may trigger hung task watchdog
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.0 eth0: Broadcom BCM57416 NetXtreme-E 10GBase-T Ethernet found at mem de610000, node addr aa:bb:cc:dd:ee:11
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.0: 63.008 Gb/s available PCIe bandwidth (8.0 GT/s PCIe x8 link)
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.1 (unnamed net_device) (uninitialized): Device requests max timeout of 100 seconds, may trigger hung task watchdog
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.1 eth1: Broadcom BCM57416 …</code></pre>
-		<p class="art-date">Publi&eacute; le 3 décembre 2024</p>
-		<p class="read-full"><a href="/broadcom-bcm57416-driver/">Tout lire</a></p>
 	</article>
 
 
