@@ -65,6 +65,8 @@ git commit --amend --reset-author # pour changer d&#39;auteur
 </code></pre><h3 id="annuler-un-push">annuler un push</h3>
 <pre tabindex="0"><code>git reset --soft HEAD~1 # ou git reset --soft commit_hash
 git push nom_remote +nom_branche
+</code></pre><h3 id="pushpull-avec-une-clé-ssh-spécifique">push/pull avec une clé ssh spécifique</h3>
+<pre tabindex="0"><code>GIT_SSH_COMMAND=&#34;ssh -i ~/.ssh/other_key&#34; git push ...
 </code></pre>
 	<p class="art-date" id="art-date">Publi&eacute; le 18 mars 2025</p>
 	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>

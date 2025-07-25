@@ -79,3 +79,9 @@ git commit --amend --reset-author # pour changer d'auteur
 git reset --soft HEAD~1 # ou git reset --soft commit_hash
 git push nom_remote +nom_branche
 ```
+
+### push/pull avec une clé ssh spécifique
+
+```
+GIT_SSH_COMMAND="ssh -i ~/.ssh/other_key" git push ...
+```
