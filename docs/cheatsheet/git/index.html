@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
     
         
-            <meta name="keywords" content="">
-            <meta name="description" content="">
+            <meta name="keywords" content="cheatsheet, git">
+            <meta name="description" content="Cheatsheet Git">
         
     
     <meta name="author" content="yoannlr">
@@ -28,7 +28,7 @@
 </header>
 <main><article>
 	<h1 id="cheatsheet-git">Cheatsheet Git</h1>
-<h2 id="tags">tags</h2>
+<h2 id="tags">Tags</h2>
 <p>Un tag pointe vers un numéro de commit.</p>
 <pre tabindex="0"><code>git tag v1.0 # tag le commit actuel
 git push origin v1.0 # push le tag sur le remote
@@ -37,7 +37,7 @@ git push origin -d v1.0 # supprime sur le remote
 git push origin --tags # push tous les tags
 
 git tag v0.9 hash_ancien_commit # cree un tag d&#39;un ancien commit
-</code></pre><h2 id="stash">stash</h2>
+</code></pre><h2 id="stash">Stash</h2>
 <p>&ldquo;stasher&rdquo; permet de mettre de côté le travail pour réorganiser le dépot.</p>
 <pre tabindex="0"><code>(main) git stash # nos modifs sont mises de coté et disparaissent de la branche courante
 (main) git branch test-feature # nouvelle branche
@@ -47,25 +47,25 @@ git tag v0.9 hash_ancien_commit # cree un tag d&#39;un ancien commit
 </code></pre><pre tabindex="0"><code>git stash list
 git stash drop # drop le dernier stash (haut de la pile)
 git stash drop stash@{n} # drop le stash n
-</code></pre><h2 id="cloner-une-branche-spécifique">cloner une branche spécifique</h2>
+</code></pre><h2 id="cloner-une-branche-spécifique">Cloner une branche spécifique</h2>
 <pre tabindex="0"><code>git clone -b nom_branche url
-</code></pre><h2 id="grep-dans-lhistorique">grep dans l&rsquo;historique</h2>
+</code></pre><h2 id="grep-dans-lhistorique">Grep dans l&rsquo;historique</h2>
 <pre tabindex="0"><code>git grep &#34;du texte a rechercher&#34; $(git rev-list --all)
 </code></pre><p>Affiche le commit et le fichier de chaque occurence, suivis par la ligne qui contient le texte recherché.</p>
-<h2 id="revenir-en-arrière">revenir en arrière</h2>
-<h3 id="annuler-un-git-add">annuler un git add</h3>
+<h2 id="revenir-en-arrière">Revenir en arrière</h2>
+<h3 id="annuler-un-git-add">Annuler un git add</h3>
 <pre tabindex="0"><code>git reset fichier # annule git add fichier
 git reset # annule git add .
-</code></pre><h3 id="annuler-un-git-commit">annuler un git commit</h3>
+</code></pre><h3 id="annuler-un-git-commit">Annuler un git commit</h3>
 <pre tabindex="0"><code>git reset --soft HEAD~1 # non destructif
 git reset --hard HEAD~1 # détruit les modifications apportées aux fichiers
-</code></pre><h3 id="modifier-un-commit">modifier un commit</h3>
+</code></pre><h3 id="modifier-un-commit">Modifier un commit</h3>
 <pre tabindex="0"><code>git commit --amend # pour modifier le message
 git commit --amend --reset-author # pour changer d&#39;auteur
-</code></pre><h3 id="annuler-un-push">annuler un push</h3>
+</code></pre><h3 id="annuler-un-push">Annuler un push</h3>
 <pre tabindex="0"><code>git reset --soft HEAD~1 # ou git reset --soft commit_hash
 git push nom_remote +nom_branche
-</code></pre><h3 id="pushpull-avec-une-clé-ssh-spécifique">push/pull avec une clé ssh spécifique</h3>
+</code></pre><h3 id="pushpull-avec-une-clé-ssh-spécifique">Push/pull avec une clé ssh spécifique</h3>
 <pre tabindex="0"><code>GIT_SSH_COMMAND=&#34;ssh -i ~/.ssh/other_key&#34; git push ...
 </code></pre>
 	<p class="art-date" id="art-date">Publi&eacute; le 18 mars 2025</p>

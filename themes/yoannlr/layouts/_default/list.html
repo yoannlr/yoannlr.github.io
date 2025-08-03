@@ -1,33 +1,40 @@
 {{ define "main" -}}
 {{ .Content }}
-{{ if eq .Params.indextype "tiles" }}
-<div class="index-tiles">
+{{ if eq .Path "/cheatsheet" }}
+<div class="index-cheatsheet">
 {{ range .Pages }}
 	<a href="{{ .RelPermalink }}"><article>
-		{{ .Content | safeHTML | truncate 100 }}
+		{{ if .Params.icon }}
+			<img src="{{ .Params.icon }}" alt="{{ .Title }}"/>
+		{{ else }}
+			<h1>{{ .Title }}<h1>
+		{{ end }}
 	</article></a>
 {{ end }}
 </div>
 {{ else }}
-{{ range .Paginator.Pages }}
+{{/* https://discourse.gohugo.io/t/exclude-main-pages-from-range-and-paginate/33780/3 */}}
+{{/* https://gohugo.io/functions/collections/where/ */}}
+{{ $paginator := .Paginate (where .Site.RegularPages "Section" "ne" "cheatsheet") }}
+{{ range $paginator.Pages }}
 	<article>
 		{{ .Content | safeHTML | truncate 1000 }}
 		<p class="art-date">Publi&eacute; le {{ .Date | time.Format ":date_long" }}</p>
 		<p class="read-full"><a href="{{ .RelPermalink }}">Tout lire</a></p>
 	</article>
 {{ end }}
-<!-- https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/pagination.html -->
-{{ if gt .Paginator.TotalPages 1 }}
+{{/* https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/pagination.html */}}
+{{ if gt $paginator.TotalPages 1 }}
 	<p class="index-pages">
-		{{ if .Paginator.HasPrev }}<a href="{{ .Paginator.Prev.URL }}">Pr&eacute;c&eacute;dent</a>{{ end }}
-		{{ range $n := seq 1 .Paginator.TotalPages }}
-			{{ if eq $.Paginator.PageNumber $n }}
+		{{ if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}">Pr&eacute;c&eacute;dent</a>{{ end }}
+		{{ range $n := seq 1 $paginator.TotalPages }}
+			{{ if eq $paginator.PageNumber $n }}
 				<span>{{ $n }}</span>
 			{{ else }}
-				<a href="{{ (index $.Paginator.Pagers (sub $n 1)).URL }}">{{ $n }}</a>
+				<a href="{{ (index $paginator.Pagers (sub $n 1)).URL }}">{{ $n }}</a>
 			{{ end }}
 		{{ end }}
-		{{ if .Paginator.HasNext }}<a href="{{ .Paginator.Next.URL }}">Suivant</a>{{ end }}
+		{{ if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}">Suivant</a>{{ end }}
 	</p>
 {{ end }}
 {{- end }}

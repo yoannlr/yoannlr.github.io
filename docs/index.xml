@@ -5,12 +5,28 @@
 	<description>Derniers articles sur yoannlr, notes d&#39;un admin sys</description>
 	<generator>Hugo -- gohugo.io</generator>
 	<language>fr-fr</language>
-	<lastBuildDate>Fri, 04 Jul 2025 11:31:19 +0200</lastBuildDate>
+	<lastBuildDate>Sun, 03 Aug 2025 18:47:00 +0200</lastBuildDate>
 
 	
 		<atom:link href="https://yoannlr.github.io/index.xml" rel="self" type="application/rss+xml" />
 	
 
+	
+	<item>
+		<title>Cheatsheet Libre Office</title>
+		<link>https://yoannlr.github.io/cheatsheet/libreoffice/</link>
+		<pubDate>Sun, 03 Aug 2025 18:47:00 +0200</pubDate>
+		<guid>https://yoannlr.github.io/cheatsheet/libreoffice/</guid>
+		<description>Cheatsheet Libre Office</description>
+	</item>
+	
+	<item>
+		<title>Kdenlive</title>
+		<link>https://yoannlr.github.io/cheatsheet/kdenlive/</link>
+		<pubDate>Sun, 03 Aug 2025 18:47:00 +0200</pubDate>
+		<guid>https://yoannlr.github.io/cheatsheet/kdenlive/</guid>
+		<description>Kdenlive</description>
+	</item>
 	
 	<item>
 		<title>Créer un tunnel UDP avec SSF (Secure Socket Funneling)</title>

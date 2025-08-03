@@ -1,10 +1,15 @@
 ---
 title: "Cheatsheet Git"
 date: 2025-03-18T10:44:29+01:00
+keywords:
+  - cheatsheet
+  - git
+description: Cheatsheet Git
+icon: /img/git.webp
 ---
 # Cheatsheet Git
 
-## tags
+## Tags
 
 Un tag pointe vers un numéro de commit.
 
@@ -18,7 +23,7 @@ git push origin --tags # push tous les tags
 git tag v0.9 hash_ancien_commit # cree un tag d'un ancien commit
 ```
 
-## stash
+## Stash
 
 "stasher" permet de mettre de côté le travail pour réorganiser le dépot.
 
@@ -36,13 +41,13 @@ git stash drop # drop le dernier stash (haut de la pile)
 git stash drop stash@{n} # drop le stash n
 ```
 
-## cloner une branche spécifique
+## Cloner une branche spécifique
 
 ```
 git clone -b nom_branche url
 ```
 
-## grep dans l'historique
+## Grep dans l'historique
 
 ```
 git grep "du texte a rechercher" $(git rev-list --all)
@@ -50,37 +55,37 @@ git grep "du texte a rechercher" $(git rev-list --all)
 
 Affiche le commit et le fichier de chaque occurence, suivis par la ligne qui contient le texte recherché.
 
-## revenir en arrière
+## Revenir en arrière
 
-### annuler un git add
+### Annuler un git add
 
 ```
 git reset fichier # annule git add fichier
 git reset # annule git add .
 ```
 
-### annuler un git commit
+### Annuler un git commit
 
 ```
 git reset --soft HEAD~1 # non destructif
 git reset --hard HEAD~1 # détruit les modifications apportées aux fichiers
 ```
 
-### modifier un commit
+### Modifier un commit
 
 ```
 git commit --amend # pour modifier le message
 git commit --amend --reset-author # pour changer d'auteur
 ```
 
-### annuler un push
+### Annuler un push
 
 ```
 git reset --soft HEAD~1 # ou git reset --soft commit_hash
 git push nom_remote +nom_branche
 ```
 
-### push/pull avec une clé ssh spécifique
+### Push/pull avec une clé ssh spécifique
 
 ```
 GIT_SSH_COMMAND="ssh -i ~/.ssh/other_key" git push ...

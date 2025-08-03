@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Kdenlive - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+    
+        
+            <meta name="keywords" content="cheatsheet, kdenlive">
+            <meta name="description" content="Cheatsheet Kdenlive">
+        
+    
+    <meta name="author" content="yoannlr">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p>
+			<a href="https://github.com/yoannlr">GitHub</a>
+			<a href="/cheatsheet">Cheatsheets</a>
+		</p>
+	</nav>
+</header>
+<main><article>
+	<h1 id="cheatsheet-kdenlive">Cheatsheet Kdenlive</h1>
+<p>Shift + drag un clip permet de le redimensionner lui seul au sein d&rsquo;un groupe</p>
+<p>Si on sélectionne une piste, on peut appliquer des effets pour toute la piste</p>
+<p>Effet &ldquo;color overlay&rdquo; ≃ recoloriser l&rsquo;image sans trop perdre les couleurs, comme un calque transparent de couleur par dessus</p>
+<h2 id="décaler-les-guides-en-même-temps-que-les-clips">Décaler les guides en même temps que les clips</h2>
+<ul>
+<li>Clic droit sur les graduations de la timeline, décocher &ldquo;Guides locked&rdquo;</li>
+<li>Passer en mode &ldquo;Spacer tool&rdquo;</li>
+<li>Cliquer sur un clip et commencer le déplacement</li>
+</ul>
+<p><a href="https://docs.kdenlive.org/en/cutting_and_assembling/guides.html#move-guides-with-spacer-tool">Référence</a></p>
+<h2 id="appliquer-un-effet-sur-une-région">Appliquer un effet sur une région</h2>
+<p>Pile de 3 effets (dans l&rsquo;ordre) :</p>
+<ul>
+<li>Effet Alpha Shapes (Mask), Rotoscoping (Mask), ou tout autre effet de création d&rsquo;un masque</li>
+<li>L&rsquo;effet à appliquer sur la région (flou par exemple)</li>
+<li>Effet Mask Apply</li>
+</ul>
+<p>Pour définir plusieurs régions sur un même clip, rajouter cet ensemble de 3 effets par dessus les 3 précédents.
+Pour du rotoscoping, il faut mettre l&rsquo;opération alpha sur &ldquo;Minimum&rdquo; sur le premier effet, puis sur &ldquo;Write on clear&rdquo; sur les suivants.</p>
+
+	<p class="art-date" id="art-date">Publi&eacute; le 3 août 2025</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+		
+		
+		
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/kdenlive");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", <span title=\"Compt&eacute; avec Abacus, une API libre et open-source\">consult&eacute; " + count + " fois</span>";
+		}
+		xhr.send();
+	</script>
+		
+	
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

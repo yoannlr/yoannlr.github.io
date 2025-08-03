@@ -182,22 +182,26 @@ div.notice {
 	padding: 0.1em 0.5em;
     border-left: 4px solid var(--notice_bordure);
 }
-/* index tiles */
+/* index cheatsheets */
 main > h1 {
 	text-align: center;
 }
-.index-tiles {
+.index-cheatsheet {
 	display: grid;
 	grid-template-columns: repeat(2, 50%);
 	gap: 8px;
 }
-.index-tiles a {
+.index-cheatsheet a {
 	border: 1px solid var(--bordure);
 	color: inherit;
 	padding: 0.5em;
 }
-.index-tiles a:hover {
+.index-cheatsheet a:hover {
 	background-color: var(--lien_bg);
+}
+.index-cheatsheet a img {
+	width: 100%;
+	height: 100%;
 }
 @media screen and (max-width: 60em) {
 	header, main, footer {
@@ -221,7 +225,7 @@ main > h1 {
 	article {
 		padding: initial;
 	}
-	.index-tiles {
+	.index-cheatsheet {
 		grid-template-columns: repeat(1, 100%);
 	}
 }
