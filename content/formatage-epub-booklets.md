@@ -1,7 +1,7 @@
 ---
 title: "Convertir un ePub en PDF puis en livre imprimable"
 date: 2025-10-03T11:48:58+02:00
-draft: true
+draft: false
 keywords:
   - epub
   - pdf
@@ -22,11 +22,14 @@ Avec rien d'autre que des outils libres, il est possible de convertir/formater u
 
 [Pandoc](https://pandoc.org/) permet la conversion de documents avec des formats d'entée et de sortie divers (HTML vers PDF, Markdown vers HTML, Markdown vers PDF etc).
 
-Avec la commande basique suivante, on peut convertir un ePub en PDF :
+Avec la commande basique suivante, on peut convertir un ePub en PDF.
+Ici avec un fichier d'exemple ePub :
 
 ```
 pandoc livre.epub -o livre.pdf
 ```
+
+![Résultat de la conversion](/img/pandoc_epub_1.webp)
 
 Le résultat obtenu n'est pas des plus jolis, mais pandoc est très paramétrable.
 Avec les options suivantes, on peut changer le format du papier, la police, les marges :
@@ -34,6 +37,8 @@ Avec les options suivantes, on peut changer le format du papier, la police, les 
 ```
 pandoc livre.epub -V geometry:a4paper -V geometry:margin=1.5cm -V mainfont="DejaVu Serif" -V fontsize=12pt --pdf-engine=xelatex -o livre.pdf
 ```
+
+![Résultat de la conversion avec des options de style](/img/pandoc_epub_2.webp)
 
 Enfin, en rajoutant un peu de LaTeX, on peut formater les pages du livre de sorte à avoir des marges différentes entre les pages paires et impaires.
 
@@ -83,7 +88,11 @@ L'utilitaire `pdfjam`, en revanche, offre cette possibilité :
 pdfjam --paper a4paper --landscape --signature 40 livre.pdf
 ```
 
+![Résultat de la séparation en cahiers](/img/booklets.webp)
+
 Cette commande produit le fichier `livre-pdfjam.pdf` qui contient l'ensemble des pages arrangées en cahiers de 40 pages (soit 10 feuilles à agrafer).
 À nouveau, le PDF est imprimable en recto-verso avec retournement sur le bord long.
 
 En graphique, le programme [Boomaga](https://www.boomaga.org/) permet de faire la même chose, de manière visuelle et interactive.
+
+![Interface de Boomaga](/img/boomaga.webp)
