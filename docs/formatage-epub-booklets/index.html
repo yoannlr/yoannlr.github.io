@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Convertir un ePub en PDF puis en livre imprimable - yoannlr, notes d&#39;un admin sys</title>
+	<meta charset="utf-8">
+    
+        
+            <meta name="keywords" content="epub, pdf, pandoc, conversion, booklets, livre, impression, signatures, pdfjam">
+            <meta name="description" content="Comment convertir un document ePub en document PDF, puis en livrets/cahiers imprimables, avec des outils libres.">
+        
+    
+    <meta name="author" content="yoannlr">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="icon" type="image/x-icon" href="https://avatars.githubusercontent.com/u/32494673">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+	<h1><a href="/">yoannlr:~$</a></h1>
+	<p>notes d&apos;un admin sys</p>
+	<nav>
+		<p>
+			<a href="https://github.com/yoannlr">GitHub</a>
+			<a href="/cheatsheet">Cheatsheets</a>
+		</p>
+	</nav>
+</header>
+<main><article>
+	<h1 id="convertir-un-epub-en-pdf-puis-en-livre-imprimable">Convertir un ePub en PDF puis en livre imprimable</h1>
+<p>Avec rien d&rsquo;autre que des outils libres, il est possible de convertir/formater un livre ePub en joli document PDF, puis d&rsquo;en créer des livrets/cahiers imprimables.</p>
+<h2 id="conversion-epub-en-pdf-avec-pandoc">Conversion ePub en PDF avec pandoc</h2>
+<p><a href="https://pandoc.org/">Pandoc</a> permet la conversion de documents avec des formats d&rsquo;entée et de sortie divers (HTML vers PDF, Markdown vers HTML, Markdown vers PDF etc).</p>
+<p>Avec la commande basique suivante, on peut convertir un ePub en PDF.
+Ici avec un fichier d&rsquo;exemple ePub :</p>
+<pre tabindex="0"><code>pandoc livre.epub -o livre.pdf
+</code></pre><p><img src="/img/pandoc_epub_1.webp" alt="Résultat de la conversion"></p>
+<p>Le résultat obtenu n&rsquo;est pas des plus jolis, mais pandoc est très paramétrable.
+Avec les options suivantes, on peut changer le format du papier, la police, les marges :</p>
+<pre tabindex="0"><code>pandoc livre.epub -V geometry:a4paper -V geometry:margin=1.5cm -V mainfont=&#34;DejaVu Serif&#34; -V fontsize=12pt --pdf-engine=xelatex -o livre.pdf
+</code></pre><p><img src="/img/pandoc_epub_2.webp" alt="Résultat de la conversion avec des options de style"></p>
+<p>Enfin, en rajoutant un peu de LaTeX, on peut formater les pages du livre de sorte à avoir des marges différentes entre les pages paires et impaires.</p>
+<p>Commençons par créer le fichier <code>margins.tex</code> :</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-tex" data-lang="tex"><span style="display:flex;"><span><span style="color:#00f">\usepackage</span>{geometry}
+</span></span><span style="display:flex;"><span><span style="color:#00f">\geometry</span>{
+</span></span><span style="display:flex;"><span>    left=2cm,
+</span></span><span style="display:flex;"><span>    right=1.5cm,
+</span></span><span style="display:flex;"><span>    top=1.5cm,
+</span></span><span style="display:flex;"><span>    bottom=1.5cm,
+</span></span><span style="display:flex;"><span>    headheight=1cm,
+</span></span><span style="display:flex;"><span>    headsep=1cm,
+</span></span><span style="display:flex;"><span>    footskip=1cm,
+</span></span><span style="display:flex;"><span>    twoside,
+</span></span><span style="display:flex;"><span>    bindingoffset=1cm
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Puis on indique à pandoc qu&rsquo;on souhaite inclure ce fichier LaTeX lors de la conversion du document :</p>
+<pre tabindex="0"><code>pandoc livre.epub -V geometry:a4paper -V geometry:margin=1.5cm -V mainfont=&#34;DejaVu Serif&#34; -V fontsize=12pt --pdf-engine=xelatex -H margins.tex -o livre.pdf
+</code></pre><p>Le PDF généré est parfait pour être consulté sur ordinateur, mais il ne convient pas à la création d&rsquo;un livre dont on souhaite agrafer les pages en leur centre.
+Il faut donc un moyen de générer des &ldquo;booklets&rdquo; : des livrets/cahiers.</p>
+<h2 id="génération-de-livrets-imprimables">Génération de livrets imprimables</h2>
+<p>Si le document PDF est assez court, il sera peut-être possible d&rsquo;en créer directement un livre.
+Pour cela, on peut utiliser l&rsquo;utilitaire <code>pdfbook2</code> sur notre PDF :</p>
+<pre tabindex="0"><code>pdfbook2 --paper=a4paper livre.pdf
+</code></pre><p>À la sortie, on obtient le fichier <code>livre-book.pdf</code>, qui contient un seul cahier, agrafable en son centre, de 2 pages A5 par page A4, soit 4 pages par feuille recto-verso.
+Le fichier <code>livre-book.pdf</code> peut être directement imprimé en recto-verso avec retourement sur le bord long (c&rsquo;est pour cela que certaines pages sont à l&rsquo;envers dans le PDF !).</p>
+<p>Avec cet outil, les livre conséquents (200 pages par exemple) seront transformés en un seul cahier qu&rsquo;il sera difficile voire impossible d&rsquo;agrafer en son centre.
+Il nous faut donc un outil pour paramétrer la taille de cahiers, et malheureusement <code>pdfbook2</code> ne le permet pas.
+L&rsquo;utilitaire <code>pdfjam</code>, en revanche, offre cette possibilité :</p>
+<pre tabindex="0"><code>pdfjam --paper a4paper --landscape --signature 40 livre.pdf
+</code></pre><p><img src="/img/booklets.webp" alt="Résultat de la séparation en cahiers"></p>
+<p>Cette commande produit le fichier <code>livre-pdfjam.pdf</code> qui contient l&rsquo;ensemble des pages arrangées en cahiers de 40 pages (soit 10 feuilles à agrafer).
+À nouveau, le PDF est imprimable en recto-verso avec retournement sur le bord long.</p>
+<p>En graphique, le programme <a href="https://www.boomaga.org/">Boomaga</a> permet de faire la même chose, de manière visuelle et interactive.</p>
+<p><img src="/img/boomaga.webp" alt="Interface de Boomaga"></p>
+
+	<p class="art-date" id="art-date">Publi&eacute; le 3 octobre 2025</p>
+	<p class="back-home"><a href="/">Retour &agrave; l&apos;index</a></p>
+	
+		
+		
+		
+	
+	<script type="text/javascript">
+		let xhr = new XMLHttpRequest();
+		xhr.open("GET", "https://abacus.jasoncameron.dev/hit/yoannlr.github.io/formatage-epub-booklets");
+		xhr.responseType = "json";
+		xhr.onload = function() {
+			count = this.response.value;
+			document.getElementById("art-date").innerHTML += ", <span title=\"Compt&eacute; avec Abacus, une API libre et open-source\">consult&eacute; " + count + " fois</span>";
+		}
+		xhr.send();
+	</script>
+		
+	
+</article>
+</main>
+<footer>
+	<p>Appr&eacute;ciez la simplicit&eacute; de ce site...</p>
+	<p class="rss"><a href="/index.xml">Flux RSS</a></p>
+</footer>
+</body>
+</html>

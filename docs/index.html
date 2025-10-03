@@ -32,6 +32,24 @@
 
 
 	<article>
+		<h1 id="convertir-un-epub-en-pdf-puis-en-livre-imprimable">Convertir un ePub en PDF puis en livre imprimable</h1>
+<p>Avec rien d&rsquo;autre que des outils libres, il est possible de convertir/formater un livre ePub en joli document PDF, puis d&rsquo;en créer des livrets/cahiers imprimables.</p>
+<h2 id="conversion-epub-en-pdf-avec-pandoc">Conversion ePub en PDF avec pandoc</h2>
+<p><a href="https://pandoc.org/">Pandoc</a> permet la conversion de documents avec des formats d&rsquo;entée et de sortie divers (HTML vers PDF, Markdown vers HTML, Markdown vers PDF etc).</p>
+<p>Avec la commande basique suivante, on peut convertir un ePub en PDF.
+Ici avec un fichier d&rsquo;exemple ePub :</p>
+<pre tabindex="0"><code>pandoc livre.epub -o livre.pdf
+</code></pre><p><img src="/img/pandoc_epub_1.webp" alt="Résultat de la conversion"></p>
+<p>Le résultat obtenu n&rsquo;est pas des plus jolis, mais pandoc est très paramétrable.
+Avec les options suivantes, on peut changer le format du papier, la police, les marges :</p>
+<pre tabindex="0"><code>pandoc livre.epub -V geometry:a4paper -V geometry:margin=1.5cm -V mainfont=&#34;DejaVu Serif&#34; -V fontsize=12pt --pdf-engine=xelatex -o livre.pdf
+</code></pre><p><img src="/img/pandoc_epub_2.webp" alt="Résultat de la conversion avec des options de style"></p>
+<p>Enfin, en rajoutant un peu de LaTeX, on peut formater les pages du livre de sorte à avoir des marges différentes entre …</p>
+		<p class="art-date">Publi&eacute; le 3 octobre 2025</p>
+		<p class="read-full"><a href="/formatage-epub-booklets/">Tout lire</a></p>
+	</article>
+
+	<article>
 		<h1 id="créer-un-tunnel-udp-avec-ssf-secure-socket-funneling-pour-exposer-un-service-derrière-un-nat">Créer un tunnel UDP avec SSF (Secure Socket Funneling) pour exposer un service derrière un NAT</h1>
 <p>Dans <a href="/tunnel-ssh-serveur-nat/">cet article précédent</a>, je vous expliquais comment créer un tunnel SSH pour exposer les services d&rsquo;une machine de votre LAN, publiquement sur Internet en passant par un VPS.
 Cette méthode présente une limite principale : seuls les tunnels TCP fonctionnent.</p>
@@ -154,20 +172,6 @@ Par exemple, VLC est tout à fait capable de s&rsquo;adresser à ALSA.</p>
 Si VLC utilise la …</p></div></a></div>
 		<p class="art-date">Publi&eacute; le 5 décembre 2024</p>
 		<p class="read-full"><a href="/audio-sous-linux/">Tout lire</a></p>
-	</article>
-
-	<article>
-		<h1 id="résoudre-le-problème-de-compatibilité-entre-linux-et-les-cartes-broadcom-bcm57416">Résoudre le problème de compatibilité entre Linux et les cartes Broadcom BCM57416</h1>
-<p>Les versions récentes du noyau Linux (apparemment 6.5+) ne reconnaissent pas correctement ces cartes réseau qu&rsquo;on peut acheter par exemple chez HPE.
-En Linux 6.2, aucun souci.</p>
-<p>Messages d&rsquo;erreur type dans dmesg :</p>
-<pre tabindex="0"><code>Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.0 (unnamed net_device) (uninitialized): Device requests max timeout of 100 seconds, may trigger hung task watchdog
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.0 eth0: Broadcom BCM57416 NetXtreme-E 10GBase-T Ethernet found at mem de610000, node addr aa:bb:cc:dd:ee:11
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.0: 63.008 Gb/s available PCIe bandwidth (8.0 GT/s PCIe x8 link)
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.1 (unnamed net_device) (uninitialized): Device requests max timeout of 100 seconds, may trigger hung task watchdog
-Nov 29 13:04:29 pve2-xxx kernel: bnxt_en 0000:12:00.1 eth1: Broadcom BCM57416 …</code></pre>
-		<p class="art-date">Publi&eacute; le 3 décembre 2024</p>
-		<p class="read-full"><a href="/broadcom-bcm57416-driver/">Tout lire</a></p>
 	</article>
 
 
